@@ -1,0 +1,205 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Noto Sans JP Variable", "Hiragino Kaku Gothic ProN", "Hiragino Sans", "Yu Gothic UI", "Meiryo", sans-serif;
+  --font-mincho: "Shippori Mincho", "Hiragino Mincho ProN", "Yu Mincho", "YuMincho", serif;
+
+  /* 藍色（あいいろ） */
+  --color-ai-50: #eef5f9;
+  --color-ai-100: #d6e6f0;
+  --color-ai-200: #aecde0;
+  --color-ai-300: #7eaecb;
+  --color-ai-400: #4f8db3;
+  --color-ai-500: #2f7099;
+  --color-ai-600: #1f5a80;
+  --color-ai-700: #1a4868;
+  --color-ai-800: #173a54;
+  --color-ai-900: #132c40;
+  --color-ai-950: #0c1c2a;
+
+  /* 朱色（しゅいろ） */
+  --color-shu-50: #fff4ed;
+  --color-shu-100: #ffe4d3;
+  --color-shu-200: #fec5a5;
+  --color-shu-300: #fd9e6d;
+  --color-shu-400: #f97c3c;
+  --color-shu-500: #eb6101;
+  --color-shu-600: #c94f05;
+  --color-shu-700: #a33f0b;
+
+  /* 生成り・墨・印朱 */
+  --color-kinari: #f6f4ee;
+  --color-kinari-dark: #ece8dd;
+  --color-sumi: #262523;
+  --color-inshu: #c8102e;
+
+  --shadow-card: 0 1px 2px rgba(38, 37, 35, 0.04), 0 1px 3px rgba(38, 37, 35, 0.06);
+  --shadow-lift: 0 4px 12px rgba(23, 58, 84, 0.08), 0 2px 4px rgba(23, 58, 84, 0.06);
+
+  --animate-fade-up: fade-up 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  --animate-shimmer: shimmer 1.6s linear infinite;
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes shimmer {
+  from {
+    background-position: -200% 0;
+  }
+  to {
+    background-position: 200% 0;
+  }
+}
+
+:root {
+  color-scheme: light;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  font-feature-settings: "palt" 0;
+}
+
+body {
+  background: var(--color-kinari);
+  color: var(--color-sumi);
+  font-family: var(--font-sans);
+  letter-spacing: 0.02em;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+.font-num,
+.tabular {
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0;
+}
+
+.font-mincho {
+  letter-spacing: 0.08em;
+}
+
+::selection {
+  background: var(--color-ai-200);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-ai-400);
+  outline-offset: 2px;
+}
+
+/* スクロールバー */
+.scroll-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #cfc9ba transparent;
+}
+.scroll-thin::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+.scroll-thin::-webkit-scrollbar-thumb {
+  background: #cfc9ba;
+  border-radius: 8px;
+}
+
+/* 表 */
+.tbl {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 13px;
+}
+.tbl th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: #f3f1ea;
+  color: #57534e;
+  font-weight: 500;
+  text-align: left;
+  white-space: nowrap;
+  padding: 8px 12px;
+  border-bottom: 1px solid #e2ddd0;
+  font-size: 12px;
+}
+.tbl td {
+  padding: 9px 12px;
+  border-bottom: 1px solid #efece4;
+  vertical-align: middle;
+}
+.tbl tbody tr {
+  transition: background-color 0.15s ease;
+}
+.tbl tbody tr:hover td {
+  background: #faf9f5;
+}
+.tbl.tbl-compact td {
+  padding: 5px 8px;
+}
+.tbl.tbl-compact th {
+  padding: 6px 8px;
+}
+
+/* 入力欄（表内インライン編集） */
+.cell-input {
+  width: 100%;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 4px;
+  padding: 3px 6px;
+  font-size: 13px;
+  transition: border-color 0.15s, background-color 0.15s;
+}
+.cell-input:hover {
+  border-color: #e2ddd0;
+  background: #fff;
+}
+.cell-input:focus {
+  outline: none;
+  border-color: var(--color-ai-400);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(79, 141, 179, 0.15);
+}
+.cell-input:disabled {
+  color: inherit;
+  border-color: transparent;
+  background: transparent;
+  cursor: default;
+}
+
+/* スケルトン */
+.skeleton {
+  background: linear-gradient(90deg, #ece8dd 25%, #f6f4ee 37%, #ece8dd 63%);
+  background-size: 400% 100%;
+  animation: var(--animate-shimmer);
+}
+
+/* 印刷 */
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body {
+    background: #fff !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+  .print-sheet {
+    box-shadow: none !important;
+    margin: 0 !important;
+    width: auto !important;
+    min-height: auto !important;
+    padding: 0 !important;
+  }
+}
