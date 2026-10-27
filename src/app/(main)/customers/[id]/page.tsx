@@ -93,15 +93,15 @@ export default function CustomerDetailPage() {
             <CardBody className="grid grid-cols-3 gap-3 text-center">
               <div>
                 <div className="font-num text-lg font-bold">{manYen(data.total)}</div>
-                <div className="text-[10px] text-stone-500">累計受注額</div>
+                <div className="text-[0.625rem] text-stone-500">累計受注額</div>
               </div>
               <div>
                 <div className="font-num text-lg font-bold">{data.won}件</div>
-                <div className="text-[10px] text-stone-500">受注件数</div>
+                <div className="text-[0.625rem] text-stone-500">受注件数</div>
               </div>
               <div>
                 <div className="font-num text-lg font-bold">{data.won + data.lost ? Math.round((data.won / (data.won + data.lost)) * 100) : 0}%</div>
-                <div className="text-[10px] text-stone-500">受注率</div>
+                <div className="text-[0.625rem] text-stone-500">受注率</div>
               </div>
             </CardBody>
           </Card>
@@ -111,18 +111,18 @@ export default function CustomerDetailPage() {
               {sites.map((s) => (
                 <div key={s.id} className="border-b border-stone-100 px-5 py-3 last:border-0">
                   <div className="flex items-center justify-between">
-                    <span className="text-[13px] font-bold">{s.name}</span>
-                    <span className="text-[11px] text-stone-500">装置 {data.eqs.filter((e) => e.siteId === s.id).length}台</span>
+                    <span className="text-[0.8125rem] font-bold">{s.name}</span>
+                    <span className="text-[0.6875rem] text-stone-500">装置 {data.eqs.filter((e) => e.siteId === s.id).length}台</span>
                   </div>
-                  <div className="text-[11px] text-stone-500">{s.address}</div>
+                  <div className="text-[0.6875rem] text-stone-500">{s.address}</div>
                   <div className="mt-2 space-y-1.5">
                     {s.contacts.map((ct) => (
-                      <div key={ct.id} className="group flex items-start justify-between rounded bg-stone-50 px-2.5 py-1.5">
+                      <div key={ct.id} className="group flex items-start justify-between rounded-sm bg-stone-50 px-2.5 py-1.5">
                         <div className="text-xs">
                           <div className="font-medium">
                             {ct.name} 様<span className="ml-1.5 font-normal text-stone-500">{ct.dept} {ct.title}</span>
                           </div>
-                          <div className="mt-0.5 flex flex-wrap gap-x-3 text-[11px] text-stone-500">
+                          <div className="mt-0.5 flex flex-wrap gap-x-3 text-[0.6875rem] text-stone-500">
                             {ct.phone && <span className="flex items-center gap-1"><Phone size={10} />{ct.phone}</span>}
                             {ct.email && <span className="flex items-center gap-1"><Mail size={10} />{ct.email}</span>}
                           </div>
@@ -135,7 +135,7 @@ export default function CustomerDetailPage() {
                       </div>
                     ))}
                     {canEdit && (
-                      <button onClick={() => setContactSite(s)} className="flex items-center gap-1 text-[11px] text-ai-700 hover:underline">
+                      <button onClick={() => setContactSite(s)} className="flex items-center gap-1 text-[0.6875rem] text-ai-700 hover:underline">
                         <UserPlus size={12} />
                         担当者を追加
                       </button>
@@ -206,11 +206,11 @@ export default function CustomerDetailPage() {
                     <span className="font-num text-xs font-bold text-emerald-700">{e.serialNo}</span>
                     <Badge className={EQUIPMENT_STATUS[e.status].color} dot={EQUIPMENT_STATUS[e.status].dot}>{EQUIPMENT_STATUS[e.status].label}</Badge>
                   </div>
-                  <div className="mt-0.5 text-[13px] font-medium">{e.name}</div>
-                  <div className="text-[11px] text-stone-500">
+                  <div className="mt-0.5 text-[0.8125rem] font-medium">{e.name}</div>
+                  <div className="text-[0.6875rem] text-stone-500">
                     {EQUIPMENT_TYPES[e.equipmentType].label}／{lk.site.get(e.siteId)?.name} {e.location.replace(lk.site.get(e.siteId)?.name ?? "", "")}
                   </div>
-                  <div className="mt-1 text-[11px] text-stone-500">納入 {fmtDate(e.deliveredDate, false)}</div>
+                  <div className="mt-1 text-[0.6875rem] text-stone-500">納入 {fmtDate(e.deliveredDate, false)}</div>
                 </Link>
               ))}
             </div>

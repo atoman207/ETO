@@ -85,11 +85,11 @@ export function CopyFromCaseModal({ c, open, onClose }: { c: Case; open: boolean
                 className={cn("w-full rounded-md border px-3 py-2 text-left transition-colors", src === x.id ? "border-ai-500 bg-ai-50" : "border-stone-200 hover:bg-stone-50")}
               >
                 <div className="flex items-center justify-between">
-                  <span className="font-num text-[11px] font-semibold text-shu-600">{x.workNo}</span>
-                  <span className="font-num text-[10px] text-stone-500">類似度 {score}</span>
+                  <span className="font-num text-[0.6875rem] font-semibold text-shu-600">{x.workNo}</span>
+                  <span className="font-num text-[0.625rem] text-stone-500">類似度 {score}</span>
                 </div>
-                <div className="text-[13px] font-medium leading-snug">{x.title}</div>
-                <div className="flex items-center gap-1.5 text-[10px] text-stone-500">
+                <div className="text-[0.8125rem] font-medium leading-snug">{x.title}</div>
+                <div className="flex items-center gap-1.5 text-[0.625rem] text-stone-500">
                   {EQUIPMENT_TYPES[x.equipmentType].label}・{x.bom.length}行
                   {c.referenceCaseIds.includes(x.id) && <Badge className="bg-ai-50 text-ai-700 ring-ai-200">参考案件</Badge>}
                 </div>
@@ -103,7 +103,7 @@ export function CopyFromCaseModal({ c, open, onClose }: { c: Case; open: boolean
             <>
               <div className="flex items-center justify-between border-b border-stone-100 bg-stone-50 px-3 py-2">
                 <span className="text-xs font-bold">{source.workNo} {source.title} のユニット構成</span>
-                <div className="flex gap-2 text-[11px]">
+                <div className="flex gap-2 text-[0.6875rem]">
                   <button className="text-ai-700 hover:underline" onClick={() => setChecked(new Set(roots.map((r) => r.id)))}>すべて選択</button>
                   <button className="text-ai-700 hover:underline" onClick={() => setChecked(new Set())}>選択解除</button>
                 </div>
@@ -128,7 +128,7 @@ export function CopyFromCaseModal({ c, open, onClose }: { c: Case; open: boolean
                           {kids.length}品目{showCost && `・${yen(bomRollup(source.bom, r.id))}`}
                         </span>
                       </div>
-                      <div className="ml-6 mt-1 line-clamp-2 text-[11px] text-stone-500">{kids.map((k) => `${k.name}×${k.qty}`).join("、")}</div>
+                      <div className="ml-6 mt-1 line-clamp-2 text-[0.6875rem] text-stone-500">{kids.map((k) => `${k.name}×${k.qty}`).join("、")}</div>
                     </div>
                   );
                 })}
@@ -201,11 +201,11 @@ export function TemplateModal({ c, open, onClose }: { c: Case; open: boolean; on
               className={cn("rounded-lg border p-3 text-left transition-all", on ? "border-ai-500 bg-ai-50 ring-2 ring-ai-500/15" : "border-stone-200 hover:border-stone-300 hover:bg-stone-50")}
             >
               <div className="flex items-start justify-between gap-2">
-                <span className="text-[13px] font-bold text-stone-800">{t.name}</span>
+                <span className="text-[0.8125rem] font-bold text-stone-800">{t.name}</span>
                 {on && <CheckCircle2 size={16} className="shrink-0 text-ai-600" />}
               </div>
-              <p className="mt-0.5 text-[11px] leading-relaxed text-stone-500">{t.description}</p>
-              <div className="mt-1.5 flex items-center gap-2 text-[11px] text-stone-600">
+              <p className="mt-0.5 text-[0.6875rem] leading-relaxed text-stone-500">{t.description}</p>
+              <div className="mt-1.5 flex items-center gap-2 text-[0.6875rem] text-stone-600">
                 <Badge>{t.equipmentType ? EQUIPMENT_TYPES[t.equipmentType].label : "共通"}</Badge>
                 <span>{t.items.length - 1}品目</span>
                 {showCost && <span className="font-num">標準原価 {yen(total)}</span>}
@@ -306,14 +306,14 @@ export function PartPickerModal({ c, open, onClose }: { c: Case; open: boolean; 
             {list.map((p: Part) => (
               <tr key={p.id} className={cn((qty[p.id] ?? 0) > 0 && "bg-ai-50/60")}>
                 <td className="font-num text-xs font-medium">{p.partNo}</td>
-                <td className="text-[13px]">{p.name}</td>
+                <td className="text-[0.8125rem]">{p.name}</td>
                 <td className="text-xs text-stone-500">{p.spec}</td>
                 <td className="text-xs">{p.maker}</td>
                 <td>
                   <Badge>{p.category}</Badge>
                 </td>
                 {showCost && <td className="font-num text-right text-xs">{yen(p.standardCost)}</td>}
-                <td className="text-[11px] text-stone-500">{p.supplierId ? lk.supplier.get(p.supplierId)?.name.replace(/株式会社|有限会社/g, "") : "社内"}</td>
+                <td className="text-[0.6875rem] text-stone-500">{p.supplierId ? lk.supplier.get(p.supplierId)?.name.replace(/株式会社|有限会社/g, "") : "社内"}</td>
                 <td className="font-num text-right text-xs">{p.leadTimeDays}日</td>
                 <td>
                   <NumberInput compact value={qty[p.id] ?? 0} onChange={(v) => setQty({ ...qty, [p.id]: Math.max(0, v) })} min={0} />
@@ -426,7 +426,7 @@ export function ImportModal({ c, open, onClose }: { c: Case; open: boolean; onCl
                       <td className="font-num text-xs">{r.partNo || "—"}</td>
                       <td className="text-xs">
                         {r.name || <span className="text-rose-600">{r.error}</span>}
-                        {r.spec && <div className="text-[10px] text-stone-400">{r.spec}</div>}
+                        {r.spec && <div className="text-[0.625rem] text-stone-400">{r.spec}</div>}
                       </td>
                       <td className="font-num text-right text-xs">
                         {r.qty} {r.unit}
@@ -438,7 +438,7 @@ export function ImportModal({ c, open, onClose }: { c: Case; open: boolean; onCl
               </table>
             )}
           </div>
-          <div className="mt-2 flex flex-wrap gap-3 text-[11px] text-stone-500">
+          <div className="mt-2 flex flex-wrap gap-3 text-[0.6875rem] text-stone-500">
             <span className="flex items-center gap-1"><CheckCircle2 size={12} className="text-emerald-600" />マスタ一致（自動補完）</span>
             <span className="flex items-center gap-1"><TriangleAlert size={12} className="text-amber-500" />マスタ未登録（そのまま取込）</span>
             <span className="flex items-center gap-1"><TriangleAlert size={12} className="text-rose-500" />エラー（取込対象外）</span>

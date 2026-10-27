@@ -64,12 +64,12 @@ export function QuoteTab({ c, goTab }: CaseTabProps) {
             onClick={() => setSel(x.id)}
             className={cn(
               "flex items-center gap-2 rounded-lg border px-3 py-2 text-left transition-all",
-              x.id === sel ? "border-ai-500 bg-white shadow-md ring-2 ring-ai-500/15" : "border-stone-200 bg-white/70 hover:border-stone-300 hover:bg-white",
+              x.id === sel ? "border-ai-500 bg-surface shadow-md ring-2 ring-ai-500/15" : "border-stone-200 bg-surface/70 hover:border-stone-300 hover:bg-surface",
             )}
           >
             <span>
-              <span className="font-num block text-[12px] font-bold text-stone-800">{x.quoteNo}</span>
-              <span className="font-num block text-[11px] text-stone-500">{yen(quoteSubtotal(x))}</span>
+              <span className="font-num block text-[0.75rem] font-bold text-stone-800">{x.quoteNo}</span>
+              <span className="font-num block text-[0.6875rem] text-stone-500">{yen(quoteSubtotal(x))}</span>
             </span>
             <Badge className={QUOTE_STATUS[x.status].color}>{QUOTE_STATUS[x.status].label}</Badge>
           </button>
@@ -243,7 +243,7 @@ function QuoteEditor({ q, goReview }: { q: Quote; goReview: () => void }) {
             <Field label="備考" className="min-w-[280px] flex-1">
               <Textarea rows={4} value={q.notes} disabled={!editable} onChange={(e) => update(q.id, { notes: e.target.value })} />
             </Field>
-            <div className="w-full max-w-xs space-y-1.5 rounded-lg bg-kinari p-4 text-[13px]">
+            <div className="w-full max-w-xs space-y-1.5 rounded-lg bg-kinari p-4 text-[0.8125rem]">
               <div className="flex justify-between">
                 <span className="text-stone-500">小計</span>
                 <span className="font-num">{yen(subtotal + (q.discount || 0))}</span>
@@ -260,7 +260,7 @@ function QuoteEditor({ q, goReview }: { q: Quote; goReview: () => void }) {
                 <span>消費税（{Math.round(taxRate * 100)}%）</span>
                 <span className="font-num">{yen(tax)}</span>
               </div>
-              <div className="flex justify-between text-[15px] font-bold text-ai-900">
+              <div className="flex justify-between text-[0.9375rem] font-bold text-ai-900">
                 <span>総額（税込）</span>
                 <span className="font-num">{yen(subtotal + tax)}</span>
               </div>
@@ -293,7 +293,7 @@ function QuoteEditor({ q, goReview }: { q: Quote; goReview: () => void }) {
             {q.approvals.some((a) => a.comment) && (
               <div className="space-y-1">
                 {q.approvals.filter((a) => a.comment).map((a, i) => (
-                  <div key={i} className={cn("rounded px-2 py-1.5 text-xs", a.status === "rejected" ? "bg-rose-50 text-rose-700" : "bg-stone-50 text-stone-600")}>
+                  <div key={i} className={cn("rounded-sm px-2 py-1.5 text-xs", a.status === "rejected" ? "bg-rose-50 text-rose-700" : "bg-stone-50 text-stone-600")}>
                     {a.label}（{lk.user.get(a.userId ?? "")?.name}）：{a.comment}
                   </div>
                 ))}

@@ -113,7 +113,7 @@ export function ShipmentTab({ c }: CaseTabProps) {
           <CardHeader title="出荷前チェック" />
           <CardBody className="space-y-2">
             {checks.map((x) => (
-              <div key={x.label} className="flex items-center gap-2 text-[13px]">
+              <div key={x.label} className="flex items-center gap-2 text-[0.8125rem]">
                 {x.ok ? <CheckCircle2 size={16} className="text-emerald-600" /> : <Circle size={16} className="text-stone-300" />}
                 <span className={x.ok ? "text-stone-700" : "text-stone-500"}>{x.label}</span>
               </div>
@@ -128,11 +128,11 @@ export function ShipmentTab({ c }: CaseTabProps) {
               {eqs.map((e) => (
                 <Link key={e.id} href={`/equipment/${e.id}`} className="block border-b border-stone-50 px-5 py-2.5 transition-colors last:border-0 hover:bg-stone-50">
                   <div className="flex items-center justify-between">
-                    <span className="font-num text-[12px] font-bold text-emerald-700">{e.serialNo}</span>
+                    <span className="font-num text-[0.75rem] font-bold text-emerald-700">{e.serialNo}</span>
                     <Badge className={EQUIPMENT_STATUS[e.status].color}>{EQUIPMENT_STATUS[e.status].label}</Badge>
                   </div>
-                  <div className="text-[13px]">{e.name}</div>
-                  <div className="text-[11px] text-stone-500">納入 {fmtDate(e.deliveredDate, false)}／保証 {fmtDate(e.warrantyUntil, false)} まで</div>
+                  <div className="text-[0.8125rem]">{e.name}</div>
+                  <div className="text-[0.6875rem] text-stone-500">納入 {fmtDate(e.deliveredDate, false)}／保証 {fmtDate(e.warrantyUntil, false)} まで</div>
                 </Link>
               ))}
             </div>
@@ -140,7 +140,7 @@ export function ShipmentTab({ c }: CaseTabProps) {
         ) : (
           <Card className="border-shu-200">
             <CardBody>
-              <div className="text-[13px] font-bold text-stone-800">納品完了の登録</div>
+              <div className="text-[0.8125rem] font-bold text-stone-800">納品完了の登録</div>
               <p className="mt-1 text-xs leading-relaxed text-stone-500">
                 登録すると、製造番号（{c.workNo}-01〜）付きで装置台帳に自動登録され、仕様・BOMが紐付いた状態でアフターサービス管理が始まります。
               </p>
@@ -192,7 +192,7 @@ export function ShipmentTab({ c }: CaseTabProps) {
           <Field label="設置場所" hint="例：本社工場 第2組立ライン">
             <Input value={deliv.location} onChange={(e) => setDeliv({ ...deliv, location: e.target.value })} />
           </Field>
-          <div className={cn("rounded-md bg-stone-50 px-3 py-2 text-[11px] text-stone-600")}>保証期間は設定に基づき自動計算されます。実績原価はBOMの購入実績から集計されます。</div>
+          <div className={cn("rounded-md bg-stone-50 px-3 py-2 text-[0.6875rem] text-stone-600")}>保証期間は設定に基づき自動計算されます。実績原価はBOMの購入実績から集計されます。</div>
         </div>
       </Modal>
     </div>

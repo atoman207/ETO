@@ -25,20 +25,20 @@ export default function OrderPrintPage() {
   return (
     <PrintShell title={`社内注文書 ${c.workNo}`}>
       <div className="flex items-start justify-between">
-        <div className="text-[11px] leading-[1.8]">
+        <div className="text-[0.6875rem] leading-[1.8]">
           <div>発行日：{fmtDateJa(c.workNoIssuedAt?.slice(0, 10) ?? today())}</div>
           <div>取引番号：<span className="font-num">{c.dealNo}</span></div>
           <div>見積番号：<span className="font-num">{q?.quoteNo ?? "—"}</span></div>
         </div>
         <StampBoxes labels={["営業部長", "設計", "購買", "製造", "品証"]} users={lk.user} />
       </div>
-      <h1 className="font-mincho mt-4 text-center text-[24px] font-bold tracking-[0.4em]">社内注文書<span className="ml-2 text-[14px] tracking-normal">（工事指示書）</span></h1>
+      <h1 className="font-mincho mt-4 text-center text-[1.5rem] font-bold tracking-[0.4em]">社内注文書<span className="ml-2 text-[0.875rem] tracking-normal">（工事指示書）</span></h1>
       <div className="mx-auto mt-4 flex w-fit items-center gap-4 border-[3px] border-stone-800 px-6 py-2">
-        <span className="text-[12px]">工事番号</span>
-        <span className="font-num text-[28px] font-bold tracking-wider">{c.workNo}</span>
+        <span className="text-[0.75rem]">工事番号</span>
+        <span className="font-num text-[1.75rem] font-bold tracking-wider">{c.workNo}</span>
       </div>
 
-      <table className="mt-5 w-full border-collapse text-[11px]">
+      <table className="mt-5 w-full border-collapse text-[0.6875rem]">
         <tbody>
           {[
             ["件名", c.title, "装置種別", EQUIPMENT_TYPES[c.equipmentType].label],
@@ -58,8 +58,8 @@ export default function OrderPrintPage() {
         </tbody>
       </table>
 
-      <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[13px] font-bold">仕様概要</h2>
-      <div className="border border-stone-400 px-3 py-2 text-[11px] leading-[1.8]">
+      <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[0.8125rem] font-bold">仕様概要</h2>
+      <div className="border border-stone-400 px-3 py-2 text-[0.6875rem] leading-[1.8]">
         処理能力 {num(c.specs.capacity)}{c.specs.capacityUnit}／W{num(c.specs.width)}×D{num(c.specs.depth)}×H{num(c.specs.height)}mm／{c.specs.material}／{c.specs.control}／{c.specs.power}／{c.specs.environment}
         <br />
         対象ワーク：{c.specs.workpiece || "—"}
@@ -77,8 +77,8 @@ export default function OrderPrintPage() {
         )}
       </div>
 
-      <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[13px] font-bold">工程計画</h2>
-      <table className="w-full border-collapse text-[11px]">
+      <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[0.8125rem] font-bold">工程計画</h2>
+      <table className="w-full border-collapse text-[0.6875rem]">
         <thead>
           <tr className="bg-stone-100">
             <th className="border border-stone-500 py-1">工程</th>
@@ -103,8 +103,8 @@ export default function OrderPrintPage() {
 
       {roots.length > 0 && (
         <>
-          <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[13px] font-bold">ユニット構成（BOM概要）</h2>
-          <table className="w-full border-collapse text-[11px]">
+          <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[0.8125rem] font-bold">ユニット構成（BOM概要）</h2>
+          <table className="w-full border-collapse text-[0.6875rem]">
             <thead>
               <tr className="bg-stone-100">
                 <th className="w-8 border border-stone-500 py-1">No.</th>
@@ -127,11 +127,11 @@ export default function OrderPrintPage() {
         </>
       )}
 
-      <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[13px] font-bold">特記事項・申し送り</h2>
-      <div className="min-h-[20mm] border border-stone-400 px-3 py-2 text-[11px] leading-[1.8]">
+      <h2 className="mt-5 mb-1.5 border-l-4 border-stone-800 pl-2 text-[0.8125rem] font-bold">特記事項・申し送り</h2>
+      <div className="min-h-[20mm] border border-stone-400 px-3 py-2 text-[0.6875rem] leading-[1.8]">
         {pinned.length ? pinned.map((n) => <div key={n.id}>・{n.text}</div>) : "特になし"}
       </div>
-      <div className="mt-6 text-right text-[9px] text-stone-400">{st.companyName}／匠帳より出力</div>
+      <div className="mt-6 text-right text-[0.5625rem] text-stone-400">{st.companyName}／匠帳より出力</div>
     </PrintShell>
   );
 }

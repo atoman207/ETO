@@ -1,6 +1,6 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useScroll, useSpring } from "framer-motion";
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -26,12 +26,17 @@ import {
   X,
   Check,
   ShieldCheck,
+  Palette,
+  ArrowUp,
 } from "lucide-react";
 import { useStore } from "@/lib/store";
 import { useCurrentUser } from "@/lib/hooks";
 import { cn, relTime } from "@/lib/format";
 import { PERMISSION_LABELS, ROLE_PERMISSIONS, ROLES } from "@/lib/constants";
-import { Avatar, Logo, Seigaiha } from "@/components/ui/misc";
+import { Avatar, Logo } from "@/components/ui/misc";
+import { WaPattern } from "@/components/theme/wa-pattern";
+import { ThemePanel } from "@/components/theme/theme-panel";
+import { useThemeStore } from "@/components/theme/theme-provider";
 import { Button } from "@/components/ui/button";
 import { CommandPalette } from "./command-palette";
 import { toast } from "sonner";
@@ -110,19 +115,19 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
   const groups = useNav();
   const company = useStore((s) => s.settings.companyName);
   return (
-    <div className="relative flex h-full flex-col overflow-hidden bg-ai-900 text-ai-100">
-      <Seigaiha className="pointer-events-none absolute bottom-0 left-0 h-56 w-full opacity-80 [mask-image:linear-gradient(to_top,black,transparent)]" id="sg-side" fill="#132c40" />
+    <div className="relative flex h-full flex-col overflow-hidden border-r border-sidebar-border bg-sidebar text-sidebar-fg">
+      <WaPattern className="pointer-events-none absolute bottom-0 left-0 h-56 w-full opacity-80 [mask-image:linear-gradient(to_top,black,transparent)]" id="wa-side" />
       <Link href="/" onClick={onNavigate} className="relative flex items-center gap-3 px-5 pb-4 pt-5">
         <Logo size={38} />
         <div>
-          <div className="font-mincho text-xl font-bold leading-none tracking-[0.25em] text-white">匠帳</div>
-          <div className="mt-1.5 text-[10px] leading-tight tracking-wider text-ai-300">個別受注生産<br />案件・装置統合管理</div>
+          <div className="font-mincho text-xl font-bold leading-none tracking-[0.25em] text-sidebar-fg">匠帳</div>
+          <div className="mt-1.5 text-[0.625rem] leading-tight tracking-wider text-sidebar-muted">個別受注生産<br />案件・装置統合管理</div>
         </div>
       </Link>
       <nav className="scroll-thin relative flex-1 overflow-y-auto px-3 pb-6">
         {groups.map((g) => (
           <div key={g.title} className="mt-4 first:mt-1">
-            <div className="mb-1 px-3 text-[10px] font-medium tracking-[0.15em] text-ai-400">{g.title}</div>
+            <div className="mb-1 px-3 text-[0.625rem] font-medium tracking-[0.15em] text-sidebar-subtle">{g.title}</div>
             {g.items.map((it) => {
               const active = isActive(pathname, it.href);
               return (
@@ -131,28 +136,28 @@ function Sidebar({ onNavigate }: { onNavigate?: () => void }) {
                   href={it.href}
                   onClick={onNavigate}
                   className={cn(
-                    "group relative mb-0.5 flex h-9 items-center gap-2.5 rounded-md px-3 text-[13px] transition-colors",
-                    active ? "text-white" : "text-ai-200 hover:bg-white/5 hover:text-white",
+                    "group relative mb-0.5 flex h-9 items-center gap-2.5 rounded-md px-3 text-[0.8125rem] transition-colors",
+                    active ? "font-medium text-sidebar-active-fg" : "text-sidebar-muted hover:bg-sidebar-hover hover:text-sidebar-fg",
                   )}
                 >
                   {active && (
                     <motion.span
                       layoutId="nav-active"
-                      className="absolute inset-0 rounded-md bg-white/12 ring-1 ring-inset ring-white/10"
+                      className="absolute inset-0 rounded-md bg-sidebar-active ring-1 ring-inset ring-sidebar-border"
                       transition={{ type: "spring", stiffness: 500, damping: 40 }}
                     />
                   )}
-                  {active && <motion.span layoutId="nav-bar" className="absolute -left-3 top-1.5 bottom-1.5 w-1 rounded-r bg-shu-500" />}
-                  <span className={cn("relative transition-colors", active ? "text-shu-300" : "text-ai-400 group-hover:text-ai-200")}>{it.icon}</span>
-                  <span className="relative flex-1">{it.label}</span>
-                  {it.badge ? <span className="font-num relative rounded-full bg-shu-500 px-1.5 text-[10px] font-bold leading-4 text-white">{it.badge}</span> : null}
+                  {active && <motion.span layoutId="nav-bar" className="absolute -left-3 top-1.5 bottom-1.5 w-1 rounded-r-sm bg-shu-500" />}
+                  <span className={cn("relative transition-all duration-200", active ? "scale-110 text-sidebar-icon" : "text-sidebar-subtle group-hover:translate-x-0.5 group-hover:text-sidebar-muted")}>{it.icon}</span>
+                  <span className="relative flex-1 transition-transform duration-200 group-hover:translate-x-0.5">{it.label}</span>
+                  {it.badge ? <span className="font-num relative animate-pop rounded-full bg-shu-500 px-1.5 text-[0.625rem] font-bold leading-4 text-white">{it.badge}</span> : null}
                 </Link>
               );
             })}
           </div>
         ))}
       </nav>
-      <div className="relative border-t border-white/10 px-5 py-3 text-[10px] leading-relaxed text-ai-400">
+      <div className="relative border-t border-sidebar-border px-5 py-3 text-[0.625rem] leading-relaxed text-sidebar-subtle">
         {company}
         <br />
         デモ版 Ver.0.9
@@ -169,6 +174,12 @@ function Notifications() {
   const ref = useRef<HTMLDivElement>(null);
   const router = useRouter();
   const unread = notifications.filter((n) => !n.read).length;
+  const [ring, setRing] = useState(0);
+  const prevUnread = useRef(unread);
+  useEffect(() => {
+    if (unread > prevUnread.current) setRing((r) => r + 1);
+    prevUnread.current = unread;
+  }, [unread]);
   useEffect(() => {
     const onClick = (e: MouseEvent) => {
       if (ref.current && !ref.current.contains(e.target as Node)) setOpen(false);
@@ -180,9 +191,9 @@ function Notifications() {
   return (
     <div className="relative" ref={ref}>
       <button onClick={() => setOpen((o) => !o)} className="relative flex h-9 w-9 items-center justify-center rounded-md text-stone-500 transition-colors hover:bg-stone-900/5 hover:text-stone-800" aria-label="お知らせ">
-        <Bell size={18} />
+        <Bell key={ring} size={18} className={ring ? "animate-ring origin-top" : ""} />
         {unread > 0 && (
-          <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="font-num absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-shu-500 px-1 text-[9px] font-bold text-white ring-2 ring-white">
+          <motion.span initial={{ scale: 0 }} animate={{ scale: 1 }} className="font-num absolute right-1 top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-shu-500 px-1 text-[0.5625rem] font-bold text-white ring-2 ring-surface">
             {unread}
           </motion.span>
         )}
@@ -194,7 +205,7 @@ function Notifications() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-11 z-40 w-[360px] origin-top-right overflow-hidden rounded-xl border border-stone-200 bg-white shadow-xl shadow-ai-950/10"
+            className="absolute right-0 top-11 z-40 w-[360px] origin-top-right overflow-hidden rounded-xl border border-stone-200 bg-surface shadow-xl shadow-ai-950/10"
           >
             <div className="flex items-center justify-between border-b border-stone-100 px-4 py-2.5">
               <span className="text-sm font-bold">お知らせ</span>
@@ -217,8 +228,8 @@ function Notifications() {
                   <span className={cn("mt-1.5 h-2 w-2 shrink-0 rounded-full", tone[n.tone], n.read && "opacity-30")} />
                   <span className="min-w-0 flex-1">
                     <span className="flex items-center justify-between gap-2">
-                      <span className={cn("text-[13px]", n.read ? "text-stone-600" : "font-bold text-stone-800")}>{n.title}</span>
-                      <span className="shrink-0 text-[10px] text-stone-400">{relTime(n.at)}</span>
+                      <span className={cn("text-[0.8125rem]", n.read ? "text-stone-600" : "font-bold text-stone-800")}>{n.title}</span>
+                      <span className="shrink-0 text-[0.625rem] text-stone-400">{relTime(n.at)}</span>
                     </span>
                     <span className="mt-0.5 block text-xs leading-relaxed text-stone-500">{n.body}</span>
                   </span>
@@ -251,8 +262,8 @@ function UserSwitcher() {
       <button onClick={() => setOpen((o) => !o)} className="flex items-center gap-2 rounded-lg py-1 pl-1 pr-2 transition-colors hover:bg-stone-900/5">
         <Avatar user={me} size={32} />
         <span className="hidden text-left leading-tight md:block">
-          <span className="block text-[13px] font-medium text-stone-800">{me.name}</span>
-          <span className="block text-[10px] text-stone-500">
+          <span className="block text-[0.8125rem] font-medium text-stone-800">{me.name}</span>
+          <span className="block text-[0.625rem] text-stone-500">
             {me.dept}
             {me.title && `・${me.title}`}
           </span>
@@ -266,14 +277,14 @@ function UserSwitcher() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.98 }}
             transition={{ duration: 0.15 }}
-            className="absolute right-0 top-12 z-40 w-[380px] origin-top-right overflow-hidden rounded-xl border border-stone-200 bg-white shadow-xl shadow-ai-950/10"
+            className="absolute right-0 top-12 z-40 w-[380px] origin-top-right overflow-hidden rounded-xl border border-stone-200 bg-surface shadow-xl shadow-ai-950/10"
           >
             <div className="border-b border-stone-100 bg-shu-50/60 px-4 py-3">
-              <div className="flex items-center gap-1.5 text-[13px] font-bold text-shu-700">
+              <div className="flex items-center gap-1.5 text-[0.8125rem] font-bold text-shu-700">
                 <ShieldCheck size={15} />
                 デモ用：ログインユーザーの切替
               </div>
-              <p className="mt-0.5 text-[11px] leading-relaxed text-stone-600">部署・役職によって、表示される情報（原価など）や実行できる操作、承認できる段階が変わります。</p>
+              <p className="mt-0.5 text-[0.6875rem] leading-relaxed text-stone-600">部署・役職によって、表示される情報（原価など）や実行できる操作、承認できる段階が変わります。</p>
             </div>
             <div className="scroll-thin max-h-[440px] overflow-y-auto py-1">
               {users.map((u) => {
@@ -291,10 +302,10 @@ function UserSwitcher() {
                     <Avatar user={u} size={30} />
                     <span className="min-w-0 flex-1">
                       <span className="flex items-center gap-2">
-                        <span className="text-[13px] font-medium">{u.name}</span>
-                        <span className={cn("rounded px-1.5 text-[10px] leading-4", ROLES[u.role].color)}>{ROLES[u.role].label}</span>
+                        <span className="text-[0.8125rem] font-medium">{u.name}</span>
+                        <span className={cn("rounded-sm px-1.5 text-[0.625rem] leading-4", ROLES[u.role].color)}>{ROLES[u.role].label}</span>
                       </span>
-                      <span className="block truncate text-[11px] text-stone-500">
+                      <span className="block truncate text-[0.6875rem] text-stone-500">
                         {u.dept}
                         {u.title && `・${u.title}`}／{ROLE_PERMISSIONS[u.role].map((p) => PERMISSION_LABELS[p].label.replace(/の閲覧|・粗利/g, "")).join("・")}
                       </span>
@@ -308,6 +319,49 @@ function UserSwitcher() {
         )}
       </AnimatePresence>
     </div>
+  );
+}
+
+function ThemeButton() {
+  const setOpen = useThemeStore((s) => s.setPanelOpen);
+  return (
+    <button onClick={() => setOpen(true)} className="group relative flex h-9 w-9 items-center justify-center rounded-md text-stone-500 transition-colors hover:bg-stone-900/5 hover:text-ai-700" aria-label="表示デザインの設定" title="表示デザインの設定（配色・フォント）">
+      <Palette size={18} className="transition-transform duration-300 group-hover:rotate-[-14deg] group-hover:scale-110" />
+    </button>
+  );
+}
+
+/** ページ上部のスクロール進捗バー */
+function ScrollProgress() {
+  const { scrollYProgress } = useScroll();
+  const scaleX = useSpring(scrollYProgress, { stiffness: 200, damping: 30, mass: 0.3 });
+  return <motion.div className="fixed inset-x-0 top-0 z-40 h-[2px] origin-left bg-gradient-to-r from-shu-500 via-shu-400 to-ai-500" style={{ scaleX }} />;
+}
+
+function BackToTop() {
+  const [show, setShow] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setShow(window.scrollY > 600);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+  return (
+    <AnimatePresence>
+      {show && (
+        <motion.button
+          initial={{ opacity: 0, y: 12, scale: 0.9 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          exit={{ opacity: 0, y: 12, scale: 0.9 }}
+          whileHover={{ y: -2 }}
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="no-print fixed bottom-6 right-6 z-30 flex h-10 w-10 items-center justify-center rounded-full bg-ai-700 text-white shadow-lg shadow-ai-900/20 transition-colors hover:bg-ai-800"
+          aria-label="ページの先頭へ"
+        >
+          <ArrowUp size={18} />
+        </motion.button>
+      )}
+    </AnimatePresence>
   );
 }
 
@@ -343,7 +397,7 @@ export function AppShell({ children }: { children: ReactNode }) {
             <motion.div className="absolute inset-0 bg-ai-950/50" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onClick={() => setDrawer(false)} />
             <motion.div className="absolute inset-y-0 left-0 w-64" initial={{ x: -260 }} animate={{ x: 0 }} exit={{ x: -260 }} transition={{ type: "spring", damping: 30, stiffness: 300 }}>
               <Sidebar onNavigate={() => setDrawer(false)} />
-              <button onClick={() => setDrawer(false)} className="absolute right-2 top-3 rounded p-1 text-ai-200 hover:bg-white/10" aria-label="閉じる">
+              <button onClick={() => setDrawer(false)} className="absolute right-2 top-3 rounded-sm p-1 text-sidebar-muted hover:bg-sidebar-hover" aria-label="閉じる">
                 <X size={18} />
               </button>
             </motion.div>
@@ -358,16 +412,17 @@ export function AppShell({ children }: { children: ReactNode }) {
           </button>
           <button
             onClick={() => setPalette(true)}
-            className="group flex h-9 min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border border-stone-300/80 bg-white px-3 text-left text-[13px] text-stone-400 shadow-sm transition-all hover:border-ai-300 hover:shadow"
+            className="group flex h-9 min-w-0 flex-1 max-w-md items-center gap-2 rounded-lg border border-stone-300/80 bg-surface px-3 text-left text-[0.8125rem] text-stone-400 shadow-sm transition-all hover:border-ai-300 hover:shadow"
           >
             <Search size={15} className="text-stone-400 group-hover:text-ai-600" />
             <span className="flex-1 truncate">取引番号・工事番号・製造番号・顧客名で検索…</span>
-            <kbd className="hidden rounded border border-stone-200 bg-stone-50 px-1.5 font-sans text-[10px] text-stone-500 sm:inline">Ctrl + K</kbd>
+            <kbd className="hidden rounded-sm border border-stone-200 bg-stone-50 px-1.5 font-sans text-[0.625rem] text-stone-500 sm:inline">Ctrl + K</kbd>
           </button>
           <div className="ml-auto flex shrink-0 items-center gap-1.5">
             <Button variant="accent" size="sm" icon={<Plus size={15} />} onClick={() => router.push("/cases/new")} className="hidden sm:inline-flex">
               新規引合
             </Button>
+            <ThemeButton />
             <Notifications />
             <div className="mx-1 hidden h-6 w-px bg-stone-300 sm:block" />
             <UserSwitcher />
@@ -380,6 +435,9 @@ export function AppShell({ children }: { children: ReactNode }) {
         </main>
       </div>
       <CommandPalette open={palette} onClose={() => setPalette(false)} />
+      <ThemePanel />
+      <ScrollProgress />
+      <BackToTop />
     </div>
   );
 }

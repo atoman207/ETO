@@ -104,13 +104,13 @@ export default function ServiceDetailPage() {
                     <motion.span
                       initial={false}
                       animate={{ scale: cur ? 1.1 : 1 }}
-                      className={cn("flex h-7 w-7 items-center justify-center rounded-full border-2 text-xs font-bold", done ? "border-ai-600 bg-ai-600 text-white" : cur ? "border-shu-500 bg-shu-500 text-white" : "border-stone-300 bg-white text-stone-400")}
+                      className={cn("flex h-7 w-7 items-center justify-center rounded-full border-2 text-xs font-bold", done ? "border-ai-600 bg-ai-600 text-white" : cur ? "border-shu-500 bg-shu-500 text-white" : "border-stone-300 bg-surface text-stone-400")}
                     >
                       {done ? <Check size={13} strokeWidth={3} /> : i + 1}
                     </motion.span>
-                    <span className={cn("text-[13px]", cur ? "font-bold text-shu-700" : done ? "text-ai-800" : "text-stone-400")}>{SERVICE_STATUS[st].label}</span>
+                    <span className={cn("text-[0.8125rem]", cur ? "font-bold text-shu-700" : done ? "text-ai-800" : "text-stone-400")}>{SERVICE_STATUS[st].label}</span>
                   </button>
-                  {i < FLOW.length - 1 && <div className={cn("mx-3 h-[2px] flex-1 rounded", i < curIdx || s.status === "done" ? "bg-ai-600" : "bg-stone-200")} />}
+                  {i < FLOW.length - 1 && <div className={cn("mx-3 h-[2px] flex-1 rounded-sm", i < curIdx || s.status === "done" ? "bg-ai-600" : "bg-stone-200")} />}
                 </div>
               );
             })}
@@ -185,7 +185,7 @@ export default function ServiceDetailPage() {
                   {f.parts.map((p) => (
                     <tr key={p.id}>
                       <td className="font-num text-xs">{p.partNo}</td>
-                      <td className="text-[13px]">{p.name}</td>
+                      <td className="text-[0.8125rem]">{p.name}</td>
                       <td><NumberInput compact value={p.qty} disabled={!canEdit} onChange={(v) => setF({ ...f, parts: f.parts.map((x) => (x.id === p.id ? { ...x, qty: v } : x)) })} /></td>
                       <td><NumberInput compact value={p.unitPrice} disabled={!canEdit} onChange={(v) => setF({ ...f, parts: f.parts.map((x) => (x.id === p.id ? { ...x, unitPrice: v } : x)) })} /></td>
                       <td className="font-num text-right text-xs">{yen(p.qty * p.unitPrice)}</td>
@@ -265,10 +265,10 @@ export default function ServiceDetailPage() {
             <Card>
               <CardHeader title="対象装置" icon={<Cpu size={16} />} />
               <Link href={`/equipment/${eq.id}`} className="block px-5 py-3 transition-colors hover:bg-stone-50">
-                <div className="font-num text-[13px] font-bold text-emerald-700">{eq.serialNo}</div>
-                <div className="text-[13px] font-medium">{eq.name}</div>
-                <div className="text-[11px] text-stone-500">{lk.customer.get(eq.customerId)?.name}／{eq.location}</div>
-                <div className="mt-1 text-[11px] text-stone-500">
+                <div className="font-num text-[0.8125rem] font-bold text-emerald-700">{eq.serialNo}</div>
+                <div className="text-[0.8125rem] font-medium">{eq.name}</div>
+                <div className="text-[0.6875rem] text-stone-500">{lk.customer.get(eq.customerId)?.name}／{eq.location}</div>
+                <div className="mt-1 text-[0.6875rem] text-stone-500">
                   納入 {fmtDate(eq.deliveredDate, false)}／保証 {fmtDate(eq.warrantyUntil, false)}
                   {eq.warrantyUntil >= s.reportedDate ? <Badge className="ml-1 bg-emerald-50 text-emerald-700 ring-emerald-200">保証内</Badge> : <Badge className="ml-1">保証外</Badge>}
                 </div>
@@ -287,8 +287,8 @@ export default function ServiceDetailPage() {
               <CardBody>
                 {s.linkedCaseId ? (
                   <>
-                    <div className="text-[13px] font-bold text-violet-800">案件化済み</div>
-                    <Link href={`/cases/${s.linkedCaseId}`} className="mt-1 flex items-center justify-between rounded-md bg-violet-50 px-3 py-2 text-[13px] text-violet-800 hover:bg-violet-100">
+                    <div className="text-[0.8125rem] font-bold text-violet-800">案件化済み</div>
+                    <Link href={`/cases/${s.linkedCaseId}`} className="mt-1 flex items-center justify-between rounded-md bg-violet-50 px-3 py-2 text-[0.8125rem] text-violet-800 hover:bg-violet-100">
                       <span>
                         <span className="font-num mr-1.5 text-xs font-bold">{lk.case.get(s.linkedCaseId)?.dealNo}</span>
                         {lk.case.get(s.linkedCaseId)?.title}
@@ -298,7 +298,7 @@ export default function ServiceDetailPage() {
                   </>
                 ) : (
                   <>
-                    <div className="text-[13px] font-bold text-stone-800">改造・更新の案件として登録</div>
+                    <div className="text-[0.8125rem] font-bold text-stone-800">改造・更新の案件として登録</div>
                     <p className="mt-1 text-xs leading-relaxed text-stone-500">装置の仕様・元案件・顧客情報を引き継いで引合を登録します。営業への引継ぎ漏れを防ぎます。</p>
                     <Button
                       variant="accent"

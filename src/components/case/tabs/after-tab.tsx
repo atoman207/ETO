@@ -51,14 +51,14 @@ export function AfterTab({ c }: CaseTabProps) {
                 return (
                   <Link key={e.id} href={`/equipment/${e.id}`} className="rounded-lg border border-stone-200 p-4 transition-all hover:-translate-y-0.5 hover:border-emerald-300 hover:shadow-[var(--shadow-lift)]">
                     <div className="flex items-center justify-between">
-                      <span className="font-num text-[13px] font-bold text-emerald-700">{e.serialNo}</span>
+                      <span className="font-num text-[0.8125rem] font-bold text-emerald-700">{e.serialNo}</span>
                       <Badge className={EQUIPMENT_STATUS[e.status].color} dot={EQUIPMENT_STATUS[e.status].dot}>
                         {EQUIPMENT_STATUS[e.status].label}
                       </Badge>
                     </div>
-                    <div className="mt-1 text-[13px] font-medium">{e.name}</div>
+                    <div className="mt-1 text-[0.8125rem] font-medium">{e.name}</div>
                     <div className="text-xs text-stone-500">{e.location}</div>
-                    <div className="mt-2 flex justify-between text-[11px] text-stone-500">
+                    <div className="mt-2 flex justify-between text-[0.6875rem] text-stone-500">
                       <span>納入 {fmtDate(e.deliveredDate, false)}</span>
                       <span className={left > 0 ? "text-emerald-700" : ""}>{left > 0 ? `保証残 ${left}日` : "保証期間終了"}</span>
                     </div>
@@ -78,9 +78,9 @@ export function AfterTab({ c }: CaseTabProps) {
           <Card className="border-violet-200">
             <CardHeader title="改造・更新元の装置" description="既設装置の履歴を参照しながら仕様を検討できます" />
             <Link href={`/equipment/${src.id}`} className="block border-b border-stone-100 px-5 py-3 hover:bg-stone-50">
-              <div className="font-num text-[12px] font-bold text-violet-700">{src.serialNo}</div>
-              <div className="text-[13px] font-medium">{src.name}</div>
-              <div className="text-[11px] text-stone-500">納入 {fmtDate(src.deliveredDate, false)}／{src.location}</div>
+              <div className="font-num text-[0.75rem] font-bold text-violet-700">{src.serialNo}</div>
+              <div className="text-[0.8125rem] font-medium">{src.name}</div>
+              <div className="text-[0.6875rem] text-stone-500">納入 {fmtDate(src.deliveredDate, false)}／{src.location}</div>
             </Link>
             <ServiceTimeline services={srcSvcs} />
           </Card>

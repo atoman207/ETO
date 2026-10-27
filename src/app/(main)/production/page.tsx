@@ -46,15 +46,15 @@ export default function ProductionPage() {
   return (
     <div>
       <PageHeader title="製造進捗（全工番）" description="工事番号ごとの工程計画と進捗を一覧します。バーにカーソルを合わせると工程の詳細を表示します" icon={<Factory size={20} />} breadcrumbs={[{ label: "ホーム", href: "/" }, { label: "製造進捗" }]} />
-      <div className="mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="stagger mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {[
           { label: "進行中の工番", value: `${list.length}件` },
           { label: "平均進捗", value: `${avg}%` },
           { label: "30日以内に納期", value: `${thisMonth.length}件`, warn: thisMonth.length > 0 },
           { label: "遅延工程あり", value: `${delayed.length}件`, danger: delayed.length > 0 },
         ].map((x) => (
-          <div key={x.label} className={cn("rounded-lg border bg-white px-4 py-3 shadow-[var(--shadow-card)]", x.danger ? "border-rose-300" : x.warn ? "border-amber-300" : "border-stone-200")}>
-            <div className="text-[11px] text-stone-500">{x.label}</div>
+          <div key={x.label} className={cn("rounded-lg border bg-surface px-4 py-3 shadow-[var(--shadow-card)]", x.danger ? "border-rose-300" : x.warn ? "border-amber-300" : "border-stone-200")}>
+            <div className="text-[0.6875rem] text-stone-500">{x.label}</div>
             <div className={cn("font-num text-xl font-bold", x.danger && "text-rose-600")}>{x.value}</div>
           </div>
         ))}
@@ -63,7 +63,7 @@ export default function ProductionPage() {
         <CardHeader
           title="工番別 工程計画（前後5ヶ月）"
           actions={
-            <div className="flex flex-wrap gap-3 text-[11px] text-stone-600">
+            <div className="flex flex-wrap gap-3 text-[0.6875rem] text-stone-600">
               {(Object.keys(PROCESS_STATUS) as (keyof typeof PROCESS_STATUS)[]).map((k) => (
                 <span key={k} className="flex items-center gap-1">
                   <span className={cn("h-2.5 w-2.5 rounded-sm", PROCESS_STATUS[k].bar)} />
@@ -75,7 +75,7 @@ export default function ProductionPage() {
         />
         <div className="scroll-thin overflow-x-auto">
           <div className="min-w-[1100px]">
-            <div className="grid grid-cols-[320px_1fr] border-b border-stone-200 bg-stone-50 text-[11px] text-stone-500">
+            <div className="grid grid-cols-[320px_1fr] border-b border-stone-200 bg-stone-50 text-[0.6875rem] text-stone-500">
               <div className="px-4 py-2">工番・案件</div>
               <div className="relative">
                 {months.map((m) => (
@@ -96,8 +96,8 @@ export default function ProductionPage() {
                         <StageBadge stage={c.stage} />
                         {isDelayed && <AlertTriangle size={13} className="text-rose-500" />}
                       </div>
-                      <div className="truncate text-[13px] font-medium">{c.title}</div>
-                      <div className="flex items-center gap-2 text-[11px] text-stone-500">
+                      <div className="truncate text-[0.8125rem] font-medium">{c.title}</div>
+                      <div className="flex items-center gap-2 text-[0.6875rem] text-stone-500">
                         <span className="truncate">{lk.customer.get(c.customerId)?.name}</span>
                         <span className="shrink-0">進捗 <span className="font-num font-bold text-stone-700">{prog}%</span></span>
                       </div>
@@ -114,7 +114,7 @@ export default function ProductionPage() {
                           <motion.div
                             key={p.id}
                             title={`${p.name}：${fmtDate(p.startDate, false)}〜${fmtDate(p.endDate, false)}（${PROCESS_STATUS[p.status].label} ${p.progress}%）`}
-                            className={cn("absolute h-full rounded-[3px] border border-white", PROCESS_STATUS[p.status].bar, p.status === "todo" && "opacity-70")}
+                            className={cn("absolute h-full rounded-[3px] border border-surface", PROCESS_STATUS[p.status].bar, p.status === "todo" && "opacity-70", p.status === "doing" && "bar-stripes")}
                             style={{ left: `${l}%` }}
                             initial={{ width: 0 }}
                             animate={{ width: `${w}%` }}
@@ -124,8 +124,8 @@ export default function ProductionPage() {
                       })}
                     </div>
                     {c.order && (
-                      <span className="absolute top-[38px] -translate-x-1/2 whitespace-nowrap text-[10px]" style={{ left: `${pos(c.order.deliveryDate)}%` }}>
-                        <span className="rounded bg-ai-800 px-1 text-white">納期</span>
+                      <span className="absolute top-[38px] -translate-x-1/2 whitespace-nowrap text-[0.625rem]" style={{ left: `${pos(c.order.deliveryDate)}%` }}>
+                        <span className="rounded-sm bg-ai-800 px-1 text-white">納期</span>
                         <span className="ml-1"><DueLabel date={c.order.deliveryDate} /></span>
                       </span>
                     )}

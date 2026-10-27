@@ -5,7 +5,7 @@ import type { InputHTMLAttributes, ReactNode, SelectHTMLAttributes, TextareaHTML
 import { cn } from "@/lib/format";
 
 const base =
-  "w-full rounded-md border border-stone-300 bg-white px-3 text-sm text-stone-800 placeholder:text-stone-400 transition-[border-color,box-shadow] duration-150 hover:border-stone-400 focus:border-ai-500 focus:outline-none focus:ring-3 focus:ring-ai-500/15 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
+  "w-full rounded-md border border-stone-300 bg-surface px-3 text-sm text-stone-800 placeholder:text-stone-400 transition-[border-color,box-shadow] duration-150 hover:border-stone-400 focus:border-ai-500 focus:outline-none focus:ring-3 focus:ring-ai-500/15 disabled:cursor-not-allowed disabled:bg-stone-50 disabled:text-stone-500";
 
 export function Field({
   label,
@@ -26,10 +26,10 @@ export function Field({
     <label className={cn("block", className)}>
       <span className="mb-1 flex items-center gap-1.5 text-xs font-medium text-stone-600">
         {label}
-        {required && <span className="rounded-sm bg-rose-600 px-1 text-[10px] leading-4 text-white">必須</span>}
+        {required && <span className="rounded-sm bg-rose-600 px-1 text-[0.625rem] leading-4 text-white">必須</span>}
       </span>
       {children}
-      {error ? <span className="mt-1 block text-xs text-rose-600">{error}</span> : hint ? <span className="mt-1 block text-[11px] text-stone-500">{hint}</span> : null}
+      {error ? <span className="mt-1 block text-xs text-rose-600">{error}</span> : hint ? <span className="mt-1 block text-[0.6875rem] text-stone-500">{hint}</span> : null}
     </label>
   );
 }
@@ -122,7 +122,7 @@ export function Checkbox({ checked, onChange, label, disabled }: { checked: bool
     <label className={cn("inline-flex cursor-pointer select-none items-center gap-2 text-sm", disabled && "cursor-not-allowed opacity-60")}>
       <input
         type="checkbox"
-        className="h-4 w-4 cursor-pointer rounded border-stone-300 accent-ai-700"
+        className="h-4 w-4 cursor-pointer rounded-sm border-stone-300 accent-ai-700"
         checked={checked}
         disabled={disabled}
         onChange={(e) => onChange(e.target.checked)}
@@ -151,9 +151,9 @@ export function SegmentedControl<T extends string>({
           type="button"
           onClick={() => onChange(o.value)}
           className={cn(
-            "inline-flex items-center gap-1.5 rounded px-3 font-medium transition-all",
-            size === "sm" ? "h-7 text-xs" : "h-6 text-[11px]",
-            value === o.value ? "bg-white text-ai-800 shadow-sm" : "text-stone-500 hover:text-stone-800",
+            "inline-flex items-center gap-1.5 rounded-sm px-3 font-medium transition-all",
+            size === "sm" ? "h-7 text-xs" : "h-6 text-[0.6875rem]",
+            value === o.value ? "bg-surface text-ai-800 shadow-sm" : "text-stone-500 hover:text-stone-800",
           )}
         >
           {o.label}

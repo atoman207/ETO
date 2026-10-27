@@ -353,8 +353,8 @@ function NewCaseInner() {
             <div className="flex items-center gap-2 border-b border-stone-100 bg-gradient-to-r from-ai-800 to-ai-700 px-4 py-3 text-white">
               <Lightbulb size={16} className="text-shu-300" />
               <div>
-                <div className="text-[13px] font-bold">類似の過去案件</div>
-                <div className="text-[10px] text-ai-200">装置種別・能力・寸法・材質・環境・業種から自動判定</div>
+                <div className="text-[0.8125rem] font-bold">類似の過去案件</div>
+                <div className="text-[0.625rem] text-ai-200">装置種別・能力・寸法・材質・環境・業種から自動判定</div>
               </div>
             </div>
             <div>
@@ -368,25 +368,25 @@ function NewCaseInner() {
                     <motion.div key={c.id} layout initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0 }} className="border-b border-stone-100 px-4 py-3 last:border-0">
                       <div className="flex items-start justify-between gap-2">
                         <div className="min-w-0">
-                          <div className="font-num text-[11px] font-semibold text-shu-600">{c.workNo}</div>
-                          <Link href={`/cases/${c.id}`} target="_blank" className="block text-[13px] font-medium leading-snug text-stone-800 hover:text-ai-700 hover:underline">
+                          <div className="font-num text-[0.6875rem] font-semibold text-shu-600">{c.workNo}</div>
+                          <Link href={`/cases/${c.id}`} target="_blank" className="block text-[0.8125rem] font-medium leading-snug text-stone-800 hover:text-ai-700 hover:underline">
                             {c.title}
                           </Link>
-                          <div className="truncate text-[11px] text-stone-500">{lk.customer.get(c.customerId)?.name}</div>
+                          <div className="truncate text-[0.6875rem] text-stone-500">{lk.customer.get(c.customerId)?.name}</div>
                         </div>
                         <div className="shrink-0 text-right">
                           <div className="font-num text-lg font-bold leading-none text-ai-700">{score}</div>
-                          <div className="text-[9px] text-stone-400">類似度</div>
+                          <div className="text-[0.5625rem] text-stone-400">類似度</div>
                         </div>
                       </div>
                       <div className="mt-1.5 flex flex-wrap gap-1">
                         {reasons.slice(0, 3).map((r) => (
-                          <span key={r} className="rounded bg-ai-50 px-1.5 text-[10px] text-ai-700">
+                          <span key={r} className="rounded-sm bg-ai-50 px-1.5 text-[0.625rem] text-ai-700">
                             {r}
                           </span>
                         ))}
                       </div>
-                      <div className="mt-1.5 grid grid-cols-2 gap-1 text-[11px]">
+                      <div className="mt-1.5 grid grid-cols-2 gap-1 text-[0.6875rem]">
                         <span className="text-stone-500">
                           能力 <span className="font-num text-stone-700">{c.specs.capacity.toLocaleString()}{c.specs.capacityUnit}</span>
                         </span>
@@ -435,7 +435,7 @@ function NewCaseInner() {
                 <div className="font-num text-xl font-bold text-stone-900">
                   {manYen(estimate.min)} 〜 {manYen(estimate.max)}
                 </div>
-                <p className="mt-1 text-[11px] leading-relaxed text-stone-500">
+                <p className="mt-1 text-[0.6875rem] leading-relaxed text-stone-500">
                   類似 {estimate.n} 件の受注金額を、処理能力比（0.6乗則）で補正した参考値です。
                   {canCost && <>平均粗利率は {pct(estimate.margin)} です。</>}
                 </p>
@@ -452,8 +452,8 @@ function NewCaseInner() {
                     const c = lk.case.get(id);
                     if (!c) return null;
                     return (
-                      <div key={id} className="flex items-center gap-2 rounded bg-stone-50 px-2 py-1.5 text-xs">
-                        <Badge className="bg-white text-shu-700 ring-shu-200">{c.workNo ?? c.dealNo}</Badge>
+                      <div key={id} className="flex items-center gap-2 rounded-sm bg-stone-50 px-2 py-1.5 text-xs">
+                        <Badge className="bg-surface text-shu-700 ring-shu-200">{c.workNo ?? c.dealNo}</Badge>
                         <span className="min-w-0 flex-1 truncate">{c.title}</span>
                         <button onClick={() => setRefs((r) => r.filter((x) => x !== id))} className="text-stone-400 hover:text-stone-700" aria-label="削除">
                           <X size={13} />
@@ -462,7 +462,7 @@ function NewCaseInner() {
                     );
                   })}
                 </div>
-                <p className="mt-2 text-[11px] text-stone-500">参考案件は、原価確認・BOM流用の候補として案件詳細に表示されます。</p>
+                <p className="mt-2 text-[0.6875rem] text-stone-500">参考案件は、原価確認・BOM流用の候補として案件詳細に表示されます。</p>
               </CardBody>
             </Card>
           )}

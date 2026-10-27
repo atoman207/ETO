@@ -30,16 +30,16 @@ export function StageStepper({ stage, status }: { stage: Stage; status: CaseStat
                 animate={{ scale: 1, opacity: 1 }}
                 transition={{ delay: i * 0.04 }}
                 className={cn(
-                  "relative flex h-[29px] w-[29px] items-center justify-center rounded-full border-2 text-[11px] font-bold transition-colors",
+                  "relative flex h-[29px] w-[29px] items-center justify-center rounded-full border-2 text-[0.6875rem] font-bold transition-colors",
                   done && (muted ? "border-stone-400 bg-stone-400 text-white" : "border-ai-600 bg-ai-600 text-white"),
-                  current && (muted ? "border-stone-500 bg-white text-stone-600" : "border-shu-500 bg-shu-500 text-white"),
-                  !done && !current && "border-stone-300 bg-white text-stone-400",
+                  current && (muted ? "border-stone-500 bg-surface text-stone-600" : "border-shu-500 bg-shu-500 text-white"),
+                  !done && !current && "border-stone-300 bg-surface text-stone-400",
                 )}
               >
                 {done ? <Check size={14} strokeWidth={3} /> : i + 1}
                 {current && !muted && <span className="absolute inset-[-5px] animate-ping rounded-full border-2 border-shu-400 opacity-40" style={{ animationDuration: "2s" }} />}
               </motion.div>
-              <span className={cn("mt-1.5 whitespace-nowrap text-[11px]", current ? "font-bold text-shu-700" : done ? "text-ai-800" : "text-stone-400")}>{s.label}</span>
+              <span className={cn("mt-1.5 whitespace-nowrap text-[0.6875rem]", current ? "font-bold text-shu-700" : done ? "text-ai-800" : "text-stone-400")}>{s.label}</span>
             </div>
           );
         })}

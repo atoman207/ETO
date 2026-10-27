@@ -30,7 +30,7 @@ export function PurchaseTab({ c, goTab }: CaseTabProps) {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="stagger grid grid-cols-2 gap-3 lg:grid-cols-4">
         <Stat label="発注書" value={`${active.length}件`} sub={`取消 ${list.length - active.length}件`} />
         <Stat label="発注金額合計" value={showCost ? yen(total) : "＊＊＊"} />
         <Stat label="入荷状況" value={`${received} / ${active.length}`} bar={active.length ? (received / active.length) * 100 : 0} />
@@ -39,7 +39,7 @@ export function PurchaseTab({ c, goTab }: CaseTabProps) {
 
       {pending > 0 && (canPurchase || canBom) && (
         <div className="flex flex-wrap items-center justify-between gap-3 rounded-lg border border-amber-200 bg-amber-50 px-4 py-3">
-          <span className="text-[13px] text-amber-900">BOMに未手配の購入品が {pending}点 あります。仕入先ごとに購買依頼を一括作成できます。</span>
+          <span className="text-[0.8125rem] text-amber-900">BOMに未手配の購入品が {pending}点 あります。仕入先ごとに購買依頼を一括作成できます。</span>
           <Button
             variant="accent"
             size="sm"
@@ -72,11 +72,11 @@ export function PurchaseTab({ c, goTab }: CaseTabProps) {
 
 function Stat({ label, value, sub, warn, bar }: { label: string; value: string; sub?: string; warn?: boolean; bar?: number }) {
   return (
-    <div className={cn("rounded-lg border bg-white px-4 py-3 shadow-[var(--shadow-card)]", warn ? "border-amber-300" : "border-stone-200")}>
-      <div className="text-[11px] text-stone-500">{label}</div>
+    <div className={cn("rounded-lg border bg-surface px-4 py-3 shadow-[var(--shadow-card)]", warn ? "border-amber-300" : "border-stone-200")}>
+      <div className="text-[0.6875rem] text-stone-500">{label}</div>
       <div className="font-num text-lg font-bold">{value}</div>
       {bar !== undefined && <ProgressBar value={bar} className="mt-1" color="bg-emerald-500" height={5} />}
-      {sub && <div className={cn("text-[10px]", warn ? "text-amber-700" : "text-stone-500")}>{sub}</div>}
+      {sub && <div className={cn("text-[0.625rem]", warn ? "text-amber-700" : "text-stone-500")}>{sub}</div>}
     </div>
   );
 }
@@ -101,9 +101,9 @@ export function POCard({ po, index = 0, showCase }: { po: PurchaseOrder; index?:
             <ChevronDown size={16} className={cn("shrink-0 text-stone-400 transition-transform", !open && "-rotate-90")} />
             <div className="min-w-0">
               <div className="flex items-center gap-2">
-                <span className="font-num text-[13px] font-bold">{po.poNo}</span>
+                <span className="font-num text-[0.8125rem] font-bold">{po.poNo}</span>
                 <Badge className={PO_STATUS[po.status].color}>{PO_STATUS[po.status].label}</Badge>
-                {showCase && c && <span className="font-num text-[11px] font-semibold text-shu-600">{c.workNo}</span>}
+                {showCase && c && <span className="font-num text-[0.6875rem] font-semibold text-shu-600">{c.workNo}</span>}
               </div>
               <div className="truncate text-xs text-stone-600">
                 {sup?.name}
@@ -119,8 +119,8 @@ export function POCard({ po, index = 0, showCase }: { po: PurchaseOrder; index?:
             </div>
           </div>
           <div className="w-28 text-right">
-            <div className="text-[10px] text-stone-500">{po.lines.length}品目</div>
-            <div className="font-num text-[13px] font-bold">{showCost ? yen(amount) : "＊＊＊"}</div>
+            <div className="text-[0.625rem] text-stone-500">{po.lines.length}品目</div>
+            <div className="font-num text-[0.8125rem] font-bold">{showCost ? yen(amount) : "＊＊＊"}</div>
           </div>
           {canPurchase && !done && (
             <div className="flex gap-1.5">
@@ -170,7 +170,7 @@ export function POCard({ po, index = 0, showCase }: { po: PurchaseOrder; index?:
                   {po.lines.map((l) => (
                     <tr key={l.id}>
                       <td className="font-num text-xs">{l.partNo}</td>
-                      <td className="text-[13px]">{l.name}</td>
+                      <td className="text-[0.8125rem]">{l.name}</td>
                       <td className="text-xs text-stone-500">{l.spec}</td>
                       <td className="font-num text-right text-xs">
                         {l.qty} {l.unit}

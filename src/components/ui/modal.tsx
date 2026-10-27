@@ -59,7 +59,7 @@ export function Modal({
           <motion.div
             role="dialog"
             aria-modal="true"
-            className={cn("relative w-full rounded-xl bg-white shadow-2xl shadow-ai-950/20 ring-1 ring-stone-200", widths[size])}
+            className={cn("relative w-full rounded-xl bg-surface shadow-2xl shadow-ai-950/20 ring-1 ring-stone-200", widths[size])}
             initial={{ opacity: 0, y: 16, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 8, scale: 0.98 }}
@@ -68,7 +68,7 @@ export function Modal({
             <div className="flex items-start gap-3 border-b border-stone-100 px-6 py-4">
               {icon && <div className="mt-0.5 flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-ai-50 text-ai-700">{icon}</div>}
               <div className="min-w-0 flex-1">
-                <h2 className="text-base font-bold text-stone-800">{title}</h2>
+                <h2 className="font-heading text-base font-bold text-stone-800">{title}</h2>
                 {description && <p className="mt-0.5 text-xs leading-relaxed text-stone-500">{description}</p>}
               </div>
               <button onClick={onClose} className="-mr-2 rounded-md p-1.5 text-stone-400 transition-colors hover:bg-stone-100 hover:text-stone-700" aria-label="閉じる">

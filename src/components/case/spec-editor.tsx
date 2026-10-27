@@ -74,7 +74,7 @@ export function SpecEditor({ value, onChange, disabled }: { value: Spec; onChang
                 onClick={() => set("options", on ? value.options.filter((x) => x !== o) : [...value.options, o])}
                 className={cn(
                   "rounded-full px-3 py-1 text-xs ring-1 ring-inset transition-all",
-                  on ? "bg-ai-700 text-white ring-ai-700" : "bg-white text-stone-600 ring-stone-300 hover:ring-ai-400",
+                  on ? "bg-ai-700 text-white ring-ai-700" : "bg-surface text-stone-600 ring-stone-300 hover:ring-ai-400",
                   disabled && "cursor-default opacity-80",
                 )}
               >

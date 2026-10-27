@@ -69,7 +69,7 @@ export function SpecTab({ c }: CaseTabProps) {
               <DL
                 cols={4}
                 items={[
-                  { label: "処理能力", value: <span className="font-num text-[15px] font-bold">{num(s.capacity)} {s.capacityUnit}</span> },
+                  { label: "処理能力", value: <span className="font-num text-[0.9375rem] font-bold">{num(s.capacity)} {s.capacityUnit}</span> },
                   { label: "外形寸法（W×D×H）", value: <span className="font-num">{num(s.width)} × {num(s.depth)} × {num(s.height)} mm</span> },
                   { label: "主要材質", value: s.material },
                   { label: "制御方式", value: s.control },
@@ -79,7 +79,7 @@ export function SpecTab({ c }: CaseTabProps) {
                 ]}
               />
               <div>
-                <div className="mb-1.5 text-[11px] font-medium text-stone-500">オプション</div>
+                <div className="mb-1.5 text-[0.6875rem] font-medium text-stone-500">オプション</div>
                 <div className="flex flex-wrap gap-1.5">
                   {s.options.length === 0 && <span className="text-xs text-stone-400">なし</span>}
                   {s.options.map((o) => (
@@ -88,11 +88,11 @@ export function SpecTab({ c }: CaseTabProps) {
                 </div>
               </div>
               <div>
-                <div className="mb-1.5 text-[11px] font-medium text-stone-500">個別仕様項目</div>
+                <div className="mb-1.5 text-[0.6875rem] font-medium text-stone-500">個別仕様項目</div>
                 {s.customFields.length === 0 ? (
                   <span className="text-xs text-stone-400">なし</span>
                 ) : (
-                  <table className="w-full overflow-hidden rounded border border-stone-200 text-[13px]">
+                  <table className="w-full overflow-hidden rounded-sm border border-stone-200 text-[0.8125rem]">
                     <tbody>
                       {s.customFields.map((f, i) => (
                         <tr key={i} className="border-b border-stone-100 last:border-0">
@@ -106,8 +106,8 @@ export function SpecTab({ c }: CaseTabProps) {
               </div>
               {s.notes && (
                 <div>
-                  <div className="mb-1 text-[11px] font-medium text-stone-500">特記事項</div>
-                  <p className="whitespace-pre-wrap text-[13px]">{s.notes}</p>
+                  <div className="mb-1 text-[0.6875rem] font-medium text-stone-500">特記事項</div>
+                  <p className="whitespace-pre-wrap text-[0.8125rem]">{s.notes}</p>
                 </div>
               )}
             </div>
@@ -117,7 +117,7 @@ export function SpecTab({ c }: CaseTabProps) {
       <div className="space-y-4">
         <Card>
           <CardHeader title="仕様データの活用" />
-          <CardBody className="space-y-3 text-[13px] leading-relaxed text-stone-600">
+          <CardBody className="space-y-3 text-[0.8125rem] leading-relaxed text-stone-600">
             <p>ここで登録した仕様は構造化データとして保存され、以下に自動連携されます。</p>
             <ul className="space-y-1.5 text-xs">
               {["見積書の明細（処理能力・制御方式）", "仕様書・社内注文書（工事指示書）の印刷", "装置台帳（納品時に仕様をスナップショット保存）", "類似案件検索（能力・寸法・材質・環境で類似度判定）"].map((t) => (

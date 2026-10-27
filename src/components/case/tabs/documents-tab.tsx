@@ -40,7 +40,7 @@ export function DocumentsTab({ c }: CaseTabProps) {
         </Card>
         <Card>
           <CardHeader title="フォルダの共有設定" icon={<ShieldCheck size={16} />} />
-          <CardBody className="space-y-2 text-[13px]">
+          <CardBody className="space-y-2 text-[0.8125rem]">
             {[
               ["営業部（案件担当）", "編集者"],
               ["設計部", "編集者"],
@@ -54,7 +54,7 @@ export function DocumentsTab({ c }: CaseTabProps) {
                 <span className="text-right text-xs font-medium text-stone-800">{perm}</span>
               </div>
             ))}
-            <p className="border-t border-stone-100 pt-2 text-[11px] leading-relaxed text-stone-500">ステージの進行に合わせて、Drive API により権限を自動付与します。原価計算書は「原価閲覧」権限を持つユーザーのみに共有されます。</p>
+            <p className="border-t border-stone-100 pt-2 text-[0.6875rem] leading-relaxed text-stone-500">ステージの進行に合わせて、Drive API により権限を自動付与します。原価計算書は「原価閲覧」権限を持つユーザーのみに共有されます。</p>
           </CardBody>
         </Card>
       </div>

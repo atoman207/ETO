@@ -111,7 +111,7 @@ function SearchInner() {
         breadcrumbs={[{ label: "ホーム", href: "/" }, { label: "類似案件・原価比較" }]}
       />
       {base && (
-        <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-ai-200 bg-ai-50 px-4 py-2.5 text-[13px] text-ai-900">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-lg border border-ai-200 bg-ai-50 px-4 py-2.5 text-[0.8125rem] text-ai-900">
           <span>
             <span className="font-num font-bold">{base.workNo ?? base.dealNo}</span>「{base.title}」の仕様で検索しています
           </span>
@@ -171,7 +171,7 @@ function SearchInner() {
                 {OPTION_PRESETS.map((o) => {
                   const on = cr.options.includes(o);
                   return (
-                    <button key={o} onClick={() => set("options", on ? cr.options.filter((x) => x !== o) : [...cr.options, o])} className={cn("rounded-full px-2 py-0.5 text-[11px] ring-1 ring-inset transition-colors", on ? "bg-ai-700 text-white ring-ai-700" : "bg-white text-stone-600 ring-stone-300 hover:ring-ai-400")}>
+                    <button key={o} onClick={() => set("options", on ? cr.options.filter((x) => x !== o) : [...cr.options, o])} className={cn("rounded-full px-2 py-0.5 text-[0.6875rem] ring-1 ring-inset transition-colors", on ? "bg-ai-700 text-white ring-ai-700" : "bg-surface text-stone-600 ring-stone-300 hover:ring-ai-400")}>
                       {o}
                     </button>
                   );
@@ -216,24 +216,24 @@ function SearchInner() {
                               <div className="h-2 w-20 overflow-hidden rounded-full bg-stone-200">
                                 <motion.div className={cn("h-full rounded-full", score >= 80 ? "bg-emerald-500" : score >= 60 ? "bg-ai-500" : "bg-stone-400")} initial={{ width: 0 }} animate={{ width: `${score}%` }} transition={{ duration: 0.6 }} />
                               </div>
-                              <span className="font-num text-[13px] font-bold">{score}</span>
+                              <span className="font-num text-[0.8125rem] font-bold">{score}</span>
                             </div>
-                            <div className="mt-0.5 line-clamp-1 text-[10px] text-stone-500">{reasons.slice(0, 2).join("・")}</div>
+                            <div className="mt-0.5 line-clamp-1 text-[0.625rem] text-stone-500">{reasons.slice(0, 2).join("・")}</div>
                           </td>
                           <td className="min-w-[220px]">
                             <div className="flex items-center gap-1.5">
-                              <span className="font-num text-[11px] font-semibold text-shu-600">{c.workNo ?? c.dealNo}</span>
+                              <span className="font-num text-[0.6875rem] font-semibold text-shu-600">{c.workNo ?? c.dealNo}</span>
                               {c.status === "lost" ? <Badge className="bg-stone-100 text-stone-500 ring-stone-300">失注</Badge> : <StageBadge stage={c.stage} />}
                             </div>
                             <Link href={`/cases/${c.id}`} className="font-medium hover:text-ai-700 hover:underline">{c.title}</Link>
-                            <div className="text-[11px] text-stone-500">{lk.customer.get(c.customerId)?.name}</div>
+                            <div className="text-[0.6875rem] text-stone-500">{lk.customer.get(c.customerId)?.name}</div>
                           </td>
                           <td className="text-xs text-stone-600">
                             <div>{EQUIPMENT_TYPES[c.equipmentType].label}　<span className="font-num font-medium text-stone-800">{num(c.specs.capacity)}{c.specs.capacityUnit}</span></div>
                             <div>{c.specs.material}／{c.specs.environment}</div>
                           </td>
-                          <td className="font-num text-right text-[13px]">{manYen(x.price)}</td>
-                          <td className={cn("font-num text-right text-[13px]", canCost && x.margin < 0.2 && "text-rose-600")}>{canCost ? pct(x.margin) : "＊＊＊"}</td>
+                          <td className="font-num text-right text-[0.8125rem]">{manYen(x.price)}</td>
+                          <td className={cn("font-num text-right text-[0.8125rem]", canCost && x.margin < 0.2 && "text-rose-600")}>{canCost ? pct(x.margin) : "＊＊＊"}</td>
                           <td className="font-num text-right text-xs">{x.lead !== undefined ? `${x.lead}日` : "—"}</td>
                           <td className="font-num text-right text-xs">{c.stage === "aftercare" ? `${x.repairs}件` : "—"}</td>
                         </motion.tr>
@@ -275,10 +275,10 @@ function CompareTable({ ids, baseId, info, canCost, canEdit, onRemove }: { ids: 
     { label: "材質", render: (c) => c.specs.material },
     { label: "制御", render: (c) => c.specs.control },
     { label: "設置環境", render: (c) => c.specs.environment },
-    { label: "オプション", render: (c) => <span className="text-[11px]">{c.specs.options.join("、") || "—"}</span> },
+    { label: "オプション", render: (c) => <span className="text-[0.6875rem]">{c.specs.options.join("、") || "—"}</span> },
     { group: "金額・原価", label: "受注金額", render: (c) => <span className="font-num font-bold">{yen(info(c).price)}</span> },
     { label: "能力あたり単価", render: (c) => <span className="font-num">{yen(info(c).perCap)}／{c.specs.capacityUnit}</span> },
-    { label: "原価（実績優先）", cost: true, render: (c) => <span className="font-num">{yen(info(c).costTotal)}<span className="ml-1 text-[10px] text-stone-400">{c.actualCost ? "実績" : "見積"}</span></span> },
+    { label: "原価（実績優先）", cost: true, render: (c) => <span className="font-num">{yen(info(c).costTotal)}<span className="ml-1 text-[0.625rem] text-stone-400">{c.actualCost ? "実績" : "見積"}</span></span> },
     { label: "粗利率", cost: true, render: (c) => <span className={cn("font-num font-bold", info(c).margin < 0.2 ? "text-rose-600" : "text-emerald-700")}>{pct(info(c).margin)}</span> },
     {
       label: "原価構成",
@@ -286,7 +286,7 @@ function CompareTable({ ids, baseId, info, canCost, canEdit, onRemove }: { ids: 
       render: (c) => {
         const x = info(c);
         return (
-          <div className="flex h-3 w-full gap-[2px] overflow-hidden rounded">
+          <div className="flex h-3 w-full gap-[2px] overflow-hidden rounded-sm">
             {COST_KEYS.map((k) => <div key={k} style={{ width: `${(x.cost[k] / (x.costTotal || 1)) * 100}%`, background: COST_COLORS[k] }} title={`${COST_LABELS[k]} ${yen(x.cost[k])}`} />)}
           </div>
         );
@@ -296,7 +296,7 @@ function CompareTable({ ids, baseId, info, canCost, canEdit, onRemove }: { ids: 
     { group: "実績", label: "リードタイム", render: (c) => (info(c).lead !== undefined ? `${info(c).lead}日` : "—") },
     { label: "BOM品目数", render: (c) => `${c.bom.length}行` },
     { label: "納入後サービス／修理", render: (c) => (c.stage === "aftercare" ? `${info(c).svc}件／${info(c).repairs}件` : "—") },
-    { label: "失注理由・メモ", render: (c) => <span className="text-[11px] text-stone-600">{c.lostReason ?? c.notes.find((n) => n.pinned)?.text ?? "—"}</span> },
+    { label: "失注理由・メモ", render: (c) => <span className="text-[0.6875rem] text-stone-600">{c.lostReason ?? c.notes.find((n) => n.pinned)?.text ?? "—"}</span> },
   ];
   return (
     <table className="tbl tbl-compact" style={{ minWidth: 160 + ids.length * 220 }}>
@@ -307,8 +307,8 @@ function CompareTable({ ids, baseId, info, canCost, canEdit, onRemove }: { ids: 
             <th key={c.id} className={cn("min-w-[200px] align-top", c.id === baseId && "bg-shu-50")}>
               <div className="flex items-start justify-between gap-2">
                 <div>
-                  <div className="font-num text-[11px] text-shu-600">{c.id === baseId ? "検索元 " : ""}{c.workNo ?? c.dealNo}</div>
-                  <div className="whitespace-normal text-[13px] font-bold text-stone-800">{c.title}</div>
+                  <div className="font-num text-[0.6875rem] text-shu-600">{c.id === baseId ? "検索元 " : ""}{c.workNo ?? c.dealNo}</div>
+                  <div className="whitespace-normal text-[0.8125rem] font-bold text-stone-800">{c.title}</div>
                 </div>
                 {c.id !== baseId && (
                   <button onClick={() => onRemove(c.id)} className="text-stone-400 hover:text-stone-700" aria-label="除外">
@@ -326,11 +326,11 @@ function CompareTable({ ids, baseId, info, canCost, canEdit, onRemove }: { ids: 
           .map((r) => (
             <tr key={r.label}>
               <td className="text-xs font-medium text-stone-500">
-                {r.group && <div className="mb-0.5 text-[10px] font-bold tracking-wider text-ai-700">{r.group}</div>}
+                {r.group && <div className="mb-0.5 text-[0.625rem] font-bold tracking-wider text-ai-700">{r.group}</div>}
                 {r.label}
               </td>
               {cols.map((c) => (
-                <td key={c.id} className={cn("text-[13px]", c.id === baseId && "bg-shu-50/50")}>{r.render(c)}</td>
+                <td key={c.id} className={cn("text-[0.8125rem]", c.id === baseId && "bg-shu-50/50")}>{r.render(c)}</td>
               ))}
             </tr>
           ))}
@@ -350,7 +350,7 @@ function CompareTable({ ids, baseId, info, canCost, canEdit, onRemove }: { ids: 
                     この案件をベースに引合登録
                   </Button>
                 )}
-                {c.id === baseId && <span className="flex items-center gap-1 text-[11px] text-shu-700"><Check size={12} />比較の基準</span>}
+                {c.id === baseId && <span className="flex items-center gap-1 text-[0.6875rem] text-shu-700"><Check size={12} />比較の基準</span>}
               </div>
             </td>
           ))}

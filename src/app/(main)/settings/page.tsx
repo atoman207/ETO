@@ -1,7 +1,10 @@
 "use client";
 
 import { useState } from "react";
-import { Building, Check, Database, Download, Hash, Minus, RotateCcw, Save, Settings, ShieldCheck } from "lucide-react";
+import { Building, Check, Database, Download, Hash, Minus, Palette, RotateCcw, Save, Settings, ShieldCheck } from "lucide-react";
+import { useThemeStore } from "@/components/theme/theme-provider";
+import { fontByKey, PRESETS } from "@/lib/theme";
+import { WaPattern } from "@/components/theme/wa-pattern";
 import { toast } from "sonner";
 import { useStore } from "@/lib/store";
 import { useCan } from "@/lib/hooks";
@@ -45,6 +48,7 @@ export default function SettingsPage() {
       <PageHeader title="設定・権限" description="自社情報・帳票設定・採番ルール・権限設計を管理します" icon={<Settings size={20} />} breadcrumbs={[{ label: "ホーム", href: "/" }, { label: "設定・権限" }]} />
       {!canEdit && <div className="mb-4"><LockedNotice message="設定の変更はシステム管理者のみ可能です（閲覧のみ）" /></div>}
       <div className="grid gap-4 xl:grid-cols-2">
+        <ThemeCard />
         <Card>
           <CardHeader
             title="自社情報（帳票に印字されます）"
@@ -122,7 +126,7 @@ export default function SettingsPage() {
                   <th>権限</th>
                   {roles.map((r) => (
                     <th key={r} className="text-center">
-                      <span className={`rounded px-1.5 py-0.5 text-[11px] ${ROLES[r].color}`}>{ROLES[r].label}</span>
+                      <span className={`rounded-sm px-1.5 py-0.5 text-[0.6875rem] ${ROLES[r].color}`}>{ROLES[r].label}</span>
                     </th>
                   ))}
                 </tr>
@@ -131,8 +135,8 @@ export default function SettingsPage() {
                 {perms.map((p) => (
                   <tr key={p}>
                     <td>
-                      <div className="text-[13px] font-medium">{PERMISSION_LABELS[p].label}</div>
-                      <div className="text-[11px] text-stone-500">{PERMISSION_LABELS[p].description}</div>
+                      <div className="text-[0.8125rem] font-medium">{PERMISSION_LABELS[p].label}</div>
+                      <div className="text-[0.6875rem] text-stone-500">{PERMISSION_LABELS[p].description}</div>
                     </td>
                     {roles.map((r) => (
                       <td key={r} className="text-center">
@@ -144,7 +148,7 @@ export default function SettingsPage() {
               </tbody>
             </table>
           </div>
-          <CardBody className="border-t border-stone-100 text-[11px] leading-relaxed text-stone-500">
+          <CardBody className="border-t border-stone-100 text-[0.6875rem] leading-relaxed text-stone-500">
             ※ 承認は役職による段階制です（担当 → 課長 → 部長・役員）。原価情報は「原価・粗利の閲覧」権限がない場合、画面・帳票・CSV のすべてでマスク表示されます。本番環境では Google Workspace の組織部門と連携し、退職・異動時の権限変更も自動化します。
           </CardBody>
         </Card>
@@ -163,5 +167,35 @@ export default function SettingsPage() {
         danger
       />
     </div>
+  );
+}
+
+function ThemeCard() {
+  const theme = useThemeStore((s) => s.theme);
+  const setOpen = useThemeStore((s) => s.setPanelOpen);
+  const preset = PRESETS.find((p) => p.id === theme.presetId);
+  return (
+    <Card className="relative overflow-hidden xl:col-span-2">
+      <WaPattern className="pointer-events-none absolute inset-y-0 right-0 h-full w-1/2 opacity-70 [mask-image:linear-gradient(to_left,black,transparent)]" id="wa-settings" fill="transparent" line="color-mix(in oklab, var(--color-ai-500) 12%, transparent)" />
+      <CardBody className="relative flex flex-wrap items-center gap-5">
+        <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-ai-600 to-ai-800 text-white shadow-md">
+          <Palette size={22} />
+        </div>
+        <div className="min-w-0 flex-1">
+          <div className="font-heading text-[0.9375rem] font-bold text-stone-800">表示デザイン（配色・フォント・動き）</div>
+          <p className="mt-0.5 text-xs text-stone-500">
+            現在：<b className="text-stone-700">{preset ? `和の配色「${preset.name}」` : "カスタム配色"}</b>／本文 {fontByKey(theme.fontBody)?.label}／文字 {Math.round(theme.fontScale * 100)}%／動き {{ none: "なし", subtle: "控えめ", full: "軽やか" }[theme.motion]}
+          </p>
+          <div className="mt-2 flex gap-1">
+            {["--color-ai-700", "--color-ai-400", "--color-ai-100", "--color-shu-500", "--color-shu-200", "--color-kinari", "--color-inshu"].map((v) => (
+              <span key={v} className="h-5 w-5 rounded-full ring-2 ring-surface shadow-sm" style={{ background: `var(${v})` }} />
+            ))}
+          </div>
+        </div>
+        <Button variant="primary" icon={<Palette size={15} />} onClick={() => setOpen(true)}>
+          表示デザインを変更
+        </Button>
+      </CardBody>
+    </Card>
   );
 }

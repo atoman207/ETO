@@ -53,10 +53,10 @@ export default function PurchasingPage() {
         icon={<ShoppingCart size={20} />}
         breadcrumbs={[{ label: "ホーム", href: "/" }, { label: "購買管理" }]}
       />
-      <div className="mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
+      <div className="stagger mb-4 grid grid-cols-2 gap-3 lg:grid-cols-4">
         {cards.map((c) => (
-          <button key={c.label} onClick={() => setScope(c.key)} className="rounded-lg border border-stone-200 bg-white px-4 py-3 text-left shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-ai-300">
-            <div className="text-[11px] text-stone-500">{c.label}</div>
+          <button key={c.label} onClick={() => setScope(c.key)} className="rounded-lg border border-stone-200 bg-surface px-4 py-3 text-left shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-ai-300">
+            <div className="text-[0.6875rem] text-stone-500">{c.label}</div>
             <div className={cn("font-num text-xl font-bold", c.tone)}>{c.value}<span className="ml-0.5 text-xs font-normal text-stone-500">件</span></div>
           </button>
         ))}

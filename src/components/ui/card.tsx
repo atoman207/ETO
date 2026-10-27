@@ -3,7 +3,7 @@ import { cn } from "@/lib/format";
 
 export function Card({ className, children, ...props }: HTMLAttributes<HTMLDivElement>) {
   return (
-    <div className={cn("rounded-lg border border-stone-200/90 bg-white shadow-[var(--shadow-card)]", className)} {...props}>
+    <div className={cn("rounded-lg border border-stone-200/90 bg-surface shadow-[var(--shadow-card)]", className)} {...props}>
       {children}
     </div>
   );
@@ -27,7 +27,7 @@ export function CardHeader({
       <div className="flex min-w-0 items-start gap-2.5">
         {icon && <div className="mt-0.5 text-ai-600">{icon}</div>}
         <div className="min-w-0">
-          <h3 className="text-[15px] font-bold text-stone-800">{title}</h3>
+          <h3 className="font-heading text-[0.9375rem] font-bold text-stone-800">{title}</h3>
           {description && <p className="mt-0.5 text-xs text-stone-500">{description}</p>}
         </div>
       </div>

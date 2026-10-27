@@ -57,22 +57,22 @@ export default function ServicePage() {
         actions={canService && <Button variant="accent" icon={<Plus size={15} />} onClick={() => setOpen(true)}>サービス受付</Button>}
       />
       <div className="mb-4 grid gap-3 lg:grid-cols-[1fr_360px]">
-        <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
+        <div className="stagger grid grid-cols-2 gap-3 md:grid-cols-4">
           {stat.map(({ k, n }) => (
-            <div key={k} className="rounded-lg border border-stone-200 bg-white px-4 py-3 shadow-[var(--shadow-card)]">
+            <div key={k} className="rounded-lg border border-stone-200 bg-surface px-4 py-3 shadow-[var(--shadow-card)]">
               <Badge className={SERVICE_STATUS[k].color}>{SERVICE_STATUS[k].label}</Badge>
               <div className="font-num mt-1 text-xl font-bold">{n}<span className="ml-0.5 text-xs font-normal text-stone-500">件</span></div>
             </div>
           ))}
         </div>
         <Card className="px-4 py-3">
-          <div className="mb-1.5 text-[11px] font-medium text-stone-500">種別ごとの件数（累計）</div>
+          <div className="mb-1.5 text-[0.6875rem] font-medium text-stone-500">種別ごとの件数（累計）</div>
           <div className="space-y-1">
             {byType.map(({ k, n }) => (
-              <div key={k} className="grid grid-cols-[64px_1fr_28px] items-center gap-2 text-[11px]">
+              <div key={k} className="grid grid-cols-[64px_1fr_28px] items-center gap-2 text-[0.6875rem]">
                 <span className="text-stone-600">{SERVICE_TYPES[k].label}</span>
-                <div className="h-2.5 overflow-hidden rounded bg-stone-100">
-                  <motion.div className="h-full rounded bg-violet-500/80" initial={{ width: 0 }} animate={{ width: `${(n / maxType) * 100}%` }} transition={{ duration: 0.7 }} />
+                <div className="h-2.5 overflow-hidden rounded-sm bg-stone-100">
+                  <motion.div className="h-full rounded-sm bg-violet-500/80" initial={{ width: 0 }} animate={{ width: `${(n / maxType) * 100}%` }} transition={{ duration: 0.7 }} />
                 </div>
                 <span className="font-num text-right text-stone-700">{n}</span>
               </div>
@@ -124,19 +124,19 @@ export default function ServicePage() {
                       <td className="font-num whitespace-nowrap text-xs font-semibold">{s.ticketNo}</td>
                       <td className="min-w-[220px]">
                         <div className="font-medium">{s.title}</div>
-                        {s.linkedCaseId && <div className="text-[10px] text-violet-700">→ 案件化 {lk.case.get(s.linkedCaseId)?.dealNo}</div>}
+                        {s.linkedCaseId && <div className="text-[0.625rem] text-violet-700">→ 案件化 {lk.case.get(s.linkedCaseId)?.dealNo}</div>}
                       </td>
                       <td><Badge className={SERVICE_TYPES[s.type].color}>{SERVICE_TYPES[s.type].label}</Badge></td>
                       <td>
                         <div className="font-num text-xs font-semibold text-emerald-700">{eq?.serialNo}</div>
-                        <div className="text-[11px] text-stone-500">{lk.customer.get(eq?.customerId ?? "")?.name}</div>
+                        <div className="text-[0.6875rem] text-stone-500">{lk.customer.get(eq?.customerId ?? "")?.name}</div>
                       </td>
                       <td className="font-num whitespace-nowrap text-xs">{fmtDate(s.reportedDate, false)}</td>
                       <td className="text-xs">{s.status === "done" ? <span className="font-num text-stone-500">完了 {fmtDate(s.completedDate, false)}</span> : <DueLabel date={s.dueDate} />}</td>
                       <td><span className="flex items-center gap-1.5 text-xs"><Avatar user={lk.user.get(s.assigneeId)} size={20} className="ring-0" />{lk.user.get(s.assigneeId)?.name}</span></td>
                       <td className="whitespace-nowrap text-xs">
                         {BILLING[s.billing]}
-                        {s.amount > 0 && <div className={cn("font-num text-[11px] text-stone-500")}>{yen(s.amount)}</div>}
+                        {s.amount > 0 && <div className={cn("font-num text-[0.6875rem] text-stone-500")}>{yen(s.amount)}</div>}
                       </td>
                       <td><Badge className={SERVICE_STATUS[s.status].color}>{SERVICE_STATUS[s.status].label}</Badge></td>
                     </motion.tr>

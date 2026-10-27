@@ -158,7 +158,7 @@ function CaseDetail() {
                 <StageBadge stage={c.stage} />
                 {c.status !== "active" && <Badge className={CASE_STATUS[c.status].color}>{CASE_STATUS[c.status].label}</Badge>}
               </h1>
-              <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-[13px] text-stone-600">
+              <div className="mt-1 flex flex-wrap items-center gap-x-4 gap-y-1 text-[0.8125rem] text-stone-600">
                 <Link href={`/customers/${c.customerId}`} className="font-medium text-ai-800 hover:underline">
                   {lk.customer.get(c.customerId)?.name}
                 </Link>
@@ -166,12 +166,12 @@ function CaseDetail() {
                 <span className="text-stone-400">｜</span>
                 <span>{EQUIPMENT_TYPES[c.equipmentType].label}</span>
                 {c.sourceEquipmentId && (
-                  <Link href={`/equipment/${c.sourceEquipmentId}`} className="rounded bg-violet-50 px-1.5 text-xs text-violet-700 ring-1 ring-violet-200 hover:bg-violet-100">
+                  <Link href={`/equipment/${c.sourceEquipmentId}`} className="rounded-sm bg-violet-50 px-1.5 text-xs text-violet-700 ring-1 ring-violet-200 hover:bg-violet-100">
                     既設装置 {lk.equipment.get(c.sourceEquipmentId)?.serialNo} の改造・更新
                   </Link>
                 )}
               </div>
-              {c.status === "lost" && c.lostReason && <div className="mt-2 rounded bg-stone-100 px-3 py-1.5 text-xs text-stone-600">失注理由：{c.lostReason}</div>}
+              {c.status === "lost" && c.lostReason && <div className="mt-2 rounded-sm bg-stone-100 px-3 py-1.5 text-xs text-stone-600">失注理由：{c.lostReason}</div>}
             </div>
             <HeaderActions c={c} latestQuoteId={latestQuote?.id} />
           </div>
@@ -264,7 +264,7 @@ function HeaderActions({ c, latestQuoteId }: { c: Case; latestQuoteId?: string }
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -4 }}
             transition={{ duration: 0.12 }}
-            className="absolute right-0 top-11 z-30 w-64 overflow-hidden rounded-lg border border-stone-200 bg-white py-1 shadow-xl"
+            className="absolute right-0 top-11 z-30 w-64 overflow-hidden rounded-lg border border-stone-200 bg-surface py-1 shadow-xl"
           >
             {items
               .filter((i) => i.show)
@@ -275,7 +275,7 @@ function HeaderActions({ c, latestQuoteId }: { c: Case; latestQuoteId?: string }
                     setMenu(false);
                     i.onClick();
                   }}
-                  className={cn("flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-[13px] transition-colors hover:bg-stone-50", i.danger ? "text-rose-700" : "text-stone-700")}
+                  className={cn("flex w-full items-center gap-2.5 px-3.5 py-2 text-left text-[0.8125rem] transition-colors hover:bg-stone-50", i.danger ? "text-rose-700" : "text-stone-700")}
                 >
                   <span className="text-stone-400">{i.icon}</span>
                   {i.label}

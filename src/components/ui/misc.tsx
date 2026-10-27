@@ -31,7 +31,7 @@ export function PageHeader({
             <span key={i} className="flex items-center gap-1">
               {i > 0 && <ChevronRight size={12} className="text-stone-400" />}
               {b.href ? (
-                <Link href={b.href} className="transition-colors hover:text-ai-700 hover:underline">
+                <Link href={b.href} className="link-anim transition-colors hover:text-ai-700">
                   {b.label}
                 </Link>
               ) : (
@@ -43,10 +43,14 @@ export function PageHeader({
       )}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div className="flex min-w-0 items-center gap-3">
-          {icon && <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-ai-700 text-white shadow-sm">{icon}</div>}
+          {icon && (
+            <motion.div initial={{ scale: 0.6, rotate: -12, opacity: 0 }} animate={{ scale: 1, rotate: 0, opacity: 1 }} transition={{ type: "spring", stiffness: 380, damping: 18 }} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-gradient-to-br from-ai-600 to-ai-800 text-white shadow-sm shadow-ai-900/20">
+              {icon}
+            </motion.div>
+          )}
           <div className="min-w-0">
-            <h1 className="text-xl font-bold tracking-wide text-stone-900">{title}</h1>
-            {description && <p className="mt-0.5 text-[13px] text-stone-500">{description}</p>}
+            <h1 className="font-heading text-xl font-bold tracking-wide text-stone-900">{title}</h1>
+            {description && <p className="mt-0.5 text-[0.8125rem] text-stone-500">{description}</p>}
           </div>
         </div>
         {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
@@ -58,7 +62,7 @@ export function PageHeader({
 export function EmptyState({ icon, title, description, action, className }: { icon?: ReactNode; title: string; description?: ReactNode; action?: ReactNode; className?: string }) {
   return (
     <div className={cn("flex flex-col items-center justify-center px-6 py-12 text-center", className)}>
-      {icon && <div className="mb-3 flex h-12 w-12 items-center justify-center rounded-full bg-kinari-dark/70 text-stone-400">{icon}</div>}
+      {icon && <div className="mb-3 flex h-12 w-12 animate-float items-center justify-center rounded-full bg-kinari-dark/70 text-stone-400">{icon}</div>}
       <p className="text-sm font-medium text-stone-700">{title}</p>
       {description && <p className="mt-1 max-w-sm text-xs leading-relaxed text-stone-500">{description}</p>}
       {action && <div className="mt-4">{action}</div>}
@@ -70,7 +74,7 @@ export function Avatar({ user, size = 28, className }: { user?: User; size?: num
   if (!user) return <span className={cn("inline-block rounded-full bg-stone-200", className)} style={{ width: size, height: size }} />;
   return (
     <span
-      className={cn("inline-flex shrink-0 items-center justify-center rounded-full font-medium text-white ring-2 ring-white", className)}
+      className={cn("inline-flex shrink-0 items-center justify-center rounded-full font-medium text-white ring-2 ring-surface", className)}
       style={{ width: size, height: size, background: user.color, fontSize: size * 0.42 }}
       title={`${user.name}（${user.dept}${user.title ? " " + user.title : ""}）`}
     >
@@ -84,8 +88,8 @@ export function UserChip({ user, sub }: { user?: User; sub?: boolean }) {
   return (
     <span className="inline-flex items-center gap-1.5">
       <Avatar user={user} size={20} className="ring-0" />
-      <span className="text-[13px]">{user.name}</span>
-      {sub && <span className="text-[11px] text-stone-400">{user.dept}</span>}
+      <span className="text-[0.8125rem]">{user.name}</span>
+      {sub && <span className="text-[0.6875rem] text-stone-400">{user.dept}</span>}
     </span>
   );
 }
@@ -113,11 +117,11 @@ export function CountUp({ value, format = (n: number) => Math.round(n).toLocaleS
   );
 }
 
-export function ProgressBar({ value, className, color = "bg-ai-600", height = 6 }: { value: number; className?: string; color?: string; height?: number }) {
+export function ProgressBar({ value, className, color = "bg-ai-600", height = 6, striped }: { value: number; className?: string; color?: string; height?: number; striped?: boolean }) {
   return (
     <div className={cn("w-full overflow-hidden rounded-full bg-stone-200/70", className)} style={{ height }}>
       <motion.div
-        className={cn("h-full rounded-full", color)}
+        className={cn("h-full rounded-full", color, striped && value > 0 && value < 100 && "bar-stripes")}
         initial={{ width: 0 }}
         animate={{ width: `${Math.max(0, Math.min(100, value))}%` }}
         transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
@@ -131,11 +135,11 @@ export function Hanko({ name, size = 46, animateIn = true, date }: { name: strin
   const sn = surname(name);
   return (
     <motion.div
-      initial={animateIn ? { scale: 1.7, opacity: 0, rotate: -20 } : false}
-      animate={{ scale: 1, opacity: 0.92, rotate: -8 }}
+      initial={animateIn ? { scale: 1.7, opacity: 0, rotate: -20, filter: "blur(2px)" } : false}
+      animate={{ scale: 1, opacity: 0.92, rotate: -8, filter: "blur(0px)" }}
       transition={{ type: "spring", stiffness: 420, damping: 16, mass: 0.8 }}
       className="relative flex items-center justify-center rounded-full border-[2px] border-inshu text-inshu"
-      style={{ width: size, height: size, boxShadow: "inset 0 0 0 1px rgba(200,16,46,0.25)" }}
+      style={{ width: size, height: size, boxShadow: "inset 0 0 0 1px color-mix(in srgb, var(--color-inshu) 25%, transparent)" }}
       title={`${name}${date ? ` ${date}` : ""}`}
     >
       <span className="font-mincho font-bold leading-none" style={{ writingMode: "vertical-rl", fontSize: sn.length > 2 ? size * 0.26 : size * 0.34, letterSpacing: "0.02em" }}>
@@ -148,24 +152,24 @@ export function Hanko({ name, size = 46, animateIn = true, date }: { name: strin
 export function ApprovalStamps({ steps, users, compact }: { steps: ApprovalStep[]; users: Map<string, User>; compact?: boolean }) {
   const size = compact ? 38 : 48;
   return (
-    <div className="inline-flex overflow-hidden rounded border border-stone-300 bg-white">
+    <div className="inline-flex overflow-hidden rounded-sm border border-stone-300 bg-surface">
       {steps.map((s, i) => {
         const u = s.userId ? users.get(s.userId) : undefined;
         return (
           <div key={i} className={cn("flex flex-col items-center", i > 0 && "border-l border-stone-300")} style={{ width: size + 22 }}>
-            <div className="w-full border-b border-stone-300 bg-stone-50 py-0.5 text-center text-[10px] text-stone-600">{s.label}</div>
+            <div className="w-full border-b border-stone-300 bg-stone-50 py-0.5 text-center text-[0.625rem] text-stone-600">{s.label}</div>
             <div className="flex items-center justify-center" style={{ height: size + 12 }}>
               {s.status === "approved" && u ? (
                 <Hanko name={u.name} size={size} />
               ) : s.status === "rejected" ? (
-                <motion.span initial={{ scale: 1.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="rounded border-2 border-rose-600 px-1 text-[11px] font-bold text-rose-600">
+                <motion.span initial={{ scale: 1.5, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} className="rounded-sm border-2 border-rose-600 px-1 text-[0.6875rem] font-bold text-rose-600">
                   差戻
                 </motion.span>
               ) : (
-                <span className="text-[10px] text-stone-300">未承認</span>
+                <span className="text-[0.625rem] text-stone-300">未承認</span>
               )}
             </div>
-            <div className="font-num w-full border-t border-stone-200 py-0.5 text-center text-[10px] text-stone-500">
+            <div className="font-num w-full border-t border-stone-200 py-0.5 text-center text-[0.625rem] text-stone-500">
               {s.at ? `${toDate(s.at).getMonth() + 1}/${toDate(s.at).getDate()}` : "　"}
             </div>
           </div>
@@ -194,8 +198,8 @@ export function DL({ items, cols = 2, className }: { items: { label: string; val
     <dl className={cn("grid grid-cols-1 gap-x-6 gap-y-3", grid, className)}>
       {items.map((it, i) => (
         <div key={i} className={cn("min-w-0", it.full && "sm:col-span-full")}>
-          <dt className="text-[11px] font-medium text-stone-500">{it.label}</dt>
-          <dd className="mt-0.5 break-words text-[13px] text-stone-800">{it.value ?? "—"}</dd>
+          <dt className="text-[0.6875rem] font-medium text-stone-500">{it.label}</dt>
+          <dd className="mt-0.5 break-words text-[0.8125rem] text-stone-800">{it.value ?? "—"}</dd>
         </div>
       ))}
     </dl>
@@ -205,7 +209,7 @@ export function DL({ items, cols = 2, className }: { items: { label: string; val
 export function FileBadge({ type }: { type: FileType }) {
   const f = FILE_TYPES[type];
   const short = { pdf: "PDF", xlsx: "XLS", docx: "DOC", dwg: "CAD", jpg: "IMG", gdoc: "文書", gsheet: "表", zip: "ZIP" }[type];
-  return <span className={cn("inline-flex h-7 w-9 shrink-0 items-center justify-center rounded text-[10px] font-bold text-white shadow-sm", f.color)}>{short}</span>;
+  return <span className={cn("inline-flex h-7 w-9 shrink-0 items-center justify-center rounded-sm text-[0.625rem] font-bold text-white shadow-sm", f.color)}>{short}</span>;
 }
 
 export function DueLabel({ date, doneLabel }: { date?: string; doneLabel?: string }) {
@@ -216,7 +220,7 @@ export function DueLabel({ date, doneLabel }: { date?: string; doneLabel?: strin
   return (
     <span className={cn("font-num whitespace-nowrap", tone)}>
       {fmtDate(date, false)}
-      <span className="ml-1 text-[11px]">{d < 0 ? `（${-d}日超過）` : d === 0 ? "（本日）" : `（あと${d}日）`}</span>
+      <span className="ml-1 text-[0.6875rem]">{d < 0 ? `（${-d}日超過）` : d === 0 ? "（本日）" : `（あと${d}日）`}</span>
     </span>
   );
 }
@@ -224,42 +228,12 @@ export function DueLabel({ date, doneLabel }: { date?: string; doneLabel?: strin
 export function SectionTitle({ children, action }: { children: ReactNode; action?: ReactNode }) {
   return (
     <div className="mb-2 flex items-center justify-between">
-      <h4 className="flex items-center gap-2 text-[13px] font-bold text-stone-700">
+      <h4 className="flex items-center gap-2 text-[0.8125rem] font-bold text-stone-700">
         <span className="h-3.5 w-1 rounded-full bg-shu-500" />
         {children}
       </h4>
       {action}
     </div>
-  );
-}
-
-export function Seigaiha({ className, stroke = "rgba(255,255,255,0.09)", fill = "#173a54", id = "sg" }: { className?: string; stroke?: string; fill?: string; id?: string }) {
-  const r = 20;
-  const centers: [number, number][] = [
-    [r, -r / 2],
-    [0, 0],
-    [2 * r, 0],
-    [r, r / 2],
-    [0, r],
-    [2 * r, r],
-    [r, (3 * r) / 2],
-  ];
-  return (
-    <svg className={className} aria-hidden="true">
-      <defs>
-        <pattern id={id} width={2 * r} height={r} patternUnits="userSpaceOnUse">
-          {centers.map(([cx, cy], i) => (
-            <g key={i}>
-              <circle cx={cx} cy={cy} r={r} fill={fill} stroke={stroke} strokeWidth={1} />
-              <circle cx={cx} cy={cy} r={r * 0.75} fill="none" stroke={stroke} strokeWidth={1} />
-              <circle cx={cx} cy={cy} r={r * 0.5} fill="none" stroke={stroke} strokeWidth={1} />
-              <circle cx={cx} cy={cy} r={r * 0.25} fill="none" stroke={stroke} strokeWidth={1} />
-            </g>
-          ))}
-        </pattern>
-      </defs>
-      <rect width="100%" height="100%" fill={`url(#${id})`} />
-    </svg>
   );
 }
 
@@ -272,13 +246,13 @@ export function Logo({ size = 36 }: { size?: number }) {
       <span className="font-mincho font-bold leading-none" style={{ fontSize: size * 0.58 }}>
         匠
       </span>
-      <span className="absolute inset-[3px] rounded-[4px] border border-white/40" />
+      <span className="absolute inset-[3px] rounded-[4px] border border-surface/40" />
     </div>
   );
 }
 
 export function Skeleton({ className }: { className?: string }) {
-  return <div className={cn("skeleton rounded", className)} />;
+  return <div className={cn("skeleton rounded-sm", className)} />;
 }
 
 export function LockedNotice({ message = "この操作を行う権限がありません" }: { message?: string }) {

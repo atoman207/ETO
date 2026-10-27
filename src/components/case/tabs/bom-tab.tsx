@@ -187,13 +187,13 @@ export function BomTab({ c, goTab }: CaseTabProps) {
               onClick={() => setModal(o.key)}
               className={cn(
                 "group rounded-xl border p-4 text-left transition-all hover:-translate-y-0.5 hover:shadow-[var(--shadow-lift)] disabled:cursor-not-allowed disabled:opacity-60",
-                o.primary ? "border-ai-300 bg-ai-50/60" : "border-stone-200 bg-white",
+                o.primary ? "border-ai-300 bg-ai-50/60" : "border-stone-200 bg-surface",
               )}
             >
               <span className={cn("flex h-10 w-10 items-center justify-center rounded-lg", o.primary ? "bg-ai-700 text-white" : "bg-stone-100 text-stone-600 group-hover:bg-ai-100 group-hover:text-ai-700")}>{o.icon}</span>
-              <div className="mt-3 text-[13px] font-bold text-stone-800">{o.title}</div>
-              <p className="mt-1 text-[11px] leading-relaxed text-stone-500">{o.body}</p>
-              {o.primary && <span className="mt-2 inline-block rounded bg-shu-500 px-1.5 text-[10px] text-white">おすすめ</span>}
+              <div className="mt-3 text-[0.8125rem] font-bold text-stone-800">{o.title}</div>
+              <p className="mt-1 text-[0.6875rem] leading-relaxed text-stone-500">{o.body}</p>
+              {o.primary && <span className="mt-2 inline-block rounded-sm bg-shu-500 px-1.5 text-[0.625rem] text-white">おすすめ</span>}
             </motion.button>
           ))}
         </div>
@@ -205,7 +205,7 @@ export function BomTab({ c, goTab }: CaseTabProps) {
 
   return (
     <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3 lg:grid-cols-5">
+      <div className="stagger grid grid-cols-2 gap-3 lg:grid-cols-5">
         {[
           { label: "部品点数（末端品目）", value: `${stats.leaves}点`, sub: `全${c.bom.length}行` },
           { label: `BOM原価合計${qty > 1 ? `（${qty}台分）` : ""}`, value: showCost ? yen(stats.total) : "＊＊＊", sub: showCost && stats.est ? `見積（材料＋購入品）比 ${stats.total >= stats.est ? "+" : ""}${pct(stats.total / stats.est - 1)}` : undefined, warn: showCost && stats.total > stats.est * 1.05 },
@@ -213,10 +213,10 @@ export function BomTab({ c, goTab }: CaseTabProps) {
           { label: "未手配品の最長LT", value: stats.maxLt ? `${stats.maxLt}日` : "—", sub: stats.arrival ? `本日手配で ${fmtDate(stats.arrival, false)} 入荷` : undefined, warn: stats.critical },
           { label: "マスタ未登録品目", value: `${stats.unregistered}点`, sub: "マスタ管理で登録できます", warn: stats.unregistered > 0 },
         ].map((s) => (
-          <div key={s.label} className={cn("rounded-lg border bg-white px-4 py-3 shadow-[var(--shadow-card)]", s.warn ? "border-amber-300" : "border-stone-200")}>
-            <div className="text-[11px] text-stone-500">{s.label}</div>
+          <div key={s.label} className={cn("rounded-lg border bg-surface px-4 py-3 shadow-[var(--shadow-card)]", s.warn ? "border-amber-300" : "border-stone-200")}>
+            <div className="text-[0.6875rem] text-stone-500">{s.label}</div>
             <div className="font-num text-lg font-bold text-stone-900">{s.value}</div>
-            {s.sub && <div className={cn("text-[10px]", s.warn ? "text-amber-700" : "text-stone-500")}>{s.sub}</div>}
+            {s.sub && <div className={cn("text-[0.625rem]", s.warn ? "text-amber-700" : "text-stone-500")}>{s.sub}</div>}
           </div>
         ))}
       </div>
@@ -303,14 +303,14 @@ export function BomTab({ c, goTab }: CaseTabProps) {
                               else n.add(b.id);
                               setCollapsed(n);
                             }}
-                            className="mr-0.5 rounded p-0.5 text-stone-500 hover:bg-stone-200"
+                            className="mr-0.5 rounded-sm p-0.5 text-stone-500 hover:bg-stone-200"
                           >
                             {collapsed.has(b.id) ? <ChevronRight size={13} /> : <ChevronDown size={13} />}
                           </button>
                         ) : (
                           <span className="mr-0.5 inline-block w-[17px]" />
                         )}
-                        <span className="font-num text-[11px] text-stone-500">{no}</span>
+                        <span className="font-num text-[0.6875rem] text-stone-500">{no}</span>
                       </div>
                     </td>
                     <td>
@@ -326,7 +326,7 @@ export function BomTab({ c, goTab }: CaseTabProps) {
                     </td>
                     <td>
                       <input className={cn("cell-input", depth === 0 && "font-bold text-ai-900")} value={b.name} disabled={ro} onChange={(e) => updateItem(c.id, b.id, { name: e.target.value })} placeholder="品名" />
-                      {b.note && <div className="px-1.5 text-[10px] text-amber-700">{b.note}</div>}
+                      {b.note && <div className="px-1.5 text-[0.625rem] text-amber-700">{b.note}</div>}
                     </td>
                     <td>
                       <input className="cell-input text-xs text-stone-600" value={b.spec} disabled={ro} onChange={(e) => updateItem(c.id, b.id, { spec: e.target.value })} />
@@ -342,7 +342,7 @@ export function BomTab({ c, goTab }: CaseTabProps) {
                     </td>
                     <td>
                       {hasChildren ? (
-                        <span className="block px-1.5 text-right text-[11px] text-stone-400">（集計）</span>
+                        <span className="block px-1.5 text-right text-[0.6875rem] text-stone-400">（集計）</span>
                       ) : showCost ? (
                         <NumberInput compact value={b.unitCost} onChange={(v) => updateItem(c.id, b.id, { unitCost: v })} disabled={ro || locked} min={0} />
                       ) : (
@@ -352,7 +352,7 @@ export function BomTab({ c, goTab }: CaseTabProps) {
                     <td className={cn("font-num text-right text-xs", hasChildren && "font-bold")}>{showCost ? yen(bomRollup(c.bom, b.id)) : "＊＊＊"}</td>
                     <td>
                       {hasChildren ? (
-                        <span className="px-1 text-[11px] text-stone-400">—</span>
+                        <span className="px-1 text-[0.6875rem] text-stone-400">—</span>
                       ) : (
                         <select className="cell-input text-xs" value={b.procurement} disabled={ro || locked} onChange={(e) => updateItem(c.id, b.id, { procurement: e.target.value as Procurement })}>
                           {(Object.keys(PROCUREMENT) as Procurement[]).map((p) => (
@@ -374,7 +374,7 @@ export function BomTab({ c, goTab }: CaseTabProps) {
                           ))}
                         </select>
                       ) : (
-                        <span className="px-1.5 text-[11px] text-stone-400">{hasChildren ? "" : b.procurement === "make" ? "社内製作" : "客先支給"}</span>
+                        <span className="px-1.5 text-[0.6875rem] text-stone-400">{hasChildren ? "" : b.procurement === "make" ? "社内製作" : "客先支給"}</span>
                       )}
                     </td>
                     <td>{!hasChildren && <NumberInput compact value={b.leadTimeDays ?? 0} onChange={(v) => updateItem(c.id, b.id, { leadTimeDays: v })} disabled={ro || locked} min={0} suffix="日" />}</td>
@@ -383,7 +383,7 @@ export function BomTab({ c, goTab }: CaseTabProps) {
                         <span className="flex items-center gap-1">
                           {locked && <Lock size={10} className="text-stone-400" />}
                           <Badge className={PO_STATUS[po.status].color}>{PO_STATUS[po.status].label}</Badge>
-                          <span className="font-num text-[10px] text-stone-400">{po.poNo}</span>
+                          <span className="font-num text-[0.625rem] text-stone-400">{po.poNo}</span>
                         </span>
                       ) : !hasChildren && b.procurement === "buy" ? (
                         <Badge className="bg-amber-50 text-amber-800 ring-amber-200">未手配</Badge>
@@ -422,14 +422,14 @@ export function BomTab({ c, goTab }: CaseTabProps) {
               <tfoot>
                 <tr className="bg-ai-50 font-bold">
                   <td colSpan={8} className="px-3 py-2 text-right text-xs">合計（1台あたり）</td>
-                  <td className="font-num px-3 py-2 text-right text-[13px]">{yen(bomTotal(c.bom))}</td>
+                  <td className="font-num px-3 py-2 text-right text-[0.8125rem]">{yen(bomTotal(c.bom))}</td>
                   <td colSpan={5} />
                 </tr>
               </tfoot>
             )}
           </table>
         </div>
-        <div className="border-t border-stone-100 bg-stone-50/60 px-4 py-2 text-[11px] text-stone-500">
+        <div className="border-t border-stone-100 bg-stone-50/60 px-4 py-2 text-[0.6875rem] text-stone-500">
           💡 品番セルに品目マスタの品番を入力すると、品名・型式・単価・仕入先・リードタイムが自動で補完されます。発注済み（🔒）の行は数量・単価を変更できません。
         </div>
       </Card>

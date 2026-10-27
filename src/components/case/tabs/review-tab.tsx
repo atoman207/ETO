@@ -73,9 +73,9 @@ export function ReviewTab({ c, openOrder }: CaseTabProps) {
             <div className="grid grid-cols-2 gap-3 md:grid-cols-4">
               {metrics.map((x) => (
                 <div key={x.label} className={cn("rounded-lg border px-3 py-2.5", x.warn ? "border-rose-200 bg-rose-50/60" : "border-stone-200 bg-stone-50/50")}>
-                  <div className="text-[11px] text-stone-500">{x.label}</div>
-                  <div className={cn("font-num font-bold", x.small ? "text-xs" : "text-[15px]", x.warn ? "text-rose-700" : "text-stone-900")}>{x.value}</div>
-                  {x.note && <div className="text-[10px] text-stone-500">{x.note}</div>}
+                  <div className="text-[0.6875rem] text-stone-500">{x.label}</div>
+                  <div className={cn("font-num font-bold", x.small ? "text-xs" : "text-[0.9375rem]", x.warn ? "text-rose-700" : "text-stone-900")}>{x.value}</div>
+                  {x.note && <div className="text-[0.625rem] text-stone-500">{x.note}</div>}
                 </div>
               ))}
             </div>
@@ -88,7 +88,7 @@ export function ReviewTab({ c, openOrder }: CaseTabProps) {
           <div>
             {r.checks.map((chk, i) => (
               <div key={chk.label} className="flex items-center justify-between gap-3 border-b border-stone-50 px-5 py-2.5 last:border-0">
-                <span className="text-[13px] text-stone-700">{chk.label}</span>
+                <span className="text-[0.8125rem] text-stone-700">{chk.label}</span>
                 <div className="flex shrink-0 gap-1">
                   {[
                     { v: true, label: "適合", icon: <Check size={13} />, on: "bg-emerald-600 text-white ring-emerald-600" },
@@ -99,7 +99,7 @@ export function ReviewTab({ c, openOrder }: CaseTabProps) {
                       key={String(o.v)}
                       disabled={!editable}
                       onClick={() => updateReview(c.id, { checks: r.checks.map((x, j) => (j === i ? { ...x, ok: o.v } : x)) })}
-                      className={cn("inline-flex h-7 items-center gap-1 rounded px-2 text-[11px] ring-1 ring-inset transition-all disabled:cursor-default", chk.ok === o.v ? o.on : "bg-white text-stone-500 ring-stone-200 hover:ring-stone-400")}
+                      className={cn("inline-flex h-7 items-center gap-1 rounded-sm px-2 text-[0.6875rem] ring-1 ring-inset transition-all disabled:cursor-default", chk.ok === o.v ? o.on : "bg-surface text-stone-500 ring-stone-200 hover:ring-stone-400")}
                     >
                       {o.icon}
                       {o.label}
@@ -136,9 +136,9 @@ export function ReviewTab({ c, openOrder }: CaseTabProps) {
             ) : (
               <p className="text-center text-xs text-stone-500">申請すると、課長 → 役員 の順に承認依頼が届きます</p>
             )}
-            {r.requestedAt && <p className="text-center text-[11px] text-stone-500">申請：{lk.user.get(r.requestedBy ?? "")?.name}（{fmtDateTime(r.requestedAt)}）</p>}
+            {r.requestedAt && <p className="text-center text-[0.6875rem] text-stone-500">申請：{lk.user.get(r.requestedBy ?? "")?.name}（{fmtDateTime(r.requestedAt)}）</p>}
             {r.approvals.filter((a) => a.comment).map((a, i) => (
-              <div key={i} className={cn("rounded px-2 py-1.5 text-xs", a.status === "rejected" ? "bg-rose-50 text-rose-700" : "bg-stone-50 text-stone-600")}>
+              <div key={i} className={cn("rounded-sm px-2 py-1.5 text-xs", a.status === "rejected" ? "bg-rose-50 text-rose-700" : "bg-stone-50 text-stone-600")}>
                 {lk.user.get(a.userId ?? "")?.name}：{a.comment}
               </div>
             ))}
@@ -146,7 +146,7 @@ export function ReviewTab({ c, openOrder }: CaseTabProps) {
             {editable && (
               <>
                 {!allAnswered && (
-                  <div className="flex items-start gap-1.5 text-[11px] text-amber-700">
+                  <div className="flex items-start gap-1.5 text-[0.6875rem] text-amber-700">
                     <AlertTriangle size={13} className="mt-0.5 shrink-0" />
                     未確認の項目があります。すべて確認してから申請してください。
                   </div>

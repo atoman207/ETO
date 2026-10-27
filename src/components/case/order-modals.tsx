@@ -116,7 +116,7 @@ export function OrderModal({ c, open, onClose, onIssued }: { c: Case; open: bool
       </div>
       <div className="mt-4 rounded-md bg-ai-50 px-4 py-3">
         <Checkbox checked={issue} onChange={setIssue} label={<span className="font-medium text-ai-900">同時に工事番号（工番）を発行する</span>} />
-        <p className="ml-6 mt-1 text-[11px] text-ai-800/80">工番発行と同時に、社内注文書の作成・標準製造工程の計画・案件メンバーへの通知を自動で行います。</p>
+        <p className="ml-6 mt-1 text-[0.6875rem] text-ai-800/80">工番発行と同時に、社内注文書の作成・標準製造工程の計画・案件メンバーへの通知を自動で行います。</p>
       </div>
       {err && <p className="mt-3 text-xs text-rose-600">{err}</p>}
     </Modal>
@@ -136,7 +136,7 @@ export function WorkNoIssuedModal({ c, workNo, onClose }: { c: Case; workNo: str
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95 }}
             transition={{ type: "spring", damping: 22, stiffness: 260 }}
-            className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white text-center shadow-2xl"
+            className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-surface text-center shadow-2xl"
           >
             <div className="bg-gradient-to-b from-ai-800 to-ai-900 px-8 pb-8 pt-7 text-white">
               <motion.div initial={{ rotate: -30, scale: 0 }} animate={{ rotate: 0, scale: 1 }} transition={{ delay: 0.15, type: "spring" }} className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-shu-500">
@@ -162,10 +162,10 @@ export function WorkNoIssuedModal({ c, workNo, onClose }: { c: Case; workNo: str
                 <ArrowRight size={14} className="text-stone-400" />
                 <NumberTag label="工番" value={workNo} tone="shu" />
               </div>
-              <ul className="mx-auto mt-5 max-w-sm space-y-1.5 text-left text-[13px] text-stone-600">
+              <ul className="mx-auto mt-5 max-w-sm space-y-1.5 text-left text-[0.8125rem] text-stone-600">
                 {["社内注文書を作成し、Drive に保存しました", "標準製造工程（9工程）を納期から逆算して計画しました", "設計・購買・製造の各部門に通知しました"].map((t, i) => (
                   <motion.li key={t} initial={{ opacity: 0, x: -8 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.6 + i * 0.12 }} className="flex items-center gap-2">
-                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[10px] text-white">✓</span>
+                    <span className="flex h-4 w-4 items-center justify-center rounded-full bg-emerald-500 text-[0.625rem] text-white">✓</span>
                     {t}
                   </motion.li>
                 ))}

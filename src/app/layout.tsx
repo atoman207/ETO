@@ -4,6 +4,8 @@ import "@fontsource/shippori-mincho/600.css";
 import "@fontsource/shippori-mincho/700.css";
 import "./globals.css";
 import { Toaster } from "sonner";
+import { ThemeProvider } from "@/components/theme/theme-provider";
+import { THEME_BOOT_SCRIPT } from "@/lib/theme";
 
 export const metadata: Metadata = {
   title: {
@@ -14,21 +16,27 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#173a54",
+  themeColor: "#132c40",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
-    <html lang="ja">
+    <html lang="ja" data-motion="full" data-follow-os="false" data-texture="none" data-density="standard" data-sidebar="deep" suppressHydrationWarning>
+      <head>
+        {/* 保存済みのテーマを初回描画前に適用（ちらつき防止） */}
+        <script dangerouslySetInnerHTML={{ __html: THEME_BOOT_SCRIPT }} />
+      </head>
       <body>
-        {children}
-        <Toaster
-          position="top-right"
-          offset={{ top: 68, right: 20 }}
-          richColors
-          closeButton
-          toastOptions={{ style: { fontFamily: "var(--font-sans)", fontSize: 13 } }}
-        />
+        <ThemeProvider>
+          {children}
+          <Toaster
+            position="top-right"
+            offset={{ top: 68, right: 20 }}
+            richColors
+            closeButton
+            toastOptions={{ className: "toast-wa", style: { fontFamily: "var(--font-sans)", fontSize: "0.8125rem" } }}
+          />
+        </ThemeProvider>
       </body>
     </html>
   );

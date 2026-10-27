@@ -24,13 +24,13 @@ function CostBar({ cost, label, sub, highlight }: { cost: CostBreakdown; label: 
     <div className={cn("grid grid-cols-[150px_1fr] items-center gap-3 rounded-md px-2 py-1.5", highlight && "bg-shu-50/60")}>
       <div className="min-w-0">
         <div className={cn("truncate text-xs", highlight ? "font-bold text-shu-700" : "text-stone-700")}>{label}</div>
-        {sub && <div className="truncate text-[10px] text-stone-400">{sub}</div>}
+        {sub && <div className="truncate text-[0.625rem] text-stone-400">{sub}</div>}
       </div>
-      <div className="flex h-5 gap-[2px] overflow-hidden rounded">
+      <div className="flex h-5 gap-[2px] overflow-hidden rounded-sm">
         {COST_KEYS.map((k, i) => (
           <motion.div
             key={k}
-            className="group relative h-full first:rounded-l last:rounded-r"
+            className="group relative h-full first:rounded-l-sm last:rounded-r-sm"
             style={{ background: COST_COLORS[k] }}
             initial={{ width: 0 }}
             animate={{ width: `${(cost[k] / total) * 100}%` }}
@@ -110,27 +110,27 @@ export function CostTab({ c }: CaseTabProps) {
               {COST_KEYS.map((k) => (
                 <div key={k} className="flex items-center gap-3">
                   <span className="h-3 w-3 shrink-0 rounded-sm" style={{ background: COST_COLORS[k] }} />
-                  <span className="w-28 shrink-0 text-[13px] text-stone-700">{COST_LABELS[k]}</span>
+                  <span className="w-28 shrink-0 text-[0.8125rem] text-stone-700">{COST_LABELS[k]}</span>
                   <NumberInput value={draft[k]} onChange={(v) => setDraft({ ...draft, [k]: v })} suffix="円" className="flex-1" disabled={!canEdit} />
-                  <span className="font-num w-12 text-right text-[11px] text-stone-500">{total ? pct(draft[k] / total, 0) : "—"}</span>
+                  <span className="font-num w-12 text-right text-[0.6875rem] text-stone-500">{total ? pct(draft[k] / total, 0) : "—"}</span>
                 </div>
               ))}
             </div>
             <div className="mt-5 grid gap-3 rounded-lg bg-kinari p-4 sm:grid-cols-4">
               <div>
-                <div className="text-[11px] text-stone-500">見積原価 合計</div>
+                <div className="text-[0.6875rem] text-stone-500">見積原価 合計</div>
                 <div className="font-num text-lg font-bold">{yen(total)}</div>
               </div>
               <div>
-                <div className="text-[11px] text-stone-500">{c.order ? "受注金額" : "見込金額"}</div>
+                <div className="text-[0.6875rem] text-stone-500">{c.order ? "受注金額" : "見込金額"}</div>
                 <div className="font-num text-lg font-bold">{yen(price)}</div>
               </div>
               <div>
-                <div className="text-[11px] text-stone-500">粗利</div>
+                <div className="text-[0.6875rem] text-stone-500">粗利</div>
                 <div className="font-num text-lg font-bold">{yen(price - total)}</div>
               </div>
               <div>
-                <div className="text-[11px] text-stone-500">粗利率（目標 25%）</div>
+                <div className="text-[0.6875rem] text-stone-500">粗利率（目標 25%）</div>
                 <div className={cn("font-num text-lg font-bold", margin < 0.2 ? "text-rose-600" : margin < 0.25 ? "text-amber-600" : "text-emerald-700")}>{price ? pct(margin) : "—"}</div>
                 <div className="mt-1 h-1.5 overflow-hidden rounded-full bg-stone-200">
                   <motion.div className={cn("h-full rounded-full", margin < 0.2 ? "bg-rose-500" : margin < 0.25 ? "bg-amber-500" : "bg-emerald-500")} initial={{ width: 0 }} animate={{ width: `${Math.max(0, Math.min(100, (margin / 0.4) * 100))}%` }} />
@@ -151,7 +151,7 @@ export function CostTab({ c }: CaseTabProps) {
             ))}
             <div className="mt-3 flex flex-wrap gap-x-4 gap-y-1 border-t border-stone-100 pt-3">
               {COST_KEYS.map((k) => (
-                <span key={k} className="flex items-center gap-1.5 text-[11px] text-stone-600">
+                <span key={k} className="flex items-center gap-1.5 text-[0.6875rem] text-stone-600">
                   <span className="h-2.5 w-2.5 rounded-sm" style={{ background: COST_COLORS[k] }} />
                   {COST_LABELS[k]}
                 </span>
@@ -219,14 +219,14 @@ export function CostTab({ c }: CaseTabProps) {
               return (
                 <div key={x.id} className="border-b border-stone-50 px-5 py-3 last:border-0">
                   <div className="flex items-center justify-between gap-2">
-                    <Link href={`/cases/${x.id}?tab=cost`} className="font-num text-[11px] font-semibold text-shu-600 hover:underline">{x.workNo}</Link>
+                    <Link href={`/cases/${x.id}?tab=cost`} className="font-num text-[0.6875rem] font-semibold text-shu-600 hover:underline">{x.workNo}</Link>
                     <div className="flex items-center gap-1">
                       {c.referenceCaseIds.includes(x.id) && <Badge className="bg-ai-50 text-ai-700 ring-ai-200">参考案件</Badge>}
                       <Badge>類似度 {score}</Badge>
                     </div>
                   </div>
-                  <div className="text-[13px] font-medium">{x.title}</div>
-                  <div className="mt-1 grid grid-cols-3 gap-1 text-[11px] text-stone-500">
+                  <div className="text-[0.8125rem] font-medium">{x.title}</div>
+                  <div className="mt-1 grid grid-cols-3 gap-1 text-[0.6875rem] text-stone-500">
                     <span>受注 <span className="font-num block text-stone-800">{(p / 10000).toLocaleString()}万</span></span>
                     <span>{x.actualCost ? "実績原価" : "見積原価"} <span className="font-num block text-stone-800">{(cst / 10000).toLocaleString()}万</span></span>
                     <span>粗利率 <span className={cn("font-num block", 1 - cst / p < 0.2 ? "text-rose-600" : "text-stone-800")}>{pct(1 - cst / p)}</span></span>
@@ -246,7 +246,7 @@ export function CostTab({ c }: CaseTabProps) {
           <Card>
             <CardBody>
               <SectionTitle>BOM積上げとの比較</SectionTitle>
-              <div className="space-y-2 text-[13px]">
+              <div className="space-y-2 text-[0.8125rem]">
                 <div className="flex justify-between">
                   <span className="text-stone-500">見積（材料費＋購入品費）</span>
                   <span className="font-num">{yen(c.costEstimate.material + c.costEstimate.purchased)}</span>

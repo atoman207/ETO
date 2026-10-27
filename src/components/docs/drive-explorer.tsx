@@ -101,10 +101,10 @@ export function DriveExplorer({ docs, path, caseId, equipmentId, extra, showCase
             const n = f.key === "all" ? docs.length : docs.filter((d) => d.folder === f.key).length;
             const active = folder === f.key;
             return (
-              <button key={f.key} onClick={() => setFolder(f.key)} className={cn("flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-left text-[13px] transition-colors", active ? "bg-ai-50 font-medium text-ai-800" : "text-stone-600 hover:bg-stone-50")}>
+              <button key={f.key} onClick={() => setFolder(f.key)} className={cn("flex w-full items-center gap-2 rounded-md px-2.5 py-1.5 text-left text-[0.8125rem] transition-colors", active ? "bg-ai-50 font-medium text-ai-800" : "text-stone-600 hover:bg-stone-50")}>
                 {active ? <FolderOpen size={15} className="text-amber-500" /> : <Folder size={15} className="text-amber-400" />}
                 <span className="flex-1 truncate">{f.label}</span>
-                <span className="font-num text-[10px] text-stone-400">{n}</span>
+                <span className="font-num text-[0.625rem] text-stone-400">{n}</span>
               </button>
             );
           })}
@@ -125,7 +125,7 @@ export function DriveExplorer({ docs, path, caseId, equipmentId, extra, showCase
         >
           <AnimatePresence>
             {drag && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pointer-events-none absolute inset-3 z-10 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-ai-400 bg-white/80 text-ai-700">
+              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} className="pointer-events-none absolute inset-3 z-10 flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-ai-400 bg-surface/80 text-ai-700">
                 <UploadCloud size={30} />
                 <div className="mt-2 text-sm font-medium">ここにドロップして「{folder === "all" ? DOC_FOLDERS[1] : folder}」に登録</div>
               </motion.div>
@@ -156,15 +156,15 @@ export function DriveExplorer({ docs, path, caseId, equipmentId, extra, showCase
                           <button className="flex items-center gap-2.5 text-left" onClick={() => toast.info(`「${d.name}」を開きます`, { description: "本番環境では Google Drive のプレビューが表示されます" })}>
                             <FileBadge type={d.fileType} />
                             <span className="min-w-0">
-                              <span className="block truncate text-[13px] font-medium text-stone-800 hover:text-ai-700 hover:underline">{d.name}</span>
-                              {folder === "all" && <span className="block text-[10px] text-stone-400">{d.folder}</span>}
+                              <span className="block truncate text-[0.8125rem] font-medium text-stone-800 hover:text-ai-700 hover:underline">{d.name}</span>
+                              {folder === "all" && <span className="block text-[0.625rem] text-stone-400">{d.folder}</span>}
                             </span>
                           </button>
                         </td>
                         <td>
                           <Badge>{DOC_KINDS[d.kind]}</Badge>
                         </td>
-                        {showCase && <td className="font-num whitespace-nowrap text-[11px] text-stone-500">{c ? c.workNo ?? c.dealNo : "—"}</td>}
+                        {showCase && <td className="font-num whitespace-nowrap text-[0.6875rem] text-stone-500">{c ? c.workNo ?? c.dealNo : "—"}</td>}
                         <td className="font-num text-xs text-stone-500">v{d.version}</td>
                         <td className="whitespace-nowrap text-xs text-stone-600">
                           <span className="font-num">{fmtDateTime(d.updatedAt)}</span>

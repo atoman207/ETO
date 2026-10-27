@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useEffect } from "react";
 import type { ReactNode } from "react";
 import { ArrowLeft, Printer } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,11 @@ import type { ApprovalStep, User } from "@/lib/types";
 import { toDate } from "@/lib/format";
 
 export function PrintShell({ title, children }: { title: string; children: ReactNode }) {
+  // 帳票は表示倍率の設定に関係なく実寸で表示する
+  useEffect(() => {
+    document.documentElement.setAttribute("data-print", "");
+    return () => document.documentElement.removeAttribute("data-print");
+  }, []);
   return (
     <div className="min-h-screen bg-stone-300/70 pb-10 print:bg-white print:pb-0">
       <div className="no-print sticky top-0 z-10 flex items-center justify-between gap-3 border-b border-stone-300 bg-white/90 px-6 py-3 backdrop-blur">
@@ -27,7 +33,7 @@ export function PrintShell({ title, children }: { title: string; children: React
         initial={{ opacity: 0, y: 16 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        className="print-sheet mx-auto mt-8 bg-white px-[16mm] py-[14mm] text-[12px] leading-relaxed text-stone-900 shadow-2xl"
+        className="print-sheet mx-auto mt-8 bg-white px-[16mm] py-[14mm] text-[0.75rem] leading-relaxed text-stone-900 shadow-2xl"
         style={{ width: "210mm", minHeight: "297mm" }}
       >
         {children}
@@ -58,7 +64,7 @@ export function CompanySeal({ name, size = 70 }: { name: string; size?: number }
 export function StampBoxes({ steps, users, labels }: { steps?: ApprovalStep[]; users: Map<string, User>; labels?: string[] }) {
   const cols = labels ?? steps?.map((s) => s.label) ?? [];
   return (
-    <table className="border-collapse text-center text-[9px]">
+    <table className="border-collapse text-center text-[0.5625rem]">
       <tbody>
         <tr>
           {cols.map((l) => (
@@ -73,7 +79,7 @@ export function StampBoxes({ steps, users, labels }: { steps?: ApprovalStep[]; u
               <td key={l} className="h-[16mm] border border-stone-500">
                 <div className="flex flex-col items-center justify-center">
                   {u && <Hanko name={u.name} size={36} animateIn={false} />}
-                  {s?.at && <span className="font-num mt-0.5 text-[8px] text-stone-500">{toDate(s.at).getMonth() + 1}/{toDate(s.at).getDate()}</span>}
+                  {s?.at && <span className="font-num mt-0.5 text-[0.5rem] text-stone-500">{toDate(s.at).getMonth() + 1}/{toDate(s.at).getDate()}</span>}
                 </div>
               </td>
             );

@@ -7,7 +7,7 @@ export function Badge({ className, children, dot }: { className?: string; childr
   return (
     <span
       className={cn(
-        "inline-flex items-center gap-1 whitespace-nowrap rounded px-1.5 py-0.5 text-[11px] font-medium leading-4 ring-1 ring-inset",
+        "inline-flex items-center gap-1 whitespace-nowrap rounded-sm px-1.5 py-0.5 text-[0.6875rem] font-medium leading-4 ring-1 ring-inset",
         className ?? "bg-stone-100 text-stone-600 ring-stone-300",
       )}
     >
@@ -39,8 +39,8 @@ export function NumberTag({ label, value, tone = "stone", className }: { label: 
     violet: "border-violet-300 text-violet-800",
   };
   return (
-    <span className={cn("inline-flex items-stretch overflow-hidden rounded border bg-white text-xs", value ? tones[tone] : "border-dashed border-stone-300 text-stone-400", className)}>
-      <span className={cn("px-1.5 py-0.5 text-[10px] font-medium", value ? "bg-stone-50" : "")}>{label}</span>
+    <span className={cn("inline-flex items-stretch overflow-hidden rounded-sm border bg-surface text-xs", value ? tones[tone] : "border-dashed border-stone-300 text-stone-400", className)}>
+      <span className={cn("px-1.5 py-0.5 text-[0.625rem] font-medium", value ? "bg-stone-50" : "")}>{label}</span>
       <span className="font-num px-1.5 py-0.5 font-semibold">{value ?? "未発行"}</span>
     </span>
   );

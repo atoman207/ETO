@@ -72,10 +72,10 @@ export default function EquipmentPage() {
           </Button>
         }
       />
-      <div className="mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
+      <div className="stagger mb-4 grid grid-cols-2 gap-3 md:grid-cols-4">
         {counts.map(({ k, n }) => (
-          <button key={k} onClick={() => setStatus(status === k ? "all" : k)} className={cn("rounded-lg border bg-white px-4 py-3 text-left shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5", status === k ? "border-ai-500 ring-2 ring-ai-500/15" : "border-stone-200")}>
-            <div className="flex items-center gap-1.5 text-[11px] text-stone-500">
+          <button key={k} onClick={() => setStatus(status === k ? "all" : k)} className={cn("rounded-lg border bg-surface px-4 py-3 text-left shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5", status === k ? "border-ai-500 ring-2 ring-ai-500/15" : "border-stone-200")}>
+            <div className="flex items-center gap-1.5 text-[0.6875rem] text-stone-500">
               <span className={cn("h-2 w-2 rounded-full", EQUIPMENT_STATUS[k].dot)} />
               {EQUIPMENT_STATUS[k].label}
             </div>
@@ -128,23 +128,23 @@ export default function EquipmentPage() {
                   return (
                     <motion.tr key={e.id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: i * 0.02 }} className="cursor-pointer" onClick={() => router.push(`/equipment/${e.id}`)}>
                       <td className="whitespace-nowrap">
-                        <div className="font-num text-[13px] font-bold text-emerald-700">{e.serialNo}</div>
-                        <div className="text-[10px] text-stone-400">{EQUIPMENT_TYPES[e.equipmentType].label}</div>
+                        <div className="font-num text-[0.8125rem] font-bold text-emerald-700">{e.serialNo}</div>
+                        <div className="text-[0.625rem] text-stone-400">{EQUIPMENT_TYPES[e.equipmentType].label}</div>
                       </td>
                       <td className="font-medium">{e.name}</td>
                       <td>
-                        <div className="text-[13px]">{lk.customer.get(e.customerId)?.name}</div>
-                        <div className="text-[11px] text-stone-500">{e.location}</div>
+                        <div className="text-[0.8125rem]">{lk.customer.get(e.customerId)?.name}</div>
+                        <div className="text-[0.6875rem] text-stone-500">{e.location}</div>
                       </td>
                       <td className="font-num whitespace-nowrap text-xs">{fmtDate(e.deliveredDate, false)}</td>
                       <td className="whitespace-nowrap">
-                        {left >= 0 ? <Badge className="bg-emerald-50 text-emerald-700 ring-emerald-200">保証内（残{left}日）</Badge> : <span className="text-[11px] text-stone-400">期間外</span>}
+                        {left >= 0 ? <Badge className="bg-emerald-50 text-emerald-700 ring-emerald-200">保証内（残{left}日）</Badge> : <span className="text-[0.6875rem] text-stone-400">期間外</span>}
                       </td>
                       <td>
                         <Badge className={EQUIPMENT_STATUS[e.status].color} dot={EQUIPMENT_STATUS[e.status].dot}>{EQUIPMENT_STATUS[e.status].label}</Badge>
                       </td>
                       <td className="font-num text-right text-xs">
-                        {sv.length}件{open > 0 && <span className="ml-1 rounded bg-shu-500 px-1 text-[10px] text-white">対応中{open}</span>}
+                        {sv.length}件{open > 0 && <span className="ml-1 rounded-sm bg-shu-500 px-1 text-[0.625rem] text-white">対応中{open}</span>}
                       </td>
                       <td className="max-w-[220px] truncate text-xs text-stone-600">{sv[0] ? `${fmtDate(sv[0].reportedDate, false)} ${sv[0].title}` : "—"}</td>
                     </motion.tr>

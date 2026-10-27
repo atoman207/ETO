@@ -27,6 +27,10 @@ import { EQUIPMENT_TYPES, SERVICE_STATUS, SERVICE_TYPES, STAGES } from "@/lib/co
 import { Card, CardHeader } from "@/components/ui/card";
 import { Badge, StageBadge } from "@/components/ui/badge";
 import { Avatar, CountUp, DueLabel, ProgressBar } from "@/components/ui/misc";
+import { WaPattern } from "@/components/theme/wa-pattern";
+import { SeasonalParticles } from "@/components/theme/seasonal";
+import { useThemeColors } from "@/components/theme/theme-provider";
+import { currentSekki, wafuMonth } from "@/lib/wa";
 
 const PROB_WEIGHT = { A: 0.8, B: 0.5, C: 0.2 };
 
@@ -47,6 +51,8 @@ export default function DashboardPage() {
   const me = useCurrentUser();
   const lk = useLookups();
   const t = today();
+  const col = useThemeColors(["--color-ai-600", "--color-stone-200", "--color-stone-500", "--color-ai-100"]);
+  const sekki = currentSekki();
 
   const data = useMemo(() => {
     const now = toDate(t);
@@ -142,35 +148,46 @@ export default function DashboardPage() {
 
   return (
     <div className="space-y-5">
-      <div className="flex flex-wrap items-end justify-between gap-3">
-        <div>
-          <p className="text-xs text-stone-500">
-            {fmtDate(t)}　{fmtWareki(t)}
-          </p>
-          <h1 className="mt-0.5 text-xl font-bold text-stone-900">
-            {greeting()}、{me?.name.split(" ")[0]}さん
-          </h1>
-          <p className="mt-0.5 text-[13px] text-stone-500">引合から納品・アフターサービスまで、全案件の状況をひと目で確認できます。</p>
+      <motion.section
+        initial={{ opacity: 0, y: 10 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        className="relative overflow-hidden rounded-xl bg-gradient-to-br from-ai-800 via-ai-700 to-ai-900 px-6 py-5 text-white shadow-[var(--shadow-lift)]"
+      >
+        <WaPattern className="pointer-events-none absolute inset-0 h-full w-full opacity-50 [mask-image:linear-gradient(to_left,black_10%,transparent_75%)]" id="wa-hero" fill="transparent" line="rgba(255,255,255,0.12)" />
+        <SeasonalParticles count={16} height={180} />
+        <div className="relative flex flex-wrap items-end justify-between gap-4">
+          <div>
+            <p className="flex flex-wrap items-center gap-x-3 gap-y-1 text-xs text-ai-100">
+              <span className="font-num">{fmtDate(t)}</span>
+              <span>{fmtWareki(t)}</span>
+              <span className="rounded-full bg-white/12 px-2 py-0.5 ring-1 ring-white/15">{wafuMonth()}・{sekki.name}（{sekki.kana}）</span>
+            </p>
+            <h1 className="font-heading mt-1.5 text-[1.375rem] font-bold tracking-wide">
+              {greeting()}、{me?.name.split(" ")[0]}さん
+            </h1>
+            <p className="mt-0.5 text-[0.8125rem] text-ai-100/90">{sekki.meaning}。本日も全案件の状況をひと目でご確認いただけます。</p>
+          </div>
+          <Link href="/proposal" className="btn-sheen group inline-flex items-center gap-1.5 rounded-full bg-white/12 px-3.5 py-1.5 text-xs text-white ring-1 ring-white/25 backdrop-blur-sm transition hover:bg-white/20">
+            本デモの構成・ご提案内容を見る
+            <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
+          </Link>
         </div>
-        <Link href="/proposal" className="group inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-xs text-ai-800 ring-1 ring-ai-200 transition hover:bg-ai-50">
-          本デモの構成・ご提案内容を見る
-          <ArrowRight size={13} className="transition-transform group-hover:translate-x-0.5" />
-        </Link>
-      </div>
+      </motion.section>
 
       <div className="grid grid-cols-2 gap-3 md:grid-cols-3 xl:grid-cols-5">
         {kpis.map((k, i) => (
           <motion.div key={k.label} initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.06, duration: 0.45, ease: [0.22, 1, 0.36, 1] }}>
-            <Link href={k.href} className="group block h-full rounded-lg border border-stone-200/90 bg-white p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-ai-200 hover:shadow-[var(--shadow-lift)]">
+            <Link href={k.href} className="group block h-full rounded-lg border border-stone-200/90 bg-surface p-4 shadow-[var(--shadow-card)] transition-all hover:-translate-y-0.5 hover:border-ai-200 hover:shadow-[var(--shadow-lift)]">
               <div className="flex items-start justify-between">
                 <span className="text-xs font-medium text-stone-500">{k.label}</span>
-                <span className={cn("flex h-8 w-8 items-center justify-center rounded-lg", k.tone)}>{k.icon}</span>
+                <span className={cn("flex h-8 w-8 items-center justify-center rounded-lg transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:rotate-[-6deg]", k.tone)}>{k.icon}</span>
               </div>
               <div className="mt-1 flex items-baseline gap-1">
-                <CountUp value={k.value} className="text-[26px] font-bold tracking-tight text-stone-900" />
+                <CountUp value={k.value} className="text-[1.625rem] font-bold tracking-tight text-stone-900" />
                 <span className="text-xs text-stone-500">{k.unit}</span>
               </div>
-              <div className="mt-0.5 text-[11px] text-stone-500">{k.sub}</div>
+              <div className="mt-0.5 text-[0.6875rem] text-stone-500">{k.sub}</div>
             </Link>
           </motion.div>
         ))}
@@ -186,9 +203,9 @@ export default function DashboardPage() {
                   <span className={cn("h-2 w-2 shrink-0 rounded-full", s.dot)} />
                   {s.label}
                 </span>
-                <div className="h-5 overflow-hidden rounded bg-stone-100">
+                <div className="h-5 overflow-hidden rounded-sm bg-stone-100">
                   <motion.div
-                    className="flex h-full items-center rounded bg-ai-600/85 pl-2 text-[10px] font-bold text-white group-hover:bg-ai-700"
+                    className="flex h-full items-center rounded-sm bg-ai-600/85 pl-2 text-[0.625rem] font-bold text-white group-hover:bg-ai-700"
                     initial={{ width: 0 }}
                     animate={{ width: `${s.count ? Math.max(10, (s.count / data.maxStage) * 100) : 0}%` }}
                     transition={{ delay: 0.15 + i * 0.04, duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
@@ -211,8 +228,8 @@ export default function DashboardPage() {
                 <Link href={tk.href} className="flex items-center gap-3 border-b border-stone-50 px-5 py-2.5 transition-colors hover:bg-stone-50">
                   <span className={cn("flex h-7 w-7 shrink-0 items-center justify-center rounded-md", tk.tone)}>{tk.icon}</span>
                   <span className="min-w-0 flex-1">
-                    <span className="block text-[13px] font-medium text-stone-800">{tk.title}</span>
-                    <span className="block truncate text-[11px] text-stone-500">{tk.sub}</span>
+                    <span className="block text-[0.8125rem] font-medium text-stone-800">{tk.title}</span>
+                    <span className="block truncate text-[0.6875rem] text-stone-500">{tk.sub}</span>
                   </span>
                   <ArrowRight size={14} className="text-stone-300" />
                 </Link>
@@ -228,14 +245,14 @@ export default function DashboardPage() {
           <div className="h-[260px] px-3 pb-3 pt-4">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart data={data.months} margin={{ top: 8, right: 12, left: 0, bottom: 0 }}>
-                <CartesianGrid vertical={false} stroke="#efece4" />
-                <XAxis dataKey="label" tickLine={false} axisLine={{ stroke: "#e2ddd0" }} tick={{ fontSize: 11, fill: "#78716c" }} />
-                <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: "#78716c" }} width={52} tickFormatter={(v: number) => v.toLocaleString()} />
+                <CartesianGrid vertical={false} stroke={col["--color-stone-200"]} strokeOpacity={0.7} />
+                <XAxis dataKey="label" tickLine={false} axisLine={{ stroke: col["--color-stone-200"] }} tick={{ fontSize: 11, fill: col["--color-stone-500"] }} />
+                <YAxis tickLine={false} axisLine={false} tick={{ fontSize: 11, fill: col["--color-stone-500"] }} width={52} tickFormatter={(v: number) => v.toLocaleString()} />
                 <Tooltip
-                  cursor={{ fill: "rgba(31,90,128,0.06)" }}
+                  cursor={{ fill: col["--color-ai-100"], fillOpacity: 0.5 }}
                   content={({ active, payload, label }) =>
                     active && payload?.length ? (
-                      <div className="rounded-md border border-stone-200 bg-white px-3 py-2 text-xs shadow-lg">
+                      <div className="rounded-md border border-stone-200 bg-surface px-3 py-2 text-xs shadow-lg">
                         <div className="font-medium text-stone-700">{label}</div>
                         <div className="font-num mt-0.5 text-stone-900">{Math.round(Number(payload[0].value)).toLocaleString()} 万円</div>
                         <div className="text-stone-500">受注 {(payload[0].payload as { count: number }).count} 件</div>
@@ -243,7 +260,7 @@ export default function DashboardPage() {
                     ) : null
                   }
                 />
-                <Bar dataKey="amount" fill="#1f5a80" radius={[4, 4, 0, 0]} maxBarSize={34} animationDuration={900} />
+                <Bar dataKey="amount" fill={col["--color-ai-600"]} radius={[4, 4, 0, 0]} maxBarSize={34} animationDuration={900} />
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -257,13 +274,13 @@ export default function DashboardPage() {
               return (
                 <Link key={c.id} href={`/cases/${c.id}`} className="block border-b border-stone-50 px-5 py-2.5 transition-colors hover:bg-stone-50">
                   <div className="flex items-center justify-between gap-2">
-                    <span className="font-num text-[11px] font-semibold text-ai-700">{c.workNo ?? c.dealNo}</span>
+                    <span className="font-num text-[0.6875rem] font-semibold text-ai-700">{c.workNo ?? c.dealNo}</span>
                     <StageBadge stage={c.stage} />
                   </div>
-                  <div className="mt-0.5 truncate text-[13px] font-medium text-stone-800">{c.title}</div>
+                  <div className="mt-0.5 truncate text-[0.8125rem] font-medium text-stone-800">{c.title}</div>
                   <div className="mt-1 flex items-center gap-3">
-                    <ProgressBar value={prog} className="flex-1" height={5} />
-                    <span className="text-[11px]">
+                    <ProgressBar value={prog} className="flex-1" height={5} striped />
+                    <span className="text-[0.6875rem]">
                       <DueLabel date={c.order!.deliveryDate} />
                     </span>
                   </div>
@@ -286,10 +303,10 @@ export default function DashboardPage() {
                   {i < 9 && <span className="absolute left-[13px] top-7 h-[calc(100%-20px)] w-px bg-stone-200" />}
                   <Avatar user={u} size={26} />
                   <div className="min-w-0 flex-1">
-                    <div className="text-[13px] text-stone-700">
+                    <div className="text-[0.8125rem] text-stone-700">
                       <span className="font-medium text-stone-900">{u?.name}</span>　{a.message}
                     </div>
-                    <div className="mt-0.5 flex flex-wrap items-center gap-2 text-[11px] text-stone-400">
+                    <div className="mt-0.5 flex flex-wrap items-center gap-2 text-[0.6875rem] text-stone-400">
                       <span>{relTime(a.at)}</span>
                       {c && (
                         <Link href={`/cases/${c.id}`} className="font-num text-ai-700 hover:underline">
@@ -315,10 +332,10 @@ export default function DashboardPage() {
                   <div className="flex items-center gap-2">
                     <Badge className={SERVICE_TYPES[s.type].color}>{SERVICE_TYPES[s.type].label}</Badge>
                     <Badge className={SERVICE_STATUS[s.status].color}>{SERVICE_STATUS[s.status].label}</Badge>
-                    <span className="font-num ml-auto text-[11px] text-stone-400">{s.ticketNo}</span>
+                    <span className="font-num ml-auto text-[0.6875rem] text-stone-400">{s.ticketNo}</span>
                   </div>
-                  <div className="mt-1 truncate text-[13px] font-medium text-stone-800">{s.title}</div>
-                  <div className="truncate text-[11px] text-stone-500">
+                  <div className="mt-1 truncate text-[0.8125rem] font-medium text-stone-800">{s.title}</div>
+                  <div className="truncate text-[0.6875rem] text-stone-500">
                     {lk.customer.get(eq?.customerId ?? "")?.name}／{eq?.serialNo} {eq ? EQUIPMENT_TYPES[eq.equipmentType].label : ""}
                   </div>
                 </Link>

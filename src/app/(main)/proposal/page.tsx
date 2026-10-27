@@ -106,7 +106,7 @@ function Section({ id, title, lead, children }: { id: string; title: string; lea
       <div className="mb-3 flex items-end gap-3 border-b-2 border-ai-800 pb-2">
         <h2 className="font-mincho text-xl font-bold tracking-wider text-ai-900">{title}</h2>
       </div>
-      {lead && <p className="mb-4 text-[13px] leading-relaxed text-stone-600">{lead}</p>}
+      {lead && <p className="mb-4 text-[0.8125rem] leading-relaxed text-stone-600">{lead}</p>}
       {children}
     </motion.section>
   );
@@ -122,9 +122,9 @@ export default function ProposalPage() {
       <div className="grid gap-6 xl:grid-cols-[200px_1fr]">
         <nav className="hidden xl:block">
           <div className="sticky top-20 space-y-0.5">
-            <div className="mb-2 text-[11px] font-bold tracking-widest text-stone-400">目次</div>
+            <div className="mb-2 text-[0.6875rem] font-bold tracking-widest text-stone-400">目次</div>
             {TOC.map((t) => (
-              <button key={t.id} onClick={() => go(t.id)} className="block w-full rounded-md px-3 py-1.5 text-left text-[13px] text-stone-600 transition-colors hover:bg-white hover:text-ai-800">
+              <button key={t.id} onClick={() => go(t.id)} className="block w-full rounded-md px-3 py-1.5 text-left text-[0.8125rem] text-stone-600 transition-colors hover:bg-surface hover:text-ai-800">
                 {t.label}
               </button>
             ))}
@@ -137,7 +137,7 @@ export default function ProposalPage() {
               <div className="bg-gradient-to-br from-ai-800 to-ai-950 px-8 py-8 text-white">
                 <div className="text-xs tracking-[0.3em] text-ai-300">PROPOSAL</div>
                 <h2 className="font-mincho mt-2 text-2xl font-bold leading-relaxed tracking-wider">引合から納品・アフターサービスまで、<br className="hidden sm:block" />案件と装置を「一本の線」で管理する。</h2>
-                <p className="mt-3 max-w-3xl text-[13px] leading-relaxed text-ai-100">
+                <p className="mt-3 max-w-3xl text-[0.8125rem] leading-relaxed text-ai-100">
                   個別受注生産（ETO）では、同じ製品を繰り返し作る量産型と異なり、案件ごとの仕様・原価・BOM・納入実績こそが会社の財産です。本提案では、これらを案件単位で長期にわたり蓄積・再利用できる業務基盤を、既存の Google Workspace を活かしながら構築する方法をご提示します。
                 </p>
               </div>
@@ -150,7 +150,7 @@ export default function ProposalPage() {
                   <div key={t} className="flex gap-3">
                     <span className="font-mincho flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-shu-500 text-base font-bold text-white">{["壱", "弐", "参"][i]}</span>
                     <div>
-                      <div className="text-[14px] font-bold">{t}</div>
+                      <div className="text-[0.875rem] font-bold">{t}</div>
                       <div className="mt-0.5 text-xs leading-relaxed text-stone-600">{d}</div>
                     </div>
                   </div>
@@ -176,7 +176,7 @@ export default function ProposalPage() {
                       <tr key={i}>
                         <td className="font-num text-center text-stone-400">{i + 1}</td>
                         <td className="min-w-[220px] font-medium text-stone-800">{x.issue}</td>
-                        <td className="min-w-[320px] text-[13px] text-stone-700">{x.solution}</td>
+                        <td className="min-w-[320px] text-[0.8125rem] text-stone-700">{x.solution}</td>
                         <td>
                           <Link href={x.href} className="inline-flex items-center gap-1 whitespace-nowrap text-xs text-ai-700 hover:underline">
                             {x.label}
@@ -191,7 +191,7 @@ export default function ProposalPage() {
             </Card>
             <Card className="mt-4">
               <CardBody>
-                <div className="mb-3 text-[13px] font-bold">対象業務フロー（11ステージ）</div>
+                <div className="mb-3 text-[0.8125rem] font-bold">対象業務フロー（11ステージ）</div>
                 <div className="flex flex-wrap items-center gap-1.5">
                   {["引合", "原価確認", "見積・仕様検討", "取引審査", "受注", "工番発行", "設計・BOM", "購買", "製造", "出荷・納品", "アフターサービス"].map((s, i, arr) => (
                     <span key={s} className="flex items-center gap-1.5">
@@ -200,7 +200,7 @@ export default function ProposalPage() {
                     </span>
                   ))}
                 </div>
-                <div className="mt-3 flex flex-wrap gap-4 text-[11px] text-stone-500">
+                <div className="mt-3 flex flex-wrap gap-4 text-[0.6875rem] text-stone-500">
                   <span><span className="mr-1 inline-block h-2 w-2 rounded-sm bg-ai-200" />受注前（取引番号・見積番号）</span>
                   <span><span className="mr-1 inline-block h-2 w-2 rounded-sm bg-shu-200" />受注後（工事番号）</span>
                   <span><span className="mr-1 inline-block h-2 w-2 rounded-sm bg-emerald-200" />納品後（製造番号・サービス番号）</span>
@@ -218,8 +218,8 @@ export default function ProposalPage() {
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
               <Card>
                 <CardBody>
-                  <div className="mb-2 text-[13px] font-bold">番号体系</div>
-                  <div className="space-y-2 text-[13px]">
+                  <div className="mb-2 text-[0.8125rem] font-bold">番号体系</div>
+                  <div className="space-y-2 text-[0.8125rem]">
                     {[
                       ["取引番号", "T26-0042", "引合登録時"],
                       ["見積番号", "M26-0042-02", "取引番号＋版数"],
@@ -229,17 +229,17 @@ export default function ProposalPage() {
                     ].map(([a, b, c], i) => (
                       <div key={a} className="flex items-center gap-3">
                         <span className="w-28 text-xs text-stone-500">{a}</span>
-                        <span className="font-num rounded bg-stone-100 px-2 py-0.5 text-[13px] font-bold">{b}</span>
-                        <span className="text-[11px] text-stone-500">{c}</span>
+                        <span className="font-num rounded-sm bg-stone-100 px-2 py-0.5 text-[0.8125rem] font-bold">{b}</span>
+                        <span className="text-[0.6875rem] text-stone-500">{c}</span>
                         {i < 4 && <span className="ml-auto text-stone-300">↓</span>}
                       </div>
                     ))}
                   </div>
-                  <p className="mt-3 text-[11px] leading-relaxed text-stone-500">見積番号・製造番号は親番号を含むため、紙の帳票や図面に記載された番号からでも関係が分かります。全番号を画面上部の検索（Ctrl＋K）から横断検索できます。</p>
+                  <p className="mt-3 text-[0.6875rem] leading-relaxed text-stone-500">見積番号・製造番号は親番号を含むため、紙の帳票や図面に記載された番号からでも関係が分かります。全番号を画面上部の検索（Ctrl＋K）から横断検索できます。</p>
                 </CardBody>
               </Card>
               <Card className="overflow-hidden">
-                <div className="px-5 pt-4 text-[13px] font-bold">主要マスタ一覧</div>
+                <div className="px-5 pt-4 text-[0.8125rem] font-bold">主要マスタ一覧</div>
                 <div className="overflow-x-auto">
                   <table className="tbl tbl-compact mt-2">
                     <thead>
@@ -253,10 +253,10 @@ export default function ProposalPage() {
                     <tbody>
                       {MASTERS.map(([a, b, c, d]) => (
                         <tr key={a}>
-                          <td className="whitespace-nowrap text-[13px] font-medium">{a}</td>
+                          <td className="whitespace-nowrap text-[0.8125rem] font-medium">{a}</td>
                           <td className="text-xs text-stone-600">{b}</td>
                           <td className="whitespace-nowrap text-xs">{c}</td>
-                          <td className="text-[11px] text-stone-500">{d}</td>
+                          <td className="text-[0.6875rem] text-stone-500">{d}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -270,12 +270,12 @@ export default function ProposalPage() {
             <div className="grid gap-3 lg:grid-cols-3">
               {OPTIONS.map((o) => (
                 <Card key={o.key} className={cn("relative overflow-hidden", o.recommended && "border-2 border-shu-400 shadow-[var(--shadow-lift)]")}>
-                  {o.recommended && <div className="absolute right-0 top-0 rounded-bl-lg bg-shu-500 px-3 py-1 text-[11px] font-bold text-white">推奨</div>}
+                  {o.recommended && <div className="absolute right-0 top-0 rounded-bl-lg bg-shu-500 px-3 py-1 text-[0.6875rem] font-bold text-white">推奨</div>}
                   <CardBody>
                     <div className="font-mincho text-2xl font-bold text-ai-800">{o.key}案</div>
-                    <div className="mt-1 text-[13px] font-bold leading-snug">{o.title}</div>
+                    <div className="mt-1 text-[0.8125rem] font-bold leading-snug">{o.title}</div>
                     <div className="mt-2 flex items-center gap-0.5">
-                      <span className="mr-1 text-[11px] text-stone-500">ETO適合度</span>
+                      <span className="mr-1 text-[0.6875rem] text-stone-500">ETO適合度</span>
                       {[1, 2, 3].map((n) => <Star key={n} size={13} className={n <= o.fit ? "fill-amber-400 text-amber-400" : "text-stone-300"} />)}
                     </div>
                     <ul className="mt-3 space-y-1 text-xs">
@@ -288,11 +288,11 @@ export default function ProposalPage() {
               ))}
             </div>
             <div className="mt-5">
-              <div className="mb-2 text-[13px] font-bold">推奨構成（B案）</div>
+              <div className="mb-2 text-[0.8125rem] font-bold">推奨構成（B案）</div>
               <ArchitectureDiagram />
             </div>
             <Card className="mt-5 overflow-hidden">
-              <div className="px-5 pt-4 text-[13px] font-bold">既存ERP・パッケージを使う領域／個別開発する領域</div>
+              <div className="px-5 pt-4 text-[0.8125rem] font-bold">既存ERP・パッケージを使う領域／個別開発する領域</div>
               <div className="overflow-x-auto">
                 <table className="tbl mt-2">
                   <thead>
@@ -307,7 +307,7 @@ export default function ProposalPage() {
                       <tr key={a}>
                         <td className="font-medium">{a}</td>
                         <td>
-                          <span className={cn("rounded px-2 py-0.5 text-xs font-medium", t === "dev" ? "bg-shu-50 text-shu-700 ring-1 ring-shu-200" : t === "gws" ? "bg-sky-50 text-sky-700 ring-1 ring-sky-200" : "bg-stone-100 text-stone-700 ring-1 ring-stone-300")}>{b}</span>
+                          <span className={cn("rounded-sm px-2 py-0.5 text-xs font-medium", t === "dev" ? "bg-shu-50 text-shu-700 ring-1 ring-shu-200" : t === "gws" ? "bg-sky-50 text-sky-700 ring-1 ring-sky-200" : "bg-stone-100 text-stone-700 ring-1 ring-stone-300")}>{b}</span>
                         </td>
                         <td className="text-xs text-stone-600">{c}</td>
                       </tr>
@@ -319,7 +319,7 @@ export default function ProposalPage() {
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
               <Card>
                 <CardBody>
-                  <div className="mb-2 text-[13px] font-bold">アクセス権限・情報セキュリティ</div>
+                  <div className="mb-2 text-[0.8125rem] font-bold">アクセス権限・情報セキュリティ</div>
                   <ul className="space-y-1.5 text-xs leading-relaxed text-stone-700">
                     {["Google アカウントによる SSO・二段階認証（パスワード管理を一元化）", "ロール（部署）×承認段階（役職）による操作制御", "原価・粗利は権限者のみ表示（画面・帳票・CSV すべて）", "Drive フォルダ権限をステージに応じて自動付与・社外共有を禁止", "全操作の監査ログ・国内リージョンでの暗号化保存・日次バックアップ", "退職・異動時は Workspace の組織変更に連動して権限を自動更新"].map((t) => <li key={t} className="flex gap-2"><Check size={13} className="mt-0.5 shrink-0 text-ai-600" />{t}</li>)}
                   </ul>
@@ -328,7 +328,7 @@ export default function ProposalPage() {
               </Card>
               <Card>
                 <CardBody>
-                  <div className="mb-2 text-[13px] font-bold">保守・運用・内製化</div>
+                  <div className="mb-2 text-[0.8125rem] font-bold">保守・運用・内製化</div>
                   <ul className="space-y-1.5 text-xs leading-relaxed text-stone-700">
                     {["設計書・データ定義書・運用手順書を整備して引き渡し", "マスタ・帳票レイアウト・区分値は画面から社内で変更可能", "AppSheet／GAS による周辺機能は社内での追加を想定", "初年度は伴走型保守（問合せ・軽微改修・担当者育成）", "2年目以降は社内主体＋スポット支援への移行を計画"].map((t) => <li key={t} className="flex gap-2"><Check size={13} className="mt-0.5 shrink-0 text-ai-600" />{t}</li>)}
                   </ul>
@@ -369,18 +369,18 @@ export default function ProposalPage() {
             </Card>
             <Card className="mt-4">
               <CardBody>
-                <div className="mb-3 text-[13px] font-bold">スケジュール（イメージ）</div>
+                <div className="mb-3 text-[0.8125rem] font-bold">スケジュール（イメージ）</div>
                 <div className="scroll-thin overflow-x-auto">
                   <div className="min-w-[640px]">
-                    <div className="ml-[200px] grid grid-cols-11 text-center text-[10px] text-stone-500">
+                    <div className="ml-[200px] grid grid-cols-11 text-center text-[0.625rem] text-stone-500">
                       {Array.from({ length: 11 }).map((_, i) => <span key={i}>{i + 1}ヶ月目</span>)}
                     </div>
                     {PHASES.map((p, i) => (
                       <div key={p.name} className="mt-1.5 flex items-center">
                         <span className="w-[200px] shrink-0 pr-3 text-xs">{p.name}</span>
-                        <div className="relative h-6 flex-1 rounded bg-stone-100">
+                        <div className="relative h-6 flex-1 rounded-sm bg-stone-100">
                           <motion.div
-                            className={cn("absolute inset-y-0 rounded", ["bg-ai-400", "bg-ai-600", "bg-shu-500", "bg-emerald-600"][i])}
+                            className={cn("absolute inset-y-0 rounded-sm", ["bg-ai-400", "bg-ai-600", "bg-shu-500", "bg-emerald-600"][i])}
                             style={{ left: `${(p.start / 11) * 100}%` }}
                             initial={{ width: 0 }}
                             whileInView={{ width: `${(p.len / 11) * 100}%` }}
@@ -390,9 +390,9 @@ export default function ProposalPage() {
                         </div>
                       </div>
                     ))}
-                    <div className="ml-[200px] mt-2 flex text-[10px] text-stone-500">
-                      <span className="rounded bg-shu-50 px-1.5 text-shu-700">◆ 5ヶ月目：主要機能の中間レビュー</span>
-                      <span className="ml-auto rounded bg-emerald-50 px-1.5 text-emerald-700">◆ 10ヶ月目：本稼働</span>
+                    <div className="ml-[200px] mt-2 flex text-[0.625rem] text-stone-500">
+                      <span className="rounded-sm bg-shu-50 px-1.5 text-shu-700">◆ 5ヶ月目：主要機能の中間レビュー</span>
+                      <span className="ml-auto rounded-sm bg-emerald-50 px-1.5 text-emerald-700">◆ 10ヶ月目：本稼働</span>
                     </div>
                   </div>
                 </div>
@@ -401,7 +401,7 @@ export default function ProposalPage() {
             <div className="mt-4 grid gap-4 lg:grid-cols-2">
               <Card>
                 <CardBody>
-                  <div className="mb-2 text-[13px] font-bold">ランニング費用（月額・目安）</div>
+                  <div className="mb-2 text-[0.8125rem] font-bold">ランニング費用（月額・目安）</div>
                   <table className="w-full text-xs">
                     <tbody>
                       {[
@@ -421,13 +421,13 @@ export default function ProposalPage() {
               </Card>
               <Card>
                 <CardBody>
-                  <div className="mb-2 text-[13px] font-bold">費用を抑えるための段階導入案</div>
+                  <div className="mb-2 text-[0.8125rem] font-bold">費用を抑えるための段階導入案</div>
                   <ol className="space-y-1.5 text-xs leading-relaxed text-stone-700">
                     <li><b className="text-ai-800">第1期：</b>案件・番号管理・見積・類似検索・Drive 連携（営業中心）</li>
                     <li><b className="text-ai-800">第2期：</b>工番・BOM・購買・製造進捗（設計・製造中心）</li>
                     <li><b className="text-ai-800">第3期：</b>装置台帳・アフターサービス・AppSheet 現場入力</li>
                   </ol>
-                  <p className="mt-2 text-[11px] text-stone-500">効果の大きい領域から段階的に稼働させ、投資を分散できます。各期の効果を確認しながら次期の範囲を調整します。</p>
+                  <p className="mt-2 text-[0.6875rem] text-stone-500">効果の大きい領域から段階的に稼働させ、投資を分散できます。各期の効果を確認しながら次期の範囲を調整します。</p>
                 </CardBody>
               </Card>
             </div>
@@ -439,13 +439,13 @@ export default function ProposalPage() {
                 <Card key={i} className="overflow-hidden">
                   <button onClick={() => setFaq(faq === i ? null : i)} className="flex w-full items-center gap-3 px-5 py-3.5 text-left">
                     <CircleHelp size={17} className="shrink-0 text-shu-500" />
-                    <span className="flex-1 text-[14px] font-bold text-stone-800">{f.q}</span>
+                    <span className="flex-1 text-[0.875rem] font-bold text-stone-800">{f.q}</span>
                     <ChevronDown size={16} className={cn("text-stone-400 transition-transform", faq === i && "rotate-180")} />
                   </button>
                   <AnimatePresence initial={false}>
                     {faq === i && (
                       <motion.div initial={{ height: 0, opacity: 0 }} animate={{ height: "auto", opacity: 1 }} exit={{ height: 0, opacity: 0 }} className="overflow-hidden">
-                        <p className="border-t border-stone-100 px-5 py-4 pl-12 text-[13px] leading-[1.9] text-stone-700">{f.a}</p>
+                        <p className="border-t border-stone-100 px-5 py-4 pl-12 text-[0.8125rem] leading-[1.9] text-stone-700">{f.a}</p>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -466,16 +466,16 @@ export default function ProposalPage() {
                   <Card className="h-full">
                     <CardBody>
                       <div className="font-mincho text-3xl font-bold text-shu-500/80">{String(i + 1).padStart(2, "0")}</div>
-                      <div className="mt-1 text-[14px] font-bold">{t}</div>
+                      <div className="mt-1 text-[0.875rem] font-bold">{t}</div>
                       <p className="mt-1 text-xs leading-relaxed text-stone-600">{d}</p>
                     </CardBody>
                   </Card>
                 </motion.div>
               ))}
             </div>
-            <Card className="mt-4 bg-gradient-to-r from-ai-50 to-white">
+            <Card className="mt-4 bg-gradient-to-r from-ai-50 to-surface">
               <CardBody className="flex flex-wrap items-center justify-between gap-3">
-                <div className="text-[13px] text-stone-700">まずはデモで、引合登録 → 見積承認 → 工番発行 → BOM流用 → 納品 → サービス受付 の一連の流れをお試しください。</div>
+                <div className="text-[0.8125rem] text-stone-700">まずはデモで、引合登録 → 見積承認 → 工番発行 → BOM流用 → 納品 → サービス受付 の一連の流れをお試しください。</div>
                 <Link href="/cases/new" className="inline-flex items-center gap-1.5 rounded-md bg-shu-500 px-4 py-2 text-sm font-medium text-white shadow-sm transition-colors hover:bg-shu-600">
                   引合登録から試す
                   <ArrowRight size={15} />

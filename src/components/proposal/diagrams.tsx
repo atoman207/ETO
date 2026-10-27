@@ -55,11 +55,11 @@ const GY = 168;
 const X0 = 10;
 const Y0 = 14;
 const TONE = {
-  ai: { head: "#1a4868", body: "#eef5f9", stroke: "#7eaecb" },
-  shu: { head: "#c94f05", body: "#fff4ed", stroke: "#fd9e6d" },
-  emerald: { head: "#047857", body: "#ecfdf5", stroke: "#6ee7b7" },
-  violet: { head: "#6d28d9", body: "#f5f3ff", stroke: "#c4b5fd" },
-  stone: { head: "#57534e", body: "#fafaf9", stroke: "#d6d3d1" },
+  ai: { head: "var(--color-ai-700)", body: "var(--color-ai-50)", stroke: "var(--color-ai-300)" },
+  shu: { head: "var(--color-shu-600)", body: "var(--color-shu-50)", stroke: "var(--color-shu-300)" },
+  emerald: { head: "var(--color-emerald-700)", body: "var(--color-emerald-50)", stroke: "var(--color-emerald-300)" },
+  violet: { head: "var(--color-violet-700)", body: "var(--color-violet-50)", stroke: "var(--color-violet-300)" },
+  stone: { head: "var(--color-stone-600)", body: "var(--color-stone-50)", stroke: "var(--color-stone-300)" },
 };
 
 export function ErDiagram() {
@@ -72,7 +72,7 @@ export function ErDiagram() {
       <svg viewBox="0 0 970 470" className="min-w-[860px]" role="img" aria-label="データ構造図">
         <defs>
           <marker id="arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
-            <path d="M0,0 L10,5 L0,10 z" fill="#a8a29e" />
+            <path d="M0,0 L10,5 L0,10 z" style={{ fill: "var(--color-stone-400)" }} />
           </marker>
         </defs>
         {REL.map(([a, b, label], i) => {
@@ -101,9 +101,9 @@ export function ErDiagram() {
           const my = (y1 + y2) / 2;
           return (
             <g key={i}>
-              <motion.line x1={x1} y1={y1} x2={x2} y2={y2} stroke="#a8a29e" strokeWidth={1.5} markerEnd="url(#arrow)" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.3 + i * 0.05 }} />
-              <rect x={mx - 19} y={my - 9} width={38} height={18} rx={9} fill="#fff" stroke="#e7e5e4" />
-              <text x={mx} y={my + 4} textAnchor="middle" fontSize={10} fill="#57534e" fontFamily="var(--font-sans)">
+              <motion.line x1={x1} y1={y1} x2={x2} y2={y2} style={{ stroke: "var(--color-stone-400)" }} strokeWidth={1.5} markerEnd="url(#arrow)" initial={{ pathLength: 0 }} animate={{ pathLength: 1 }} transition={{ duration: 0.6, delay: 0.3 + i * 0.05 }} />
+              <rect x={mx - 19} y={my - 9} width={38} height={18} rx={9} style={{ fill: "var(--color-surface)", stroke: "var(--color-stone-200)" }} />
+              <text x={mx} y={my + 4} textAnchor="middle" fontSize={10} style={{ fill: "var(--color-stone-600)" }} fontFamily="var(--font-sans)">
                 {label}
               </text>
             </g>
@@ -115,18 +115,18 @@ export function ErDiagram() {
           const t = TONE[e.tone];
           return (
             <motion.g key={e.key} initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.03 }}>
-              <rect x={x} y={y} width={W} height={H} rx={8} fill={t.body} stroke={t.stroke} />
-              <path d={`M${x} ${y + 8} a8 8 0 0 1 8 -8 h${W - 16} a8 8 0 0 1 8 8 v22 h-${W} z`} fill={t.head} />
+              <rect x={x} y={y} width={W} height={H} rx={8} style={{ fill: t.body, stroke: t.stroke }} />
+              <path d={`M${x} ${y + 8} a8 8 0 0 1 8 -8 h${W - 16} a8 8 0 0 1 8 8 v22 h-${W} z`} style={{ fill: t.head }} />
               <text x={x + 10} y={y + 20} fontSize={12.5} fontWeight={700} fill="#fff" fontFamily="var(--font-sans)">
                 {e.title}
               </text>
               {e.no && (
-                <text x={x + 10} y={y + 47} fontSize={11} fontWeight={700} fill={t.head} fontFamily="var(--font-sans)">
+                <text x={x + 10} y={y + 47} fontSize={11} fontWeight={700} style={{ fill: t.head }} fontFamily="var(--font-sans)">
                   🔑 {e.no}
                 </text>
               )}
               {e.fields.map((f, fi) => (
-                <text key={f} x={x + 10} y={y + (e.no ? 66 : 50) + fi * 17} fontSize={10.5} fill="#44403c" fontFamily="var(--font-sans)">
+                <text key={f} x={x + 10} y={y + (e.no ? 66 : 50) + fi * 17} fontSize={10.5} style={{ fill: "var(--color-stone-700)" }} fontFamily="var(--font-sans)">
                   ・{f}
                 </text>
               ))}
@@ -140,10 +140,10 @@ export function ErDiagram() {
 
 export function ArchitectureDiagram() {
   const Box = ({ title, sub, items, tone, delay = 0 }: { title: string; sub?: string; items: string[]; tone: string; delay?: number }) => (
-    <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay }} className={`rounded-lg border-2 bg-white p-3 ${tone}`}>
-      <div className="text-[13px] font-bold">{title}</div>
-      {sub && <div className="text-[10px] text-stone-500">{sub}</div>}
-      <ul className="mt-1.5 space-y-0.5 text-[11px] text-stone-700">
+    <motion.div initial={{ opacity: 0, y: 8 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay }} className={`rounded-lg border-2 bg-surface p-3 ${tone}`}>
+      <div className="text-[0.8125rem] font-bold">{title}</div>
+      {sub && <div className="text-[0.625rem] text-stone-500">{sub}</div>}
+      <ul className="mt-1.5 space-y-0.5 text-[0.6875rem] text-stone-700">
         {items.map((i) => (
           <li key={i}>・{i}</li>
         ))}
@@ -151,7 +151,7 @@ export function ArchitectureDiagram() {
     </motion.div>
   );
   const Arrow = ({ label }: { label: string }) => (
-    <div className="flex flex-col items-center justify-center py-1 text-[10px] text-stone-500">
+    <div className="flex flex-col items-center justify-center py-1 text-[0.625rem] text-stone-500">
       <span className="h-4 w-px bg-stone-400" />
       <span className="rounded-full bg-stone-100 px-2 py-0.5">{label}</span>
       <span className="h-0 w-0 border-x-[5px] border-t-[6px] border-x-transparent border-t-stone-400" />
@@ -167,7 +167,7 @@ export function ArchitectureDiagram() {
           <Box title="分析・帳票" sub="Looker Studio／スプレッドシート出力" items={["受注・粗利・負荷の可視化", "経営会議資料の自動作成"]} tone="border-stone-300" delay={0.15} />
         </div>
         <div className="rounded-xl border-2 border-ai-600 bg-ai-50/50 p-3">
-          <div className="mb-2 text-center text-[13px] font-bold text-ai-900">業務アプリケーション（本システム）</div>
+          <div className="mb-2 text-center text-[0.8125rem] font-bold text-ai-900">業務アプリケーション（本システム）</div>
           <div className="grid gap-2 sm:grid-cols-2">
             <Box title="Web アプリ" sub="Next.js／Google Cloud Run" items={["案件・見積・審査・工番", "BOM・購買・製造進捗", "装置台帳・アフターサービス"]} tone="border-ai-300" delay={0.05} />
             <Box title="データベース" sub="Cloud SQL（PostgreSQL）" items={["構造化データの一元管理", "操作履歴（監査ログ）", "日次バックアップ・暗号化"]} tone="border-ai-300" delay={0.1} />

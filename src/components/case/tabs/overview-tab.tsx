@@ -94,7 +94,7 @@ export function OverviewTab(props: CaseTabProps) {
     <div className="grid gap-4 xl:grid-cols-3">
       <div className="space-y-4 xl:col-span-2">
         {next.title && (
-          <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="relative overflow-hidden rounded-lg border border-shu-200 bg-gradient-to-r from-shu-50 via-white to-white px-5 py-4 shadow-[var(--shadow-card)]">
+          <motion.div initial={{ opacity: 0, y: 6 }} animate={{ opacity: 1, y: 0 }} className="relative overflow-hidden rounded-lg border border-shu-200 bg-gradient-to-r from-shu-50 via-surface to-surface px-5 py-4 shadow-[var(--shadow-card)]">
             <div className="absolute left-0 top-0 h-full w-1 bg-shu-500" />
             <div className="flex flex-wrap items-center justify-between gap-3">
               <div className="flex items-start gap-3">
@@ -102,8 +102,8 @@ export function OverviewTab(props: CaseTabProps) {
                   <Sparkles size={16} />
                 </span>
                 <div>
-                  <div className="text-[11px] font-medium tracking-wider text-shu-700">次のアクション（{stageDef(c.stage).label}）</div>
-                  <div className="text-[15px] font-bold text-stone-900">{next.title}</div>
+                  <div className="text-[0.6875rem] font-medium tracking-wider text-shu-700">次のアクション（{stageDef(c.stage).label}）</div>
+                  <div className="text-[0.9375rem] font-bold text-stone-900">{next.title}</div>
                   <div className="mt-0.5 text-xs text-stone-600">{next.body}</div>
                 </div>
               </div>
@@ -138,7 +138,7 @@ export function OverviewTab(props: CaseTabProps) {
                   value: c.tags.length ? (
                     <div className="flex flex-wrap gap-1">
                       {c.tags.map((t) => (
-                        <span key={t} className="rounded bg-stone-100 px-1.5 py-0.5 text-[11px] text-stone-600">#{t}</span>
+                        <span key={t} className="rounded-sm bg-stone-100 px-1.5 py-0.5 text-[0.6875rem] text-stone-600">#{t}</span>
                       ))}
                     </div>
                   ) : "—",
@@ -152,7 +152,8 @@ export function OverviewTab(props: CaseTabProps) {
         <Card>
           <CardHeader title="番号の紐付け（案件のライフサイクル）" description="取引番号から製造番号・サービス履歴まで、一つの案件として追跡できます" icon={<Link2 size={16} />} />
           <CardBody>
-            <ol className="relative space-y-3 border-l-2 border-dashed border-stone-200 pl-6">
+            <ol className="relative space-y-3 pl-6">
+              <span className="flow-line absolute bottom-1 left-0 top-1 w-[2px]" aria-hidden="true" />
               <ChainItem tone="stone" label="取引番号" value={c.dealNo} sub={`${fmtDate(c.inquiryDate, false)} 引合登録`} />
               {caseQuotes.length === 0 ? (
                 <ChainItem tone="none" label="見積番号" value="未作成" />
@@ -185,21 +186,21 @@ export function OverviewTab(props: CaseTabProps) {
           <CardBody>
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <div className="text-[11px] text-stone-500">{c.order ? "受注金額" : "見込金額"}</div>
+                <div className="text-[0.6875rem] text-stone-500">{c.order ? "受注金額" : "見込金額"}</div>
                 <div className="font-num text-lg font-bold text-stone-900">{manYen(price)}</div>
               </div>
               <div>
-                <div className="text-[11px] text-stone-500">{c.actualCost ? "実績粗利率" : "見積粗利率"}</div>
+                <div className="text-[0.6875rem] text-stone-500">{c.actualCost ? "実績粗利率" : "見積粗利率"}</div>
                 <div className={cn("font-num text-lg font-bold", !canCost ? "text-stone-300" : price && 1 - cost / price < 0.2 ? "text-rose-600" : "text-emerald-700")}>{canCost ? (cost ? pct(1 - cost / price) : "—") : "＊＊＊"}</div>
               </div>
             </div>
             {c.processes.length > 0 && (
               <div className="mt-3">
-                <div className="mb-1 flex justify-between text-[11px] text-stone-500">
+                <div className="mb-1 flex justify-between text-[0.6875rem] text-stone-500">
                   <span>製造進捗</span>
                   <span className="font-num">{progress}%</span>
                 </div>
-                <ProgressBar value={progress} />
+                <ProgressBar value={progress} striped />
               </div>
             )}
           </CardBody>
@@ -208,19 +209,19 @@ export function OverviewTab(props: CaseTabProps) {
         {(srcEq || srcSvc) && (
           <Card className="border-violet-200">
             <CardHeader title="元装置・起点となったサービス" icon={<Wrench size={16} />} />
-            <CardBody className="space-y-2 text-[13px]">
+            <CardBody className="space-y-2 text-[0.8125rem]">
               {srcEq && (
                 <Link href={`/equipment/${srcEq.id}`} className="block rounded-md bg-violet-50/70 px-3 py-2 hover:bg-violet-50">
-                  <div className="font-num text-[11px] font-semibold text-violet-700">{srcEq.serialNo}</div>
+                  <div className="font-num text-[0.6875rem] font-semibold text-violet-700">{srcEq.serialNo}</div>
                   <div className="font-medium">{srcEq.name}</div>
-                  <div className="text-[11px] text-stone-500">納入 {fmtDate(srcEq.deliveredDate, false)}／{srcEq.location}</div>
+                  <div className="text-[0.6875rem] text-stone-500">納入 {fmtDate(srcEq.deliveredDate, false)}／{srcEq.location}</div>
                 </Link>
               )}
               {srcSvc && (
                 <Link href={`/service/${srcSvc.id}`} className="block rounded-md bg-stone-50 px-3 py-2 hover:bg-stone-100">
                   <div className="flex items-center gap-1.5">
                     <Badge className={SERVICE_TYPES[srcSvc.type].color}>{SERVICE_TYPES[srcSvc.type].label}</Badge>
-                    <span className="font-num text-[11px] text-stone-500">{srcSvc.ticketNo}</span>
+                    <span className="font-num text-[0.6875rem] text-stone-500">{srcSvc.ticketNo}</span>
                   </div>
                   <div className="mt-0.5 font-medium">{srcSvc.title}</div>
                 </Link>
@@ -239,10 +240,10 @@ export function OverviewTab(props: CaseTabProps) {
                 const r = lk.case.get(rid);
                 if (!r) return null;
                 return (
-                  <Link key={rid} href={`/cases/${rid}`} className="flex items-center gap-2 border-b border-stone-50 px-5 py-2.5 text-[13px] transition-colors last:border-0 hover:bg-stone-50">
-                    <span className="font-num text-[11px] font-semibold text-shu-600">{r.workNo ?? r.dealNo}</span>
+                  <Link key={rid} href={`/cases/${rid}`} className="flex items-center gap-2 border-b border-stone-50 px-5 py-2.5 text-[0.8125rem] transition-colors last:border-0 hover:bg-stone-50">
+                    <span className="font-num text-[0.6875rem] font-semibold text-shu-600">{r.workNo ?? r.dealNo}</span>
                     <span className="min-w-0 flex-1 truncate">{r.title}</span>
-                    <span className="text-[11px] text-stone-400">{lk.customer.get(r.customerId)?.name.replace(/株式会社|有限会社/g, "")}</span>
+                    <span className="text-[0.6875rem] text-stone-400">{lk.customer.get(r.customerId)?.name.replace(/株式会社|有限会社/g, "")}</span>
                   </Link>
                 );
               })}
@@ -259,14 +260,14 @@ export function OverviewTab(props: CaseTabProps) {
               ["購買", c.workNo ? "u06" : undefined],
               ["製造", c.workNo ? "u07" : undefined],
             ].map(([role, uid]) => (
-              <div key={role} className="flex items-center justify-between text-[13px]">
-                <span className="w-10 text-[11px] text-stone-500">{role}</span>
+              <div key={role} className="flex items-center justify-between text-[0.8125rem]">
+                <span className="w-10 text-[0.6875rem] text-stone-500">{role}</span>
                 <span className="flex-1">
                   <UserChip user={uid ? lk.user.get(uid) : undefined} sub />
                 </span>
               </div>
             ))}
-            <p className="pt-1 text-[11px] text-stone-500">メンバーには Google Drive の案件フォルダが自動共有されます。</p>
+            <p className="pt-1 text-[0.6875rem] text-stone-500">メンバーには Google Drive の案件フォルダが自動共有されます。</p>
           </CardBody>
         </Card>
       </div>
@@ -276,17 +277,17 @@ export function OverviewTab(props: CaseTabProps) {
 }
 
 function ChainItem({ tone, label, value, sub, href, onClick }: { tone: "stone" | "ai" | "shu" | "emerald" | "violet" | "none"; label: string; value: string; sub?: React.ReactNode; href?: string; onClick?: () => void }) {
-  const dot = { stone: "bg-stone-500", ai: "bg-ai-600", shu: "bg-shu-500", emerald: "bg-emerald-600", violet: "bg-violet-600", none: "bg-white border-2 border-stone-300" }[tone];
+  const dot = { stone: "bg-stone-500", ai: "bg-ai-600", shu: "bg-shu-500", emerald: "bg-emerald-600", violet: "bg-violet-600", none: "bg-surface border-2 border-stone-300" }[tone];
   const inner = (
     <div className={cn("flex flex-wrap items-baseline gap-x-3 gap-y-0.5", (href || onClick) && "cursor-pointer")}>
-      <span className="w-32 shrink-0 text-[11px] text-stone-500">{label}</span>
-      <span className={cn("font-num text-[14px] font-bold", tone === "none" ? "text-stone-300" : "text-stone-800")}>{value}</span>
-      {sub && <span className="text-[11px] text-stone-500">{sub}</span>}
+      <span className="w-32 shrink-0 text-[0.6875rem] text-stone-500">{label}</span>
+      <span className={cn("font-num text-[0.875rem] font-bold", tone === "none" ? "text-stone-300" : "text-stone-800")}>{value}</span>
+      {sub && <span className="text-[0.6875rem] text-stone-500">{sub}</span>}
     </div>
   );
   return (
     <li className="relative">
-      <span className={cn("absolute -left-[31px] top-1 h-3 w-3 rounded-full ring-4 ring-white", dot)} />
+      <span className={cn("absolute -left-[31px] top-1 h-3 w-3 rounded-full ring-4 ring-surface", dot)} />
       {href ? (
         <Link href={href} className="hover:opacity-80">{inner}</Link>
       ) : onClick ? (
@@ -345,19 +346,19 @@ function NotesCard({ c }: { c: Case }) {
               <div className="flex items-center gap-2">
                 <Avatar user={u} size={20} className="ring-0" />
                 <span className="text-xs font-medium">{u?.name}</span>
-                <span className="text-[10px] text-stone-400">{relTime(n.at)}</span>
+                <span className="text-[0.625rem] text-stone-400">{relTime(n.at)}</span>
                 <span className="ml-auto flex gap-1 opacity-0 transition-opacity group-hover:opacity-100">
-                  <button onClick={() => togglePin(c.id, n.id)} className="rounded p-1 text-stone-400 hover:bg-white hover:text-amber-600" title={n.pinned ? "固定を解除" : "固定する"}>
+                  <button onClick={() => togglePin(c.id, n.id)} className="rounded-sm p-1 text-stone-400 hover:bg-surface hover:text-amber-600" title={n.pinned ? "固定を解除" : "固定する"}>
                     {n.pinned ? <PinOff size={13} /> : <Pin size={13} />}
                   </button>
                   {n.userId === me?.id && (
-                    <button onClick={() => del(c.id, n.id)} className="rounded p-1 text-stone-400 hover:bg-white hover:text-rose-600" title="削除">
+                    <button onClick={() => del(c.id, n.id)} className="rounded-sm p-1 text-stone-400 hover:bg-surface hover:text-rose-600" title="削除">
                       <Trash2 size={13} />
                     </button>
                   )}
                 </span>
               </div>
-              <p className="mt-1 whitespace-pre-wrap text-[13px] leading-relaxed text-stone-700">
+              <p className="mt-1 whitespace-pre-wrap text-[0.8125rem] leading-relaxed text-stone-700">
                 {n.pinned && <Pin size={11} className="mr-1 inline text-amber-600" />}
                 {n.text}
               </p>

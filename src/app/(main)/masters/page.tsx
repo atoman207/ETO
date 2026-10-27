@@ -110,13 +110,13 @@ function PartsTab() {
             {list.map((p) => (
               <tr key={p.id} className="group">
                 <td className="font-num text-xs font-semibold">{p.partNo}</td>
-                <td className="text-[13px]">{p.name}</td>
+                <td className="text-[0.8125rem]">{p.name}</td>
                 <td className="text-xs text-stone-500">{p.spec}</td>
                 <td><Badge>{p.category}</Badge></td>
                 <td className="text-xs">{p.maker}</td>
                 <td className="text-xs">{p.unit}</td>
                 {showCost && <td><NumberInput compact value={p.standardCost} disabled={!canEdit} onChange={(v) => updatePart(p.id, { standardCost: v })} /></td>}
-                <td className="text-[11px] text-stone-600">{p.supplierId ? lk.supplier.get(p.supplierId)?.name : "社内"}</td>
+                <td className="text-[0.6875rem] text-stone-600">{p.supplierId ? lk.supplier.get(p.supplierId)?.name : "社内"}</td>
                 <td><NumberInput compact value={p.leadTimeDays} disabled={!canEdit} onChange={(v) => updatePart(p.id, { leadTimeDays: v })} suffix="日" /></td>
                 <td><Badge className={PROCUREMENT[p.procurement].color}>{PROCUREMENT[p.procurement].label}</Badge></td>
                 <td className="font-num text-right text-xs">{usage.get(p.partNo) ?? 0}</td>
@@ -235,7 +235,7 @@ function SuppliersTab() {
                   <td className="font-num text-xs">{s.code}</td>
                   <td className="font-medium">{s.name}</td>
                   <td className="text-xs">{s.category}</td>
-                  <td className="text-xs text-stone-600">{s.contact}<div className="font-num text-[11px] text-stone-400">{s.phone}</div></td>
+                  <td className="text-xs text-stone-600">{s.contact}<div className="font-num text-[0.6875rem] text-stone-400">{s.phone}</div></td>
                   <td className="text-amber-500">{"★".repeat(s.rating)}<span className="text-stone-200">{"★".repeat(5 - s.rating)}</span></td>
                   <td className="font-num text-right text-xs">{list.length}</td>
                   {showCost && <td className="font-num text-right text-xs">{yen(list.reduce((t, p) => t + p.lines.reduce((x, l) => x + l.qty * l.unitPrice, 0), 0))}</td>}
@@ -293,14 +293,14 @@ function TemplatesTab() {
                 <ChevronDown size={16} className={cn("text-stone-400 transition-transform", !isOpen && "-rotate-90")} />
                 <span className="flex h-8 w-8 items-center justify-center rounded-md bg-ai-50 text-ai-700"><Layers size={16} /></span>
                 <span className="min-w-0">
-                  <span className="block text-[13px] font-bold">{t.name}</span>
-                  <span className="block truncate text-[11px] text-stone-500">{t.description}</span>
+                  <span className="block text-[0.8125rem] font-bold">{t.name}</span>
+                  <span className="block truncate text-[0.6875rem] text-stone-500">{t.description}</span>
                 </span>
               </button>
               <Badge>{t.equipmentType ? EQUIPMENT_TYPES[t.equipmentType].label : "共通"}</Badge>
               <span className="text-xs text-stone-500">{t.items.length - 1}品目</span>
               {showCost && <span className="font-num w-28 text-right text-xs">{yen(total)}</span>}
-              <span className="font-num hidden text-[11px] text-stone-400 md:inline">{fmtDate(t.createdAt.slice(0, 10), false)}</span>
+              <span className="font-num hidden text-[0.6875rem] text-stone-400 md:inline">{fmtDate(t.createdAt.slice(0, 10), false)}</span>
               {canEdit && (
                 <IconButton label="削除" onClick={() => { del(t.id); toast.success("テンプレートを削除しました"); }}>
                   <Trash2 size={14} />
@@ -325,7 +325,7 @@ function TemplatesTab() {
                       {t.items.filter((i) => i.parentKey).map((i) => (
                         <tr key={i.key}>
                           <td className="font-num text-xs">{i.partNo}</td>
-                          <td className="text-[13px]">{i.name}</td>
+                          <td className="text-[0.8125rem]">{i.name}</td>
                           <td className="text-xs text-stone-500">{i.spec}</td>
                           <td className="text-xs">{i.maker}</td>
                           <td className="font-num text-right text-xs">{i.qty} {i.unit}</td>
@@ -368,13 +368,13 @@ function UsersTab() {
                   <span className="flex items-center gap-2">
                     <Avatar user={u} size={26} className="ring-0" />
                     <span>
-                      <span className="block text-[13px] font-medium">{u.name}{u.id === currentUserId && <span className="ml-1.5 text-[10px] text-ai-700">（ログイン中）</span>}</span>
-                      <span className="block text-[10px] text-stone-400">{u.kana}</span>
+                      <span className="block text-[0.8125rem] font-medium">{u.name}{u.id === currentUserId && <span className="ml-1.5 text-[0.625rem] text-ai-700">（ログイン中）</span>}</span>
+                      <span className="block text-[0.625rem] text-stone-400">{u.kana}</span>
                     </span>
                   </span>
                 </td>
                 <td className="text-xs">{u.dept}{u.title && `・${u.title}`}</td>
-                <td><span className={cn("rounded px-1.5 py-0.5 text-[11px]", ROLES[u.role].color)}>{ROLES[u.role].label}</span></td>
+                <td><span className={cn("rounded-sm px-1.5 py-0.5 text-[0.6875rem]", ROLES[u.role].color)}>{ROLES[u.role].label}</span></td>
                 <td className="text-xs">{can(u, "approve") ? ["担当", "課長", "部長・役員"][u.approvalLevel] : "—"}</td>
                 <td>
                   <div className="flex flex-wrap gap-1">
@@ -387,7 +387,7 @@ function UsersTab() {
           </tbody>
         </table>
       </div>
-      <div className="border-t border-stone-100 bg-stone-50/60 px-4 py-2 text-[11px] text-stone-500">本番環境では Google Workspace のアカウント（SSO）と連携し、組織部門・グループから自動的にロールを割り当てます。</div>
+      <div className="border-t border-stone-100 bg-stone-50/60 px-4 py-2 text-[0.6875rem] text-stone-500">本番環境では Google Workspace のアカウント（SSO）と連携し、組織部門・グループから自動的にロールを割り当てます。</div>
     </Card>
   );
 }

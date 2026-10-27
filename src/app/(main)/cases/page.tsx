@@ -245,14 +245,14 @@ function CasesInner() {
                       onClick={() => router.push(`/cases/${c.id}`)}
                     >
                       <td className="whitespace-nowrap">
-                        <div className="font-num text-[12px] font-semibold text-stone-700">{c.dealNo}</div>
-                        <div className={cn("font-num text-[11px]", c.workNo ? "font-semibold text-shu-600" : "text-stone-400")}>{c.workNo ?? "工番 未発行"}</div>
+                        <div className="font-num text-[0.75rem] font-semibold text-stone-700">{c.dealNo}</div>
+                        <div className={cn("font-num text-[0.6875rem]", c.workNo ? "font-semibold text-shu-600" : "text-stone-400")}>{c.workNo ?? "工番 未発行"}</div>
                       </td>
                       <td className="min-w-[260px]">
                         <Link href={`/cases/${c.id}`} onClick={(e) => e.stopPropagation()} className="font-medium text-stone-900 hover:text-ai-700 hover:underline">
                           {c.title}
                         </Link>
-                        <div className="text-[11px] text-stone-500">
+                        <div className="text-[0.6875rem] text-stone-500">
                           {lk.customer.get(c.customerId)?.name}　{lk.site.get(c.siteId)?.name}
                         </div>
                       </td>
@@ -261,8 +261,8 @@ function CasesInner() {
                       </td>
                       <td className="whitespace-nowrap text-xs text-stone-600">{EQUIPMENT_TYPES[c.equipmentType].label}</td>
                       <td className="whitespace-nowrap text-right">
-                        <div className="font-num text-[13px] font-medium">{yen(c.order?.orderAmount ?? c.expectedAmount)}</div>
-                        <div className="text-[10px] text-stone-400">{c.order ? "受注金額" : "見込金額"}</div>
+                        <div className="font-num text-[0.8125rem] font-medium">{yen(c.order?.orderAmount ?? c.expectedAmount)}</div>
+                        <div className="text-[0.625rem] text-stone-400">{c.order ? "受注金額" : "見込金額"}</div>
                       </td>
                       <td>
                         {!c.order && c.status === "active" ? (
@@ -282,7 +282,7 @@ function CasesInner() {
                       <td className="text-xs">
                         {c.order && c.stage !== "aftercare" ? <DueLabel date={c.order.deliveryDate} /> : <span className="font-num text-stone-500">{fmtDate(c.order?.deliveryDate ?? c.desiredDeliveryDate, false)}</span>}
                       </td>
-                      <td className="font-num whitespace-nowrap text-[11px] text-stone-500">{fmtDate(c.updatedAt.slice(0, 10), false)}</td>
+                      <td className="font-num whitespace-nowrap text-[0.6875rem] text-stone-500">{fmtDate(c.updatedAt.slice(0, 10), false)}</td>
                     </motion.tr>
                   ))}
                 </tbody>
@@ -307,30 +307,30 @@ function Board({ cases }: { cases: Case[] }) {
         return (
           <motion.div key={s.key} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: si * 0.03 }} className="flex w-64 shrink-0 flex-col rounded-lg bg-kinari-dark/60">
             <div className="flex items-center justify-between px-3 py-2.5">
-              <span className="flex items-center gap-1.5 text-[13px] font-bold text-stone-700">
+              <span className="flex items-center gap-1.5 text-[0.8125rem] font-bold text-stone-700">
                 <span className={cn("h-2 w-2 rounded-full", s.dot)} />
                 {s.label}
               </span>
-              <span className="font-num text-[11px] text-stone-500">
+              <span className="font-num text-[0.6875rem] text-stone-500">
                 {list.length}件・{manYen(amount)}
               </span>
             </div>
             <div className="flex min-h-24 flex-col gap-2 px-2 pb-2">
               {list.map((c) => (
-                <Link key={c.id} href={`/cases/${c.id}`} className="group block rounded-md border border-stone-200 bg-white p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-ai-300 hover:shadow-md">
+                <Link key={c.id} href={`/cases/${c.id}`} className="group block rounded-md border border-stone-200 bg-surface p-2.5 shadow-sm transition-all hover:-translate-y-0.5 hover:border-ai-300 hover:shadow-md">
                   <div className="flex items-center justify-between">
-                    <span className="font-num text-[11px] font-semibold text-stone-500">{c.workNo ?? c.dealNo}</span>
+                    <span className="font-num text-[0.6875rem] font-semibold text-stone-500">{c.workNo ?? c.dealNo}</span>
                     {c.status !== "active" && <Badge className={CASE_STATUS[c.status].color}>{CASE_STATUS[c.status].label}</Badge>}
                   </div>
-                  <div className="mt-0.5 text-[13px] font-medium leading-snug text-stone-800 group-hover:text-ai-800">{c.title}</div>
-                  <div className="mt-0.5 truncate text-[11px] text-stone-500">{lk.customer.get(c.customerId)?.name}</div>
+                  <div className="mt-0.5 text-[0.8125rem] font-medium leading-snug text-stone-800 group-hover:text-ai-800">{c.title}</div>
+                  <div className="mt-0.5 truncate text-[0.6875rem] text-stone-500">{lk.customer.get(c.customerId)?.name}</div>
                   <div className="mt-2 flex items-center justify-between">
                     <span className="font-num text-xs font-medium text-stone-700">{manYen(c.order?.orderAmount ?? c.expectedAmount)}</span>
                     <Avatar user={lk.user.get(c.salesRepId)} size={20} />
                   </div>
                 </Link>
               ))}
-              {list.length === 0 && <div className="py-6 text-center text-[11px] text-stone-400">案件なし</div>}
+              {list.length === 0 && <div className="py-6 text-center text-[0.6875rem] text-stone-400">案件なし</div>}
             </div>
           </motion.div>
         );

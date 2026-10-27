@@ -159,7 +159,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
             transition={{ type: "spring", damping: 30, stiffness: 420 }}
-            className="relative w-full max-w-2xl overflow-hidden rounded-xl bg-white shadow-2xl ring-1 ring-stone-200"
+            className="relative w-full max-w-2xl overflow-hidden rounded-xl bg-surface shadow-2xl ring-1 ring-stone-200"
           >
             <div className="flex items-center gap-3 border-b border-stone-100 px-4">
               <Search size={18} className="text-ai-600" />
@@ -180,9 +180,9 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                   } else if (e.key === "Escape") onClose();
                 }}
                 placeholder="番号（T26-／M26-／K26-／S26-／P26-）、案件名、顧客名、装置名…"
-                className="h-14 flex-1 bg-transparent text-[15px] outline-none placeholder:text-stone-400"
+                className="h-14 flex-1 bg-transparent text-[0.9375rem] outline-none placeholder:text-stone-400"
               />
-              <kbd className="rounded border border-stone-200 bg-stone-50 px-1.5 text-[10px] text-stone-500">Esc</kbd>
+              <kbd className="rounded-sm border border-stone-200 bg-stone-50 px-1.5 text-[0.625rem] text-stone-500">Esc</kbd>
             </div>
             <div ref={listRef} className="scroll-thin max-h-[52vh] overflow-y-auto py-2">
               {results.length === 0 && (
@@ -196,7 +196,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                 lastGroup = r.group;
                 return (
                   <div key={`${r.group}-${r.id}`}>
-                    {header && <div className="px-4 pb-1 pt-2 text-[10px] font-medium tracking-widest text-stone-400">{r.group}</div>}
+                    {header && <div className="px-4 pb-1 pt-2 text-[0.625rem] font-medium tracking-widest text-stone-400">{r.group}</div>}
                     <button
                       data-idx={i}
                       onMouseEnter={() => setActive(i)}
@@ -205,8 +205,8 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                     >
                       <span className={cn("flex h-7 w-7 shrink-0 items-center justify-center rounded-md", i === active ? "bg-ai-700 text-white" : "bg-stone-100 text-stone-500")}>{r.icon}</span>
                       <span className="min-w-0 flex-1">
-                        <span className="block truncate text-[13px] font-medium text-stone-800">{r.title}</span>
-                        {r.sub && <span className="block truncate text-[11px] text-stone-500">{r.sub}</span>}
+                        <span className="block truncate text-[0.8125rem] font-medium text-stone-800">{r.title}</span>
+                        {r.sub && <span className="block truncate text-[0.6875rem] text-stone-500">{r.sub}</span>}
                       </span>
                       {r.right}
                       {i === active && <CornerDownLeft size={14} className="text-ai-500" />}
@@ -215,7 +215,7 @@ export function CommandPalette({ open, onClose }: { open: boolean; onClose: () =
                 );
               })}
             </div>
-            <div className="flex items-center gap-4 border-t border-stone-100 bg-stone-50 px-4 py-2 text-[10px] text-stone-500">
+            <div className="flex items-center gap-4 border-t border-stone-100 bg-stone-50 px-4 py-2 text-[0.625rem] text-stone-500">
               <span>↑↓ で選択</span>
               <span>Enter で開く</span>
               <span className="ml-auto">取引番号 → 見積番号 → 工事番号 → 製造番号 はすべて紐付いています</span>

@@ -23,14 +23,14 @@ export function Tabs<T extends string>({ tabs, value, onChange, id }: { tabs: Ta
             type="button"
             onClick={() => onChange(t.key)}
             className={cn(
-              "relative inline-flex h-10 shrink-0 items-center gap-1.5 px-3.5 text-[13px] font-medium transition-colors",
+              "relative inline-flex h-10 shrink-0 items-center gap-1.5 px-3.5 text-[0.8125rem] font-medium transition-colors",
               active ? "text-ai-800" : "text-stone-500 hover:text-stone-800",
             )}
           >
             {t.icon && <span className={cn("transition-colors", active ? "text-ai-600" : "text-stone-400")}>{t.icon}</span>}
             {t.label}
             {t.count !== undefined && (
-              <span className={cn("font-num rounded-full px-1.5 text-[10px] leading-4", active ? "bg-ai-100 text-ai-800" : "bg-stone-100 text-stone-500")}>{t.count}</span>
+              <span className={cn("font-num rounded-full px-1.5 text-[0.625rem] leading-4", active ? "bg-ai-100 text-ai-800" : "bg-stone-100 text-stone-500")}>{t.count}</span>
             )}
             {t.alert && <span className="h-1.5 w-1.5 rounded-full bg-shu-500" />}
             {active && (

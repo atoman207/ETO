@@ -129,7 +129,7 @@ export default function EquipmentDetailPage() {
                 ]}
               />
               <div className="mt-4">
-                <div className="mb-1 flex justify-between text-[11px] text-stone-500">
+                <div className="mb-1 flex justify-between text-[0.6875rem] text-stone-500">
                   <span>保証期間</span>
                   <span className={warrantyLeft >= 0 ? "text-emerald-700" : ""}>{warrantyLeft >= 0 ? `残り ${warrantyLeft}日` : "保証期間終了"}</span>
                 </div>
@@ -141,15 +141,15 @@ export default function EquipmentDetailPage() {
             <CardBody className="grid grid-cols-3 gap-2 text-center">
               <div>
                 <div className="font-num text-lg font-bold">{svcs.length}</div>
-                <div className="text-[10px] text-stone-500">サービス件数</div>
+                <div className="text-[0.625rem] text-stone-500">サービス件数</div>
               </div>
               <div>
                 <div className="font-num text-lg font-bold">{mtbf ? `${mtbf}日` : "—"}</div>
-                <div className="text-[10px] text-stone-500">平均故障間隔</div>
+                <div className="text-[0.625rem] text-stone-500">平均故障間隔</div>
               </div>
               <div>
                 <div className="font-num text-lg font-bold">{(totalAmount / 10000).toLocaleString()}万</div>
-                <div className="text-[10px] text-stone-500">サービス売上</div>
+                <div className="text-[0.625rem] text-stone-500">サービス売上</div>
               </div>
             </CardBody>
           </Card>
@@ -209,15 +209,15 @@ export default function EquipmentDetailPage() {
                   <tbody>
                     {leaves.map((b) => (
                       <tr key={b.id}>
-                        <td className="text-[11px] text-stone-500">{roots.find((r) => r.id === b.parentId)?.name ?? c.bom.find((x) => x.id === b.parentId)?.name ?? "—"}</td>
+                        <td className="text-[0.6875rem] text-stone-500">{roots.find((r) => r.id === b.parentId)?.name ?? c.bom.find((x) => x.id === b.parentId)?.name ?? "—"}</td>
                         <td className="font-num text-xs">{b.partNo}</td>
                         <td>
-                          <div className="text-[13px]">{b.name}</div>
-                          <div className="text-[10px] text-stone-400">{b.spec}</div>
+                          <div className="text-[0.8125rem]">{b.name}</div>
+                          <div className="text-[0.625rem] text-stone-400">{b.spec}</div>
                         </td>
                         <td className="text-xs">{b.maker}</td>
                         <td className="font-num text-right text-xs">{b.qty} {b.unit}</td>
-                        <td className="text-[11px] text-stone-500">{b.supplierId ? lk.supplier.get(b.supplierId)?.name : "社内"}</td>
+                        <td className="text-[0.6875rem] text-stone-500">{b.supplierId ? lk.supplier.get(b.supplierId)?.name : "社内"}</td>
                         {showCost && <td className="font-num text-right text-xs">{yen(b.unitCost)}</td>}
                       </tr>
                     ))}

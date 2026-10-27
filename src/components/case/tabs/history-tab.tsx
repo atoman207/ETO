@@ -33,20 +33,20 @@ export function HistoryTab({ c }: CaseTabProps) {
         <div className="px-5 py-4">
           {byDay.map(([day, items]) => (
             <div key={day} className="mb-4 last:mb-0">
-              <div className="font-num sticky top-14 mb-2 inline-block rounded bg-stone-100 px-2 py-0.5 text-[11px] font-medium text-stone-600">{day}</div>
+              <div className="font-num sticky top-14 mb-2 inline-block rounded-sm bg-stone-100 px-2 py-0.5 text-[0.6875rem] font-medium text-stone-600">{day}</div>
               <div className="space-y-2 border-l border-stone-200 pl-4">
                 {items.map((a) => {
                   const u = lk.user.get(a.userId);
                   return (
                     <div key={a.id} className="flex items-start gap-2.5">
                       <Avatar user={u} size={22} className="ring-0" />
-                      <div className="min-w-0 flex-1 text-[13px]">
+                      <div className="min-w-0 flex-1 text-[0.8125rem]">
                         <span className="font-medium">{u?.name}</span>
-                        <span className="ml-1 text-[11px] text-stone-400">{u?.dept}</span>
+                        <span className="ml-1 text-[0.6875rem] text-stone-400">{u?.dept}</span>
                         <div className="text-stone-700">{a.message}</div>
                       </div>
                       <Badge>{ENTITY_LABEL[a.entity] ?? a.entity}</Badge>
-                      <span className="font-num w-12 shrink-0 text-right text-[11px] text-stone-400">{fmtDateTime(a.at).slice(11)}</span>
+                      <span className="font-num w-12 shrink-0 text-right text-[0.6875rem] text-stone-400">{fmtDateTime(a.at).slice(11)}</span>
                     </div>
                   );
                 })}
